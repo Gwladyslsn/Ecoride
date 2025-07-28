@@ -2,6 +2,7 @@
 
 require_once ROOTPATH . 'src/Templates/header.php';
 require_once ROOTPATH . 'vendor/autoload.php';
+
 use App\Entity\ReviewRepository;
 
 $reviewRepository = new ReviewRepository();
@@ -126,19 +127,16 @@ $groupedReviews = array_chunk($reviews, 2);
     </div>
 </section>
 
-<!--Avis sur ecoride-->
 <section class="text-gray-600">
     <h1 class="text-white text-3xl text-center mt-24 mb-10">Les avis des utilisateurs </h1>
     <div class="relative w-full max-w-6xl mx-auto">
         <div id="carousel-reviews" class="overflow-hidden relative w-full">
             <div id="carousel-inner" class="flex transition-transform duration-500 ease-in-out">
                 <?php foreach ($groupedReviews as $group): ?>
-                    <pre><?php var_dump($review); ?></pre>
                     <div class="w-full flex-shrink-0 flex gap-6 px-4">
                         <?php foreach ($group as $review): ?>
                             <div class="w-full md:w-1/2">
-
-                                <?php echo "<div class='bg-red-200 p-4'>Review ici</div>"; ?>
+                                <?php include ROOTPATH . 'src/Templates/review_item.php'; ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
