@@ -1,0 +1,12 @@
+.btn-send{
+    background-color:var(--secondary-color);
+}
+
+.btn-send:hover{
+    background-color:#a1d3a7;
+    color:var(--text-black);
+}
+
+.mail-ecoride{
+    color:var(--secondary-color);
+}

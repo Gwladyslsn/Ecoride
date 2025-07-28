@@ -1,0 +1,77 @@
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.profile-section {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    /* Coins arrondis */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Légère ombre */
+    margin-bottom: 1.5rem;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #22c55e;
+    /* Vert Tailwind 500 */
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #22c55e;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(20px);
+    /* Déplacement du curseur */
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+.edit-btn{
+    background-color: var(--primary-color);
+}
+
+.edit-btn:hover{
+    background-color: var(--secondary-color);
+}

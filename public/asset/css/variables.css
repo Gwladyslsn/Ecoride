@@ -1,0 +1,17 @@
+:root {
+    --darkblue: #264059;
+    --lightblue: #6EA0B1;
+    --orange: #E5690B;
+    --green: #7A9E7E;
+    --white: #F5F5F5;
+    --black: #000000;
+
+
+    /*utilitaires*/
+    --bg-main: var(--darkblue);
+    --bg-section: var(--lightblue);
+    --text-black: var(--black);
+    --text-white: var(--white);
+    --primary-color: var(--orange);
+    --secondary-color: var(--green);
+}

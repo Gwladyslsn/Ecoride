@@ -1,5 +1,10 @@
 <?php
 
-?>
+define("ROOTPATH", __DIR__ . '/../'); // Pour se baser sur le chemin racine
+require ROOTPATH . '/vendor/autoload.php';
 
-<h1>Page index</h1>
+use App\Controller\Controller;
+
+$routes = require ROOTPATH . 'config/routes.php';
+$controller = new Controller($routes);
+$controller->route();
