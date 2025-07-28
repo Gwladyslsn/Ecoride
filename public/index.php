@@ -16,3 +16,5 @@ foreach ($routes as $path => $routeInfo) {
 
 $uri = $_SERVER['REQUEST_URI'];
 $router->dispatch($uri);
+
+
