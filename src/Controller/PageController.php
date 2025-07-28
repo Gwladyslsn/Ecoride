@@ -2,108 +2,102 @@
 
 namespace App\Controller;
 
-use App\Entity\ReviewRepository;
+
 
 class PageController extends Controller
 {
     public function home()
     {
-        $reviewRepository = new ReviewRepository();
-        $reviews = $reviewRepository->getAllReviews();
-        $groupedReviews = array_chunk($reviews, 2);
-
-        $this->render('src/Templates/page/home', [
-            'groupedReviews' => $groupedReviews
-        ]);
+        $this->render('Templates/page/home', []);
     }
 
     public function register()
     {
-        $this->render('src/Templates/page/register', []);
+        $this->render('Templates/page/register', []);
     }
 
     public function contact()
     {
-        $this->render('src/Templates/page/contact', []);
+        $this->render('/Templates/page/contact', []);
     }
 
     public function about()
     {
-        $this->render('src/Templates/page/about', []);
+        $this->render('/Templates/page/about', []);
     }
 
     public function mentions()
     {
-        $this->render('src/Templates/page/mentions', []);
+        $this->render('/Templates/page/mentions', []);
     }
 
     public function dashboardUser()
     {
-        $this->render('src/Templates/page/dashboardUser', []);
+        $this->render('/Templates/page/dashboardUser', []);
     }
 
     public function logout()
     {
-        $this->render('src/Templates/logout', []);
+        $this->render('/Templates/logout', []);
     }
 
     public function history()
     {
-        $this->render('src/Templates/page/history', []);
+        $this->render('/Templates/page/history', []);
     }
 
     public function updateUser()
     {
-        $this->render('src/Entity/updateUser', []);
+        $this->render('/Entity/updateUser', []);
     }
 
     public function updateCar()
     {
-        $this->render('src/Entity/updateCar', []);
+        $this->render('/Entity/updateCar', []);
     }
 
     public function addCarpooling()
     {
-        $this->render('src/Templates/page/addCarpooling', []);
+        $this->render('/Templates/page/addCarpooling', []);
     }
 
     public function searchCarpooling()
     {
-        $this->render('src/Templates/page/searchCarpooling', []);
+        $this->render('/Templates/page/searchCarpooling', []);
     }
 
     public function newCarpooling()
     {
-        $this->render('src/Entity/newCarpooling', []);
+        $this->render('/Entity/newCarpooling', []);
     }
 
     public function searchTripAPI()
     {
-        $this->render('src/Entity/searchTripAPI', []);
+        $this->render('/Entity/searchTripAPI', []);
     }
 
     public function contactUser()
     {
-        $this->render('src/Entity/contactUser', []);
+        $this->render('/Entity/contactUser', []);
     }
 
     public function reviewEcoride()
     {
-        $this->render('src/Templates/page/reviewEcoride', []);
+        $this->render('/Templates/page/reviewEcoride', []);
     }
 
     public function addReviewEcoride()
     {
-        $this->render('src/Entity/addReviewEcoride', []);
+        $this->render('/Entity/addReviewEcoride', []);
     }
 
     public function createAdmin()
     {
-        $this->render('src/Entity/createAdmin', []);
+        $this->render('/Entity/createAdmin', []);
     }
 
     public function homeAdmin()
     {
-        $this->render('src/Templates/page/admin/homeAdmin', []);
+        $this->render('/Templates/page/admin/homeAdmin', []);
     }
 }

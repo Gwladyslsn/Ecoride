@@ -7,6 +7,6 @@ abstract class Controller
     protected function render(string $template, array $data = []): void
     {
         extract($data);
-        require ROOTPATH . $template . '.php';
+        require_once ROOTPATH .'src/' . $template . '.php';
     }
 }

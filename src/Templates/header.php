@@ -1,5 +1,6 @@
 <?php
-use App\Entity\Auth;
+require_once ROOTPATH . 'src/Entity/auth.php';
+require_once ROOTPATH . 'config/config.php';
 
 ?>
 
