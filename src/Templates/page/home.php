@@ -1,25 +1,12 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once ROOTPATH . 'src/Templates/header.php';
+require_once ROOTPATH . 'vendor/autoload.php';
+use App\Entity\ReviewRepository;
 
-
-// Inclusion de l'autoload pour gérer les namespaces et classes
-//require_once ROOTPATH . 'vendor/autoload.php';
-//require_once ROOTPATH . 'src/Templates/header.php';
-
-use App\Entity\Auth;
-
-// Utilisation de la classe POO pour récupérer les avis
-use Entity\ReviewRepository;
-
-$repo = new ReviewRepository();
-$reviews = $repo->getAllReviews();
-
-// Si tu veux garder le carousel avec des groupes de 2, tu peux garder cette ligne
+$reviewRepository = new ReviewRepository();
+$reviews = $reviewRepository->getAllReviews();
 $groupedReviews = array_chunk($reviews, 2);
-
 ?>
 
 
