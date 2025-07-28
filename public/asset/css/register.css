@@ -1,0 +1,49 @@
+.divider{
+    color:var(--text-white);
+}
+
+.form{
+    background-color: var(--bg-section);
+    color: var(--text-black);
+}
+
+.btn-register{
+    background-color:var(--primary-color);
+    
+}
+
+.field-password{
+    position: relative;
+}
+
+.field-password .password-show, .field-password .password-hide{
+    position:absolute;
+    top: 0px;
+    right: 0px;
+}
+
+
+/*Style MOBILE*/
+@media screen and (min-width:320px) and (max-width:767px) {
+    .sectionLog {
+        flex-direction: column;
+    }
+
+    .divider {
+        margin: 0 auto;
+    }
+}
+
+/*Style LAPTOP Medium*/
+@media screen and (min-width:768px) {
+    .sectionLog {
+        flex-direction: row;
+    }
+
+    .containerLog {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2%;
+    }
+}

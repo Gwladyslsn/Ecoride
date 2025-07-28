@@ -81,7 +81,14 @@ class PageController extends Controller
 
     protected function home()
     {
-        $this->render('Templates/page/home', []);
+        require_once ROOTPATH . 'vendor/autoload.php';
+
+    $repo = new \Entity\ReviewRepository();
+    $reviews = $repo->getAllReviews();
+
+    $this->render('Templates/page/home', [
+        'reviews' => $reviews
+    ]);
     }
 
     protected function register()

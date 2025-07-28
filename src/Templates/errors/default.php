@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOTHPATH.'src/templates/header.php';?>
+require_once ROOTPATH.'src/templates/header.php';?>
 
 <?php if ($error){ ?>
 <div class="alert alert-danger">
@@ -9,4 +9,4 @@ require_once ROOTHPATH.'src/templates/header.php';?>
 <?php } ?>
 
 <?php
-require_once ROOTHPATH.'/src/templates/footer.php';?>
+require_once ROOTPATH.'/src/templates/footer.php';?>

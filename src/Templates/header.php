@@ -1,5 +1,6 @@
 <?php
-require_once ROOTHPATH . 'src/Entity/auth.php';
+use App\Entity\Auth;
+
 ?>
 
 <!DOCTYPE html>

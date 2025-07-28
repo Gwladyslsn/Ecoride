@@ -1,11 +1,10 @@
 <?php
 
-define("ROOTHPATH", __DIR__ . '/../'); // Pour se baser sur le chemin racine
-require ROOTHPATH . '/vendor/autoload.php';
+define("ROOTPATH", __DIR__ . '/../'); // Pour se baser sur le chemin racine
+require ROOTPATH . '/vendor/autoload.php';
 
 use App\Controller\Controller;
 
-$routes = require ROOTHPATH . 'config/routes.php';
-var_dump($routes);
+$routes = require ROOTPATH . 'config/routes.php';
 $controller = new Controller($routes);
 $controller->route();

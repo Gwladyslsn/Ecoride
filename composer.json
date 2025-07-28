@@ -9,7 +9,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "mongodb/mongodb": "^2.1"
+    },
 
     "autoload": {
     "psr-4": {

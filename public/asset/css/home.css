@@ -1,0 +1,44 @@
+.bg-image {
+    background-image: url("/asset/image/testAccueil.jpg");
+}
+
+.text-home{
+    background-color: rgba(106, 140, 108, 0.3);
+    border-radius: 8px;
+    padding:2em;
+}
+
+.card-about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.card-city{
+    background-color: var(--secondary-color);
+    color: var(--text-black);
+}
+
+.btn-home{
+    background-color: var(--secondary-color);
+}
+
+.container{
+    background-color: var(--bg-main);
+}
+
+input{
+    border-color: var(--secondary-color);
+}
+
+.btn-search{
+    background-color: var(--secondary-color);
+    color: var(--text-black);
+}
+
+/*Style MOBILE*/
+@media screen and (min-width:320px) and (max-width:767px) {}
+
+/*Style LAPTOP Medium*/
+@media screen and (min-width:768px) {}

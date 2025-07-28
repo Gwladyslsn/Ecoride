@@ -46,7 +46,7 @@ class Controller
 
     protected function render(string $path, array $params = []): void
     {
-        $filePath = ROOTHPATH . 'src/' . $path . '.php';
+        $filePath = ROOTPATH . 'src/' . $path . '.php';
 
         try {
             if (!file_exists($filePath)) {

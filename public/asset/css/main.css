@@ -1,0 +1,11 @@
+@import './variables.css';
+@import './layout.css';
+@import './header.css';
+@import './home.css';
+@import './register.css';
+@import './dashboardUser.css';
+@import './addCarpooling.css';
+@import './trips.css';
+@import './about.css';
+@import './contact.css';
+@import './dashboardAdmin.css';
