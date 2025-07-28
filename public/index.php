@@ -1,0 +1,5 @@
+<?php
+
+?>
+
+<h1>Page index</h1>

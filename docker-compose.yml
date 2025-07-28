@@ -1,0 +1,57 @@
+services:
+  php:
+    image: php:8.2-apache
+    container_name: phpApache_ecoride
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - db_host=${db_host}
+      - db_name=${db_name}
+      - db_user=${db_user}
+      - db_password=${db_password}
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www/html
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    networks:
+      - ecoride-net
+  db:
+    image: mysql:8.0
+    container_name: mysql_ecoride
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_root_password}
+      MYSQL_DATABASE: ${MYSQL_database}
+      MYSQL_USER: ${MYSQL_user}
+      MYSQL_PASSWORD: ${MYSQL_password}
+    ports:
+      - 3307:3306
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - ecoride-net
+
+  phpma:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_ecoride
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: ${db_host}
+      PMA_USER: ${db_user}
+      PMA_PASSWORD: ${db_password}
+    ports:
+      - 8899:80
+    networks:
+      - ecoride-net
+
+volumes:
+  db_data:
+  mongo_data:
+
+networks:
+  ecoride-net:
+    name: ecoride-net
+    driver: bridge
