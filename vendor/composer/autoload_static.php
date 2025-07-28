@@ -24,6 +24,10 @@ class ComposerStaticInitba9bef9f17bbca61034fe774c2faccc9
         array (
             'MongoDB\\' => 8,
         ),
+        'E' => 
+        array (
+            'Entity\\' => 7,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -42,6 +46,10 @@ class ComposerStaticInitba9bef9f17bbca61034fe774c2faccc9
         'MongoDB\\' => 
         array (
             0 => __DIR__ . '/..' . '/mongodb/mongodb/src',
+        ),
+        'Entity\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Entity',
         ),
         'App\\' => 
         array (
