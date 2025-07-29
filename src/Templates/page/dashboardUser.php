@@ -47,6 +47,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         $errorMessage = "Échec de la mise à jour.";
     }
 }
+
+// 🛠 Mise à jour des infos voiture si formulaire envoyé
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
+    $dataCar = [];
+
+    if (!empty($_POST['brand_car'])) $dataCar['brand_car'] = $_POST['brand_car'];
+    if (!empty($_POST['model_car'])) $dataCar['model_car'] = $_POST['model_car'];
+    if (!empty($_POST['color_car'])) $dataCar['color_car'] = $_POST['color_car'];
+    if (!empty($_POST['year_car'])) $dataCar['year_car'] = $_POST['year_car'];
+    if (!empty($_POST['energy_car'])) $dataCar['energy_car'] = $_POST['energy_car'];
+    // Ajoute d'autres champs si besoin
+
+    $updatedCar = $userRepo->updateCarInfo($id_user, $dataCar['brand_car'], $dataCar['model_car'], $dataCar['color_car'], $dataCar['year_car'], $dataCar['energy_car']);
+    
+    if ($updatedCar) {
+        $successMessage = "Voiture mise à jour avec succès.";
+    } else {
+        $errorMessage = "Échec de la mise à jour de la voiture.";
+    }
+}
 }
 ?>
 

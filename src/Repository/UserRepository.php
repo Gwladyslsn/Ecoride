@@ -105,15 +105,14 @@ class UserRepository
     // --- UPDATE ---
 
     /* update avatar user*/
-    public function updateUserAvatar(int $userId, string $avatarFilename): bool
-    {
-        $sql = "UPDATE user SET avatar_user = :avatar WHERE id_user = :id_user";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([
-            'avatar' => $avatarFilename,
-            'id_user' => $userId
-        ]);
-    }
+    public function updateAvatar($userId, $avatarPath)
+{
+    $sql = "UPDATE user SET avatar = :avatar WHERE id_user = :userId";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindParam(':avatar', $avatarPath);
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    return $stmt->execute();
+}
 
     /* update data user*/
     public function updateUserInfo(int $userId, array $data): bool
@@ -136,22 +135,39 @@ class UserRepository
     }
 
     /* update data car*/
-    public function updateCarInfo($id, $carModel, $carColor, $photoPath = null)
+    public function updateCarInfo($userId, $brandCar, $modelCar, $yearCar, $energyCar)
 {
-    $sql = "UPDATE users SET car_model = :carModel, car_color = :carColor";
+    // Vérifie d'abord si une voiture existe déjà pour cet utilisateur
+    $sqlCheck = "SELECT id_car FROM car WHERE id_user = :userId";
+    $stmtCheck = $this->pdo->prepare($sqlCheck);
+    $stmtCheck->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmtCheck->execute();
 
-    if ($photoPath !== null) {
-        $sql .= ", car_photo = :carPhoto";
+    $car = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+    if ($car) {
+        // Une voiture existe → UPDATE
+        $sql = "UPDATE car SET brand_car = :brandCar, model_car = :modelCar, year_car = :yearCar, energy_car = :energyCar";
+
+
+        $sql .= " WHERE id_user = :userId";
+        $stmt = $this->pdo->prepare($sql);
+    } else {
+        // Aucune voiture → INSERT
+        $sql = "INSERT INTO car (id_user, brand_car, model_car, year_car, energy_car";
+        $values = "VALUES (:userId, :brandCar, :modelCar, :yearCar, :energyCar";
+
+
+        $sql .= ") " . $values . ")";
+        $stmt = $this->pdo->prepare($sql);
     }
 
-    $sql .= " WHERE id = :id";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindParam(':carModel', $carModel);
-    $stmt->bindParam(':carColor', $carColor);
-    if ($photoPath !== null) {
-        $stmt->bindParam(':carPhoto', $photoPath);
-    }
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    // Paramètres communs
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmt->bindParam(':brandCar', $brandCar);
+    $stmt->bindParam(':modelCar', $modelCar);
+    $stmt->bindParam(':yearCar', $yearCar);
+    $stmt->bindParam(':energyCar', $energyCar);
 
     return $stmt->execute();
 }
