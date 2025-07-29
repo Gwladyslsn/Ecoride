@@ -28,7 +28,7 @@ class PageController extends Controller
 
     public function mentions()
     {
-        $this->render('/Templates/page/mentions', []);
+        $this->render('Templates/page/mentions', []);
     }
 
     public function dashboardUser()

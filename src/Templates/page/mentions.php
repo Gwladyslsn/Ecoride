@@ -1,6 +1,7 @@
 <?php
 
-require_once ROOTPATH . '/src/Templates/header.php'; ?>
+require_once ROOTPATH . 'src/Templates/header.php';
+?>
 
 
 <h1 class="text-center text-3xl mt-4">Mentions légales</h1> <br />
@@ -50,4 +51,4 @@ require_once ROOTPATH . '/src/Templates/header.php'; ?>
 </section>
 
 <?php
-require_once ROOTPATH . '/src/Templates/footer.php'; ?>
+require_once ROOTPATH . 'src/Templates/footer.php'; ?>

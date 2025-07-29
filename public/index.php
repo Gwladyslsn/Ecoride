@@ -15,6 +15,5 @@ foreach ($routes as $path => $routeInfo) {
 }
 
 $uri = $_SERVER['REQUEST_URI'];
+$uri = str_replace('/index.php', '', $uri); // Corrige l’URI
 $router->dispatch($uri);
-
-

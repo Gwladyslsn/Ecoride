@@ -10,7 +10,7 @@ $reviews = $reviewRepository->getAllReviews();
 $groupedReviews = array_chunk($reviews, 2);
 ?>
 
-
+<!--presentation-->
 <div class="hero w-auto min-h-dvh bg-image">
     <div class="hero-overlay"></div>
     <div class="hero-content text-neutral-content text-center">
@@ -25,9 +25,9 @@ $groupedReviews = array_chunk($reviews, 2);
             </p>
             <button class="btn btn-home mt-5">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <a href="<?= BASE_URL ?>?controller=page&action=about">A propos de nous</a>
+                    <a href="<?= BASE_URL ?>about">A propos de nous</a>
                 <?php else: ?>
-                    <a href="<?= BASE_URL ?>?controller=page&action=register" rel="noopener noreferrer">Nous rejoindre</a>
+                    <a href="<?= BASE_URL ?>register" rel="noopener noreferrer">Nous rejoindre</a>
                 <?php endif; ?>
             </button>
         </div>
@@ -83,7 +83,7 @@ $groupedReviews = array_chunk($reviews, 2);
                     <img alt="gallery" class="absolute inset-0 w-full h-full object-cover object-center rounded-md" src="/asset/image/strasbourg.webp">
                     <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 opacity-0 hover:opacity-100 card-city rounded-md">
                         <h1 class="title-font text-lg font-medium mb-3">Strasbourg</h1>
-                        <p class="leading-relaxed">Un souffle de tradition et de charme alsacien au fil des canaux.<br></p>
+                        <p class="leading-relaxed"><br>Un souffle de tradition et de charme alsacien au fil des canaux.<br></p>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@ $groupedReviews = array_chunk($reviews, 2);
         <div class="flex flex-col text-center w-full mb-8">
             <h1 class="text-3xl font-medium title-font mb-2">Trouvez votre trajet dès maintenant !</h1>
         </div>
-        <form id="formSearch" method="post" action="<?= BASE_URL ?>?controller=page&action=searchCarpooling" class="flex lg:w-1/1 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+        <form id="formSearch" method="post" action="<?= BASE_URL ?>searchCarpooling" class="flex lg:w-1/1 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
             <div class="relative flex-grow w-full">
                 <label for="departureCity" class="leading-7 text-lg">Ville de départ</label>
                 <input type="text" id="departure_city_search" name="departureCitySearch" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-black py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -127,6 +127,7 @@ $groupedReviews = array_chunk($reviews, 2);
     </div>
 </section>
 
+<!--Reviews-->
 <section class="text-gray-600">
     <h1 class="text-white text-3xl text-center mt-24 mb-10">Les avis des utilisateurs </h1>
     <div class="relative w-full max-w-6xl mx-auto">
@@ -144,7 +145,6 @@ $groupedReviews = array_chunk($reviews, 2);
             </div>
         </div>
 
-        <!-- Flèches -->
         <button id="prevReview" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white text-gray-800 px-3 py-2 rounded-full shadow-md hover:bg-gray-100 z-10">‹</button>
         <button id="nextReview" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white text-gray-800 px-3 py-2 rounded-full shadow-md hover:bg-gray-100 z-10">›</button>
     </div>
