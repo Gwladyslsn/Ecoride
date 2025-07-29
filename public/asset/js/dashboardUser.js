@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 data[input.name] = input.value.trim();
             });
 
-            fetch('/?controller=page&action=updateUser', {
+            fetch('/updateUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)

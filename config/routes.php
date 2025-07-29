@@ -34,11 +34,11 @@ return [
         'method' => 'history'
     ],
     '/updateUser' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\UserController::class,
         'method' => 'updateUser'
     ],
     '/updateCar' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\UserController::class,
         'method' => 'updateCar'
     ],
     '/addCarpooling' => [

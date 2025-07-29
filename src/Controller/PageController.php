@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Auth;
 
 
 class PageController extends Controller
@@ -38,7 +39,7 @@ class PageController extends Controller
 
     public function logout()
     {
-        $this->render('/Templates/logout', []);
+        Auth::logout('/'); // appeler la fonction
     }
 
     public function history()

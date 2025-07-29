@@ -1,5 +1,4 @@
 <?php
-
 require_once ROOTPATH . '/src/Templates/header.php'; ?>
 
 <section class="content-section">
