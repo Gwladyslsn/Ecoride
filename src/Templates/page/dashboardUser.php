@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
     <div class="profile-section flex flex-col md:flex-row items-center md:items-start gap-6">
         <div class="flex-shrink-0">
             <img
-                src="<?= $avatarPath ?>"
+                src="/uploads/<?= htmlspecialchars($user['avatar_user']) ?>"
                 alt="icone de profil"
                 class="w-32 h-32 rounded-full object-cover border-4 border-purple-300 shadow-md">
         </div>
@@ -84,8 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
             <h2 class="text-2xl font-semibold text-gray-900"><?= $user["name_user"]; ?></h2>
             <p class="text-gray-600"><?= $role['name_role']; ?></p>
             <button id="edit-photo" class="btn rounded-md">Modifier ma photo</button>
-            <form action="<?= BASE_URL ?>updateUser" method="POST" enctype="multipart/form-data" class="mt-4">
-                <input id="file-input" type="file" name="avatar" accept="image/*" class="mb-2 hidden text-gray-600">
+            <form action="<?= BASE_URL ?>updateAvatar" method="POST" enctype="multipart/form-data" class="mt-4">
+                <input id="file-input" type="file" name="avatar_user" accept="image/*" class="mb-2 hidden text-gray-600">
                 <button id="submit-btn" type="submit" name="upload_avatar" class="hidden px-3 py-1 bg-indigo-600 text-white rounded">
                     Mettre à jour la photo
                 </button>

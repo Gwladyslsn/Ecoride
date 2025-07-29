@@ -7,6 +7,79 @@ use App\Database\Database;
 
 class UserController
 {
+    public function updateAvatar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'message' => 'Méthode non autorisée']);
+            return;
+        }
+
+        if (!isset($_FILES['avatar_user'])) {
+            echo json_encode(['success' => false, 'message' => 'Aucun fichier reçu.']);
+            return;
+        }
+
+        switch ($_FILES['avatar_user']['error']) {
+            case UPLOAD_ERR_OK:
+                // Tout va bien
+                break;
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $message = 'Le fichier est trop volumineux.';
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                $message = 'Le fichier n\'a été que partiellement téléchargé.';
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                $message = 'Aucun fichier n\'a été téléchargé.';
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                $message = 'Dossier temporaire manquant.';
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                $message = 'Échec de l\'écriture sur le disque.';
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                $message = 'Une extension PHP a arrêté le téléchargement.';
+                break;
+            default:
+                $message = 'Erreur inconnue.';
+        }
+
+        if ($_FILES['avatar_user']['error'] !== UPLOAD_ERR_OK) {
+            echo json_encode(['success' => false, 'message' => $message]);
+            return;
+        }
+
+        // Vérifie le type MIME
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($_FILES['avatar_user']['type'], $allowedTypes)) {
+            echo json_encode(['success' => false, 'message' => 'Type de fichier non autorisé.']);
+            return;
+        }
+
+        // Déplace le fichier dans le dossier "uploads"
+        $uploadDir = ROOTPATH . 'asset/uploads/avatar';
+        $fileName = uniqid() . '_' . basename($_FILES['avatar_user']['name']);
+        $destination = $uploadDir . $fileName;
+
+        if (move_uploaded_file($_FILES['avatar_user']['tmp_name'], $destination)) {
+            // Enregistre le chemin dans la BDD via UserRepository
+            $userId = $_SESSION['user'];
+            $pdo = require ROOTPATH . 'config/database.php'; // ou tout autre fichier qui crée l'objet PDO
+            $userRepo = new UserRepository($pdo);
+            $userRepo->updateAvatar($userId, $fileName);
+
+            // Redirection ou message de succès
+            header('Location: /dashboardUser');
+            exit;
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Erreur lors du déplacement du fichier.']);
+        }
+    }
+
+    /*UPDATE USER*/
     public function updateUser()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -43,88 +116,35 @@ class UserController
         exit;
     }
 
-    public function updateAvatar()
-{
-    session_start();
-    $userId = $_SESSION['user_id'] ?? null;
 
-    if (!$userId) {
-        http_response_code(401); // Non autorisé
-        echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté.']);
-        return;
-    }
 
-    if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Erreur lors du téléchargement de l’image.']);
-        return;
-    }
-
-    $avatar = $_FILES['avatar'];
-
-    // Vérifie que c'est bien une image
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!in_array($avatar['type'], $allowedTypes)) {
-        http_response_code(415); // Unsupported Media Type
-        echo json_encode(['success' => false, 'message' => 'Type de fichier non supporté.']);
-        return;
-    }
-
-    // Génère un nom de fichier unique
-    $extension = pathinfo($avatar['name'], PATHINFO_EXTENSION);
-    $newFileName = 'avatar_' . $userId . '_' . time() . '.' . $extension;
-
-    $uploadDir = __DIR__ . '/../../public/uploads/avatars/';
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0755, true); // crée le dossier si inexistant
-    }
-
-    $destination = $uploadDir . $newFileName;
-
-    if (!move_uploaded_file($avatar['tmp_name'], $destination)) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'message' => 'Erreur lors de l’enregistrement du fichier.']);
-        return;
-    }
-
-    // Met à jour l'utilisateur
-    require_once ROOTPATH . '/src/Repository/UserRepository.php';
-    $userRepo = new \App\Repository\UserRepository($this->pdo);
-
-    $relativePath = '/uploads/avatars/' . $newFileName;
-    $userRepo->updateAvatar($userId, $relativePath);
-
-    echo json_encode(['success' => true, 'avatarPath' => $relativePath]);
-}
-
+    /* UPDATE VOITURE */
     public function updateCar()
-{
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['user'])) {
-        echo json_encode(['success' => false, 'message' => 'Requête invalide ou utilisateur non connecté.']);
-        return;
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['user'])) {
+            echo json_encode(['success' => false, 'message' => 'Requête invalide ou utilisateur non connecté.']);
+            return;
+        }
+
+
+        // Récupération des données JSON
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+
+        $carBrand = htmlspecialchars($data['brand_car'] ?? '');
+        $carModel = htmlspecialchars($data['model_car'] ?? '');
+        $carYear = htmlspecialchars($data['year_car'] ?? '');
+        $carEnergy = htmlspecialchars($data['energy_car'] ?? '');
+
+
+        // Mise à jour
+        $database = new Database();
+        $pdo = $database->getConnection();
+        $userRepo = new UserRepository($pdo);
+
+        $userId = $_SESSION['user'];
+        $success = $userRepo->updateCarInfo($userId, $carBrand, $carModel,  $carYear, $carEnergy);
+
+        echo json_encode(['success' => $success]);
     }
-
-    $userId = $_SESSION['user'];
-
-    // Récupération des données JSON
-    $json = file_get_contents('php://input');
-    $data = json_decode($json, true);
-
-    $carBrand = htmlspecialchars($data['brand_car'] ?? '');
-    $carModel = htmlspecialchars($data['model_car'] ?? '');
-    $carYear = htmlspecialchars($data['year_car'] ?? '');
-    $carEnergy = htmlspecialchars($data['energy_car'] ?? '');
-
-
-    // Mise à jour
-    $database = new Database();
-    $pdo = $database->getConnection();
-    $userRepo = new UserRepository($pdo);
-
-    $userId = $_SESSION['user'];
-    $success = $userRepo->updateCarInfo($userId, $carBrand,$carModel,  $carYear, $carEnergy);
-
-    echo json_encode(['success' => $success]);
-}
-
 }

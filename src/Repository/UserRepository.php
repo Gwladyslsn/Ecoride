@@ -105,13 +105,14 @@ class UserRepository
     // --- UPDATE ---
 
     /* update avatar user*/
-    public function updateAvatar($userId, $avatarPath)
+    public function updateAvatar(int $userId, string $fileName): bool
 {
-    $sql = "UPDATE user SET avatar = :avatar WHERE id_user = :userId";
+    $sql = "UPDATE user SET avatar_user = :avatar_user WHERE id_user = :idUser";
     $stmt = $this->pdo->prepare($sql);
-    $stmt->bindParam(':avatar', $avatarPath);
-    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-    return $stmt->execute();
+    return $stmt->execute([
+        ':avatar_user' => $fileName,
+        ':idUser' => $userId,
+    ]);
 }
 
     /* update data user*/

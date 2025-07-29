@@ -41,6 +41,10 @@ return [
         'controller' => App\Controller\UserController::class,
         'method' => 'updateCar'
     ],
+    '/updateAvatar' => [
+        'controller' => App\Controller\UserController::class,
+        'method' => 'updateAvatar'
+    ],
     '/addCarpooling' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'addCarpooling'
