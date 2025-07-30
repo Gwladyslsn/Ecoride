@@ -109,6 +109,7 @@ class UserController
         $data = [];
         if (!empty($input['name_user'])) $data['name_user'] = $input['name_user'];
         if (!empty($input['lastname_user'])) $data['lastname_user'] = $input['lastname_user'];
+        if (!empty($input['dob_user'])) $data['dob_user'] = $input['dob_user'];
         if (!empty($input['email_user'])) $data['email_user'] = $input['email_user'];
         if (!empty($input['phone_user'])) $data['phone_user'] = $input['phone_user'];
 

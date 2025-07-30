@@ -91,6 +91,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
                 </button>
             </form>
         </div>
+        <div class="credit">
+            <h3 class="text-xl font-semibold text-gray-900">Crédit restants :</h3>
+            <p class="text-black"><?= $user["credit_user"]; ?></p>
+        </div>
     </div>
 
     <div class="profile-section">
