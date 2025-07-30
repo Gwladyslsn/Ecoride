@@ -38,9 +38,10 @@ class UserRepository
 
     // --- READ ---
     /* get admin by id*/
-    function getAdminByEmail(PDO $pdo, string $email): ?array {
+    public function getAdminByEmail(string $email)
+    {
     $sql = "SELECT * FROM admin WHERE email_admin = :email";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $this->pdo->prepare($sql);
     $stmt->execute(['email' => $email]);
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);
     return $admin ?: null;

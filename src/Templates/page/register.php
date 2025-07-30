@@ -21,14 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $password = $_POST["password_user"] ?? '';
 
         // 1. Tentative connexion admin
-        $admin = getAdminByEmail($email);
+        $admin = $userRepo->getAdminByEmail($email);
         if ($admin && password_verify($password, $admin['password_admin'])) {
             $_SESSION['admin'] = [
                 'id_admin' => $admin['id_admin'],
                 'email_admin' => $admin['email_admin'],
                 'name_admin' => $admin['name_admin']
             ];
-            header('Location: ?controller=admin&action=dashboardAdmin');
+            header('Location: dashboardAdmin');
             exit;
         }
 

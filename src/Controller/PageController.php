@@ -102,4 +102,8 @@ class PageController extends Controller
     {
         $this->render('/Templates/page/admin/homeAdmin', []);
     }
+    public function dashboardAdmin()
+    {
+        $this->render('Templates/page/admin/dashboardAdmin', []);
+    }
 }

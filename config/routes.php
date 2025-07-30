@@ -61,10 +61,6 @@ return [
         'controller' => App\Controller\CarpoolingController::class,
         'method' => 'showTrips'
     ],
-    '/newCarpooling' => [
-        'controller' => App\Controller\PageController::class,
-        'method' => 'newCarpooling'
-    ],
     '/searchTripAPI' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'searchTripAPI'
@@ -88,5 +84,9 @@ return [
     '/homeAdmin' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'homeAdmin'
+    ],
+    '/dashboardAdmin' => [
+        'controller' => App\Controller\PageController::class,
+        'method' => 'dashboardAdmin'
     ]
 ];
