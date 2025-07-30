@@ -17,11 +17,11 @@ class UserRepository
 
     // --- CREATE ---
     // Add user
-    public function addUser(string $name_user, string $lastname_user, string $email_user, string $password_user, string $id_role): bool
+    public function addUser(string $name_user, string $lastname_user, string $email_user, string $password_user, string $id_role, int $credit_user): bool
     {
         $query = $this->pdo->prepare("
-            INSERT INTO user (name_user, lastname_user, email_user, password_user, id_role)
-            VALUES (:name_user, :lastname_user, :email_user, :password_user, :id_role)
+            INSERT INTO user (name_user, lastname_user, email_user, password_user, id_role, credit_user)
+            VALUES (:name_user, :lastname_user, :email_user, :password_user, :id_role, :credit_user)
         ");
 
         $password = password_hash($password_user, PASSWORD_DEFAULT);
@@ -31,6 +31,7 @@ class UserRepository
         $query->bindValue(':email_user', $email_user);
         $query->bindValue(':password_user', $password);
         $query->bindValue(':id_role', $id_role);
+        $query->bindValue(':credit_user', $credit_user);
 
         return $query->execute();
     }
@@ -106,14 +107,14 @@ class UserRepository
 
     /* update avatar user*/
     public function updateAvatar(int $userId, string $fileName): bool
-{
-    $sql = "UPDATE user SET avatar_user = :avatar_user WHERE id_user = :idUser";
-    $stmt = $this->pdo->prepare($sql);
-    return $stmt->execute([
-        ':avatar_user' => $fileName,
-        ':idUser' => $userId,
-    ]);
-}
+    {
+        $sql = "UPDATE user SET avatar_user = :avatar_user WHERE id_user = :idUser";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':avatar_user' => $fileName,
+            ':idUser' => $userId,
+        ]);
+    }
 
     /* update data user*/
     public function updateUserInfo(int $userId, array $data): bool
@@ -137,41 +138,51 @@ class UserRepository
 
     /* update data car*/
     public function updateCarInfo($userId, $brandCar, $modelCar, $yearCar, $energyCar)
-{
-    // Vérifie d'abord si une voiture existe déjà pour cet utilisateur
-    $sqlCheck = "SELECT id_car FROM car WHERE id_user = :userId";
-    $stmtCheck = $this->pdo->prepare($sqlCheck);
-    $stmtCheck->bindParam(':userId', $userId, PDO::PARAM_INT);
-    $stmtCheck->execute();
+    {
+        // Vérifie d'abord si une voiture existe déjà pour cet utilisateur
+        $sqlCheck = "SELECT id_car FROM car WHERE id_user = :userId";
+        $stmtCheck = $this->pdo->prepare($sqlCheck);
+        $stmtCheck->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmtCheck->execute();
 
-    $car = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+        $car = $stmtCheck->fetch(PDO::FETCH_ASSOC);
 
-    if ($car) {
-        // Une voiture existe → UPDATE
-        $sql = "UPDATE car SET brand_car = :brandCar, model_car = :modelCar, year_car = :yearCar, energy_car = :energyCar";
-
-
-        $sql .= " WHERE id_user = :userId";
-        $stmt = $this->pdo->prepare($sql);
-    } else {
-        // Aucune voiture → INSERT
-        $sql = "INSERT INTO car (id_user, brand_car, model_car, year_car, energy_car";
-        $values = "VALUES (:userId, :brandCar, :modelCar, :yearCar, :energyCar";
+        if ($car) {
+            // Une voiture existe → UPDATE
+            $sql = "UPDATE car SET brand_car = :brandCar, model_car = :modelCar, year_car = :yearCar, energy_car = :energyCar";
 
 
-        $sql .= ") " . $values . ")";
-        $stmt = $this->pdo->prepare($sql);
+            $sql .= " WHERE id_user = :userId";
+            $stmt = $this->pdo->prepare($sql);
+        } else {
+            // Aucune voiture → INSERT
+            $sql = "INSERT INTO car (id_user, brand_car, model_car, year_car, energy_car";
+            $values = "VALUES (:userId, :brandCar, :modelCar, :yearCar, :energyCar";
+
+
+            $sql .= ") " . $values . ")";
+            $stmt = $this->pdo->prepare($sql);
+        }
+
+        // Paramètres communs
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':brandCar', $brandCar);
+        $stmt->bindParam(':modelCar', $modelCar);
+        $stmt->bindParam(':yearCar', $yearCar);
+        $stmt->bindParam(':energyCar', $energyCar);
+
+        return $stmt->execute();
     }
 
-    // Paramètres communs
-    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-    $stmt->bindParam(':brandCar', $brandCar);
-    $stmt->bindParam(':modelCar', $modelCar);
-    $stmt->bindParam(':yearCar', $yearCar);
-    $stmt->bindParam(':energyCar', $energyCar);
-
-    return $stmt->execute();
-}
+    public function updateCarImg(int $userId, string $fileName): bool
+    {
+        $sql = "UPDATE car SET photo_car = :photoCar WHERE id_user = :idUser";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':photoCar' => $fileName,
+            ':idUser' => $userId,
+        ]);
+    }
 
     // --- DELETE ---
 
@@ -217,5 +228,3 @@ class UserRepository
         return $errors;
     }
 }
-
-

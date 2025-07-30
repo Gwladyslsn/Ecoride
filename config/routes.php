@@ -37,14 +37,19 @@ return [
         'controller' => App\Controller\UserController::class,
         'method' => 'updateUser'
     ],
-    '/updateCar' => [
-        'controller' => App\Controller\UserController::class,
-        'method' => 'updateCar'
-    ],
     '/updateAvatar' => [
         'controller' => App\Controller\UserController::class,
         'method' => 'updateAvatar'
     ],
+    '/updateCar' => [
+        'controller' => App\Controller\UserController::class,
+        'method' => 'updateCar'
+    ],
+    '/updateImgCar' => [
+        'controller' => App\Controller\UserController::class,
+        'method' => 'updateImgCar'
+    ],
+    
     '/addCarpooling' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'addCarpooling'

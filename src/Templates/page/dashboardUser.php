@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
                     src="<?= $avatarPathCar ?>"alt="Illustration de voiture" class="w-90 h-50 object-cover border-4 shadow-md">
             </div>
             <button id="edit-photo-car" class="btn rounded-md">Modifier la photo de ma voiture</button>
-            <form action="<?= BASE_URL ?>updateCar" method="POST" enctype="multipart/form-data" class="mt-4">
+            <form action="<?= BASE_URL ?>updateImgCar" method="POST" enctype="multipart/form-data" class="mt-4">
                 <input id="file-input-car" type="file" name="photo_car" accept="image/*" class="mb-2 hidden text-gray-600">
                 <button id="submit-btn-car" type="submit" name="photo_car" class="hidden px-3 py-1 bg-indigo-600 text-white rounded">
                     Mettre à jour la photo
