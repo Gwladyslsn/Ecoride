@@ -30,7 +30,7 @@ require_once ROOTPATH . 'config/config.php';
                 </div>
                 <ul class="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow">
                     <li>
-                        <a href="<?= BASE_URL ?>searchCarpooling" class="text-lg ">Covoiturages</a>
+                        <a href="<?= BASE_URL ?>Carpoolings" class="text-lg ">Covoiturages</a>
                     </li>
                     <li>
                         <?php  if (isset($_SESSION['user'])): ?>
@@ -55,7 +55,7 @@ require_once ROOTPATH . 'config/config.php';
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1 justify-around">
                 <li>
-                        <a href="<?= BASE_URL ?>searchCarpooling" class="text-lg">Covoiturages</a>
+                        <a href="<?= BASE_URL ?>Carpoolings" class="text-lg">Covoiturages</a>
                     </li>
                     <li>
                         <?php  if (isset($_SESSION['user'])): ?>

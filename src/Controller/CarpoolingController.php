@@ -11,9 +11,7 @@ class CarpoolingController
 {
 
 
-    /**
-     * Ajoute un nouveau trajet en base
-     */
+// READ
 public function newCarpooling(): void
 {
     $database = new Database();
@@ -82,5 +80,28 @@ public function newCarpooling(): void
 
     echo json_encode(['success' => $success]);
 }
+
+// READ
+public function showTrips()
+{
+    $database = new Database();
+    $pdo = $database->getConnection();
+
+    $carpoolingRepo = new CarpoolingRepository($pdo);
+
+    $departure = $_POST['departureCitySearch'] ?? null;
+    $arrival = $_POST['arrivalCitySearch'] ?? null;
+    $date = $_POST['dateSearch'] ?? null;
+
+    if ($departure && $arrival && $date) {
+        $trips = $carpoolingRepo->showTripsSearched( $departure, $arrival, $date);
+    } else {
+        $trips = $carpoolingRepo->getAllTrips();
+    }
+
+    // Envoie les trajets à la vue
+    require_once ROOTPATH . 'src/Templates/page/Carpoolings.php';
+}
+
 
 }

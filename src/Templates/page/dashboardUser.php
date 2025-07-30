@@ -177,13 +177,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
             <a href="<?= BASE_URL ?>addCarpooling">Proposer un trajet</a>
         </button>
                 <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
-            <a href="<?= BASE_URL ?>searchCarpooling">Rechercher un trajet</a>
+            <a href="<?= BASE_URL ?>Carpooling">Rechercher un trajet</a>
         </button>
     </div>
     <?php else: ?>
         <div class="text-center mt-8">
         <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
-            <a href="<?= BASE_URL ?>searchCarpooling">Rechercher un trajet</a>
+            <a href="<?= BASE_URL ?>Carpooling">Rechercher un trajet</a>
         </button>
     </div>
     <?php endif; ?>

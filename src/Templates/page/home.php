@@ -3,7 +3,7 @@
 require_once ROOTPATH . 'src/Templates/header.php';
 require_once ROOTPATH . 'vendor/autoload.php';
 
-use App\Entity\ReviewRepository;
+use App\Repository\ReviewRepository;
 
 $reviewRepository = new ReviewRepository();
 $reviews = $reviewRepository->getAllReviews();
@@ -106,7 +106,7 @@ $groupedReviews = array_chunk($reviews, 2);
         <div class="flex flex-col text-center w-full mb-8">
             <h1 class="text-3xl font-medium title-font mb-2">Trouvez votre trajet dès maintenant !</h1>
         </div>
-        <form id="formSearch" method="post" action="<?= BASE_URL ?>searchCarpooling" class="flex lg:w-1/1 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+        <form id="formSearch" method="post" action="<?= BASE_URL ?>Carpoolings" class="flex lg:w-1/1 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
             <div class="relative flex-grow w-full">
                 <label for="departureCity" class="leading-7 text-lg">Ville de départ</label>
                 <input type="text" id="departure_city_search" name="departureCitySearch" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-black py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">

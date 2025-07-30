@@ -62,9 +62,9 @@ class PageController extends Controller
         $this->render('/Templates/page/addCarpooling', []);
     }
 
-    public function searchCarpooling()
+    public function Carpoolings()
     {
-        $this->render('/Templates/page/searchCarpooling', []);
+        $this->render('Templates/page/Carpoolings', []);
     }
 
     public function newCarpooling()

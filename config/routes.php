@@ -57,9 +57,9 @@ return [
         'controller' => App\Controller\CarpoolingController::class,
         'method' => 'newCarpooling'
     ],
-    '/searchCarpooling' => [
-        'controller' => App\Controller\PageController::class,
-        'method' => 'searchCarpooling'
+    '/Carpoolings' => [
+        'controller' => App\Controller\CarpoolingController::class,
+        'method' => 'showTrips'
     ],
     '/newCarpooling' => [
         'controller' => App\Controller\PageController::class,
