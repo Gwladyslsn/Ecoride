@@ -27,7 +27,7 @@ if (isset($_SESSION['user'])) {
         : 'https://placehold.co/128x128/a78bfa/ffffff?text=Avatar';
 
     $avatarPathCar = !empty($car['photo_car'])
-        ? '/asset/uploads/car/' . htmlspecialchars($car['photo_car'])
+        ? '/asset/uploads/cars/' . htmlspecialchars($car['photo_car'])
         : 'https://placehold.co/128x128/a78bfa/ffffff?text=car';
 
     // 🛠 Mise à jour des infos utilisateur si formulaire envoyé
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
     <div class="profile-section flex flex-col md:flex-row items-center md:items-start gap-6">
         <div class="flex-shrink-0">
             <img
-                src="/uploads/<?= htmlspecialchars($user['avatar_user']) ?>"
+                src="/asset/uploads/avatar/<?= htmlspecialchars($user['avatar_user']) ?>"
                 alt="icone de profil"
                 class="w-32 h-32 rounded-full object-cover border-4 border-purple-300 shadow-md">
         </div>

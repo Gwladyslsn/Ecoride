@@ -60,20 +60,20 @@ class UserController
         }
 
         // Déplace le fichier dans le dossier "uploads"
-        $uploadDir = ROOTPATH . 'asset/uploads/avatar';
+        $uploadDir = ROOTPATH . 'public/asset/uploads/avatar/';
         $fileName = uniqid() . '_' . basename($_FILES['avatar_user']['name']);
         $destination = $uploadDir . $fileName;
+        var_dump($destination);
 
         if (move_uploaded_file($_FILES['avatar_user']['tmp_name'], $destination)) {
+            
             // Enregistre le chemin dans la BDD via UserRepository
             $userId = $_SESSION['user'];
-            $pdo = require ROOTPATH . 'config/database.php'; // ou tout autre fichier qui crée l'objet PDO
+            require_once ROOTPATH . 'src/Database/Database.php';
+            $database = new Database();
+            $pdo = $database->getConnection(); // ou tout autre fichier qui crée l'objet PDO
             $userRepo = new UserRepository($pdo);
             $userRepo->updateAvatar($userId, $fileName);
-
-            // Redirection ou message de succès
-            header('Location: /dashboardUser');
-            exit;
         } else {
             echo json_encode(['success' => false, 'message' => 'Erreur lors du déplacement du fichier.']);
         }
