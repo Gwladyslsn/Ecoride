@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nb_place: nbPlace
         };
 
-        fetch('/?controller=page&action=newCarpooling', {
+        fetch('/newCarpooling', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)

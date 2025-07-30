@@ -49,10 +49,13 @@ return [
         'controller' => App\Controller\UserController::class,
         'method' => 'updateImgCar'
     ],
-    
     '/addCarpooling' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'addCarpooling'
+    ],
+    '/newCarpooling' => [
+        'controller' => App\Controller\CarpoolingController::class,
+        'method' => 'newCarpooling'
     ],
     '/searchCarpooling' => [
         'controller' => App\Controller\PageController::class,

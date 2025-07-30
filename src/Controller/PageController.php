@@ -69,7 +69,8 @@ class PageController extends Controller
 
     public function newCarpooling()
     {
-        $this->render('/Entity/newCarpooling', []);
+        $controller = new CarpoolingController();
+        $controller->newCarpooling();
     }
 
     public function searchTripAPI()
