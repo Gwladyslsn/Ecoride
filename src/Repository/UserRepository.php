@@ -37,7 +37,14 @@ class UserRepository
     }
 
     // --- READ ---
-
+    /* get admin by id*/
+    function getAdminByEmail(PDO $pdo, string $email): ?array {
+    $sql = "SELECT * FROM admin WHERE email_admin = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['email' => $email]);
+    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $admin ?: null;
+}
 
     /* get user by id*/
     public function getDataUser(string $id_user): ?array
@@ -91,16 +98,6 @@ class UserRepository
             return $user['id_user'];
         }
         return false;
-    }
-
-    /* get user by email*/
-    public function getAdminByEmail(string $email): ?array
-    {
-        $sql = "SELECT * FROM admin WHERE email_admin = :email";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['email' => $email]);
-        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $admin ?: null;
     }
 
     // --- UPDATE ---

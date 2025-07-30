@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alertSuccess.classList.remove('hidden');
                     setTimeout(() => {
                         window.location.reload();
-                    }, 5000)
+                    }, 3000)
                 } else {
                     alert('Erreur : ' + (response.message || 'Impossible de sauvegarder'));
                 }

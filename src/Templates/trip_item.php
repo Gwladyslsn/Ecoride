@@ -11,9 +11,8 @@ $avatarDriver = !empty($trip['avatar_user'])
     <div class="px-5 py-6 mx-auto flex">
         <div class="card p-4 rounded-lg trip">
             <div class="flex rounded-lg p-6 sm:flex-row">
-                <div class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0 overflow-hidden">
+                <div class="w-20 h-20 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0 overflow-hidden">
                     <img src="<?= $avatarDriver; ?>" alt="icone de profil du conducteur" class="w-full h-full object-cover rounded-full">
-
                 </div>
                 <div class="flex-grow">
                     <h2 class="text-gray-900 text-lg title-font font-semibold mb-2">

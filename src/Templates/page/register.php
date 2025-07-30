@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = $_POST["email_user"] ?? '';
         $password = $_POST["password_user"] ?? '';
 
-        // 1. Tentative connexion admin (à garder si tu veux)
-        /*$admin = getAdminByEmail($pdo, $email);
+        // 1. Tentative connexion admin
+        $admin = getAdminByEmail($email);
         if ($admin && password_verify($password, $admin['password_admin'])) {
             $_SESSION['admin'] = [
                 'id_admin' => $admin['id_admin'],
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ];
             header('Location: ?controller=admin&action=dashboardAdmin');
             exit;
-        }*/
+        }
 
         // 2. Sinon tentative connexion utilisateur
         $id_user = $userRepo->verifUserExists($email, $password);

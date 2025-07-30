@@ -83,7 +83,7 @@ $groupedReviews = array_chunk($reviews, 2);
                     <img alt="gallery" class="absolute inset-0 w-full h-full object-cover object-center rounded-md" src="/asset/image/strasbourg.webp">
                     <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 opacity-0 hover:opacity-100 card-city rounded-md">
                         <h1 class="title-font text-lg font-medium mb-3">Strasbourg</h1>
-                        <p class="leading-relaxed"><br>Un souffle de tradition et de charme alsacien au fil des canaux.<br></p>
+                        <p class="leading-relaxed">Déconnectez et profitez d'un souffle de tradition et de charme alsacien au fil des canaux.<br></p>
                     </div>
                 </div>
             </div>
