@@ -1,7 +1,9 @@
 .trip {
     background-color: var(--text-white);
-    border: solid 4px;
-    border-color: var(--secondary-color);
+}
+
+.trip:hover{
+    box-shadow: 0 15px 30px rgba(102, 192, 234, 0.4);
 }
 
 
