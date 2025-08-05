@@ -48,7 +48,7 @@ $avatarPathCar = !empty($car['photo_car'])
                 <p><strong>Départ :</strong> <?= htmlspecialchars($trip['departure_city']) ?> - <?= date('d/m/Y', strtotime($trip['departure_date'])) ?> à <?= htmlspecialchars($trip['departure_hour']) ?></p>
                 <p><strong>Arrivée :</strong> <?= $trip['arrival_city'] ?> - <?= date('d/m/Y', strtotime($trip['arrival_date'])) ?> à <?= $trip['arrival_hour'] ?></p>
                 <p><strong>Places restantes :</strong> <?= htmlspecialchars($trip['nb_place']) ?></p>
-                <p><strong>Prix :</strong> <?= htmlspecialchars($trip['price_place']) ?> EcoCrédit</p>
+                <p><strong>EcoCrédit nécessaire :</strong> <?= htmlspecialchars($trip['price_place']) ?></p>
             </div>
             <div>
                 <img src="/image/map-preview.png" class="w-full mt-2 rounded" alt="Carte trajet">

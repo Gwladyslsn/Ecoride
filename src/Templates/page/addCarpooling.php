@@ -79,8 +79,8 @@ require_once ROOTPATH . '/src/Templates/header.php';
                 </div>
             </div>
             <div class="form-group">
-                <label class="label-add-carpooling" for="description">Description du trajet (optionnel)</label>
-                <textarea id="description" rows="3" placeholder="Informations supplémentaires, conditions particulières..."></textarea>
+                <label class="label-add-carpooling" for="info-carpooling">Description du trajet (optionnel)</label>
+                <textarea id="info-carpooling" rows="3" name="info_carpooling" placeholder="Informations supplémentaires, conditions particulières..."></textarea>
             </div>
         </div>
 

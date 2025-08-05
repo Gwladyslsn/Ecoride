@@ -68,6 +68,7 @@ public function newCarpooling(): void
             $data['arrival_hour'],
             (int) $data['nb_place'],
             (float) $data['price_place'],
+            $data['info_carpooling'],
             (int) $idCar
         );
     } catch (\Exception $e) {

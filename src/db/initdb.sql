@@ -129,7 +129,8 @@ ALTER TABLE user ADD avatar_user VARCHAR(255);
 
 ALTER TABLE car ADD photo_car VARCHAR(255);
 
-
+ALTER TABLE carpooling
+ADD COLUMN info_carpooling TEXT;
 
 
         /*test*/

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const arrivalHourInput = document.getElementById('arrival-hour');
     const pricePlaceInput = document.getElementById('price-place');
     const btnSubmitTrip = document.getElementById('btn-submit-trip');
+    const infoCarpoolingInput = document.getElementById('info-carpooling');
     const feedbackAdd = document.getElementById('feedback-add-carpooling');
 
     let selectedSeats = null;
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let arrivalDate = arrivalDateInput.value.trim();
         let arrivalHour = arrivalHourInput.value.trim();
         let pricePlace = pricePlaceInput.value.trim();
+        let infoCarpooling = infoCarpoolingInput.value.trim();
         let nbPlace = selectedSeats;
 
         const errors = {};
@@ -65,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         };
 
+        console.log('description covoit',infoCarpooling );
+        
         // Envoi Back
         const data = {
             departure_city: departureCity,
@@ -74,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             arrival_date: arrivalDate,
             arrival_hour: arrivalHour,
             price_place: pricePlace,
+            info_carpooling: infoCarpooling,
             nb_place: nbPlace
         };
 

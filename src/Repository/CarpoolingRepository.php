@@ -24,11 +24,11 @@ class CarpoolingRepository
     $sql = "INSERT INTO carpooling (
         departure_city, departure_date, departure_hour,
         arrival_city, arrival_date, arrival_hour,
-        nb_place, price_place, id_car
+        nb_place, price_place, info_carpooling, id_car
     ) VALUES (
         :departure_city, :departure_date, :departure_hour,
         :arrival_city, :arrival_date, :arrival_hour,
-        :nb_place, :price_place, :id_car
+        :nb_place, :price_place, :info_carpooling, :id_car
     )";
 
     $stmt = $this->pdo->prepare($sql);
@@ -46,6 +46,7 @@ class CarpoolingRepository
         'arrival_hour' => $carpooling->getArrivalHour(),
         'nb_place' => $carpooling->getNbPlace(),
         'price_place' => $carpooling->getPricePlace(),
+        'info_carpooling' => $carpooling->getInfoCarpooling(),
         'id_car' => $carpooling->getIdCar()
     ]);
 }
