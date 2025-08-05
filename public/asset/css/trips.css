@@ -4,24 +4,22 @@
     border-color: var(--secondary-color);
 }
 
-/*Mobile*/
-@media screen and (min-width:320px) and (max-width:767px) {
-    
 
-}
+.btn-search {
+            width: 100%;
+            padding: 16px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
 
-
-/*large*/
-@media screen and (min-width:768px) {
-    .container-trip{
-        display:flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content:center;
-    }
-
-    .trip{
-        width:100%;
-    }
-
-}
+        .btn-search:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 234, 161, 0.4);
+        }

@@ -5,52 +5,50 @@ $avatarDriver = !empty($trip['avatar_user'])
 
 
 ?>
-
-
-<div class="text-gray-600 body-font px-5 py-6 mx-auto flex">
-    <div class="px-5 py-6 mx-auto flex">
-        <div class="card p-4 rounded-lg trip">
-            <div class="flex rounded-lg p-6 sm:flex-row">
-                <div class="w-20 h-20 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0 overflow-hidden">
+    
+        <div class="w-full max-w-5xl bg-white rounded-2xl shadow-md hover:shadow-lg p-6 border border-gray-100 hover:border-green-custom transition-all duration-300 transform hover:-translate-y-1">
+            <!-- Driver Info -->
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center">
                     <img src="<?= $avatarDriver; ?>" alt="icone de profil du conducteur" class="w-full h-full object-cover rounded-full">
                 </div>
-                <div class="flex-grow">
-                    <h2 class="text-gray-900 text-lg title-font font-semibold mb-2">
-                        Trajet proposé par <?= htmlspecialchars($trip['name_user']) ?>
-                    </h2>
-
-                    <div class="mb-2">
-                        <p class="text-sm text-gray-600 font-semibold uppercase">Départ</p>
-                        <p class="text-black">
-                            <?= htmlspecialchars($trip['departure_city']) ?> -
-                            le <?= date('d/m/Y', strtotime($trip['departure_date'])) ?> à <?= htmlspecialchars($trip['departure_hour']) ?>
-                        </p>
-                    </div>
-
-                    <div class="mb-2">
-                        <p class="text-sm text-gray-600 font-semibold uppercase">Arrivée</p>
-                        <p class="text-black">
-                            <?= htmlspecialchars($trip['arrival_city']) ?> -
-                            le <?= date('d/m/Y', strtotime($trip['arrival_date'])) ?> à <?= htmlspecialchars($trip['arrival_hour']) ?>
-                        </p>
-                    </div>
-
-                    <div class="mb-2">
-                        <p class="text-sm text-gray-600 font-semibold uppercase">Place(s) disponible(s)</p>
-                        <p class="text-black">
-                            <?= htmlspecialchars($trip['nb_place']) ?>
-                        </p>
-                    </div>
-
-                    <a href="#" class="mt-3 text-indigo-500 inline-flex items-center">
-                        Voir le détail
-                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                    </a>
+                <div>
+                    <h3 class="font-semibold text-black">Trajet proposé par <?= htmlspecialchars($trip['name_user']) ?></h3>
+                    <p class="text-sm text-gray-500">Conducteur expérimenté</p>
                 </div>
             </div>
+
+            <!-- Route Info -->
+            <div class="space-y-4 mb-6">
+                <div class="flex items-center space-x-4 route-line relative">
+                    <div class="flex-1">
+                        <p class="font-semibold text-black"> <?= htmlspecialchars($trip['departure_city']) ?></p>
+                        <p class="text-sm text-gray-500">Le <?= date('d/m/Y', strtotime($trip['departure_date'])) ?> à <?= htmlspecialchars($trip['departure_hour']) ?></p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 route-line relative">
+                    <div class="flex-1">
+                        <p class="font-semibold text-black"><?= htmlspecialchars($trip['arrival_city']) ?></p>
+                        <p class="text-sm text-gray-500">Le <?= date('d/m/Y', strtotime($trip['arrival_date'])) ?> à <?= htmlspecialchars($trip['arrival_hour']) ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div class="flex items-center space-x-2 text-black">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
+                    </svg>
+                    <span class="font-semibold text-black"><?= htmlspecialchars($trip['nb_place']) ?></span>
+                </div>
+                <button class="bg-navy text-black px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
+                    Voir le détail
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
         </div>
-    </div>
-</div>
+    
