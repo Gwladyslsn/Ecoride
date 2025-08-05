@@ -61,6 +61,10 @@ return [
         'controller' => App\Controller\CarpoolingController::class,
         'method' => 'showTrips'
     ],
+    '/tripDetails' => [
+        'controller' => App\Controller\PageController::class,
+        'method' => 'tripDetails'
+    ],
     '/searchTripAPI' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'searchTripAPI'

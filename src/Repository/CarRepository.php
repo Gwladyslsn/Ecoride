@@ -33,4 +33,11 @@ class CarRepository
 
         return (bool) $stmt->fetchColumn();
     }
+
+    public function getCarById(int $carId): ?array {
+    $stmt = $this->pdo->prepare("SELECT * FROM car WHERE id_car = :id");
+    $stmt->execute(['id' => $carId]);
+    $car = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $car ?: null;
+}
 }

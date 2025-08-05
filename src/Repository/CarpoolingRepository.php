@@ -54,7 +54,7 @@ public function getAllTrips()
 {
 
     $sql = "
-        SELECT carpooling.*, user.name_user, user.avatar_user
+        SELECT carpooling.*, user.name_user, user.avatar_user, user.id_user
         FROM carpooling
         JOIN car ON carpooling.id_car = car.id_car
         JOIN user ON car.id_user = user.id_user
@@ -89,5 +89,23 @@ public function showTripsSearched($departure, $arrival, $date)
     $trips = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $trips;
 }
+
+public function getTripById(int $id)
+{
+    $sql = "
+        SELECT carpooling.*, user.name_user, user.avatar_user, user.id_user, car.brand_car, car.model_car, car.photo_car, car.year_car, car.energy_car
+        FROM carpooling
+        JOIN car ON carpooling.id_car = car.id_car
+        JOIN user ON car.id_user = user.id_user
+        WHERE carpooling.id_carpooling = :id
+        LIMIT 1;
+    ";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['id' => $id]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
 }

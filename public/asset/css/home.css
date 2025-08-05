@@ -36,9 +36,3 @@ input{
     background-color: var(--secondary-color);
     color: var(--text-black);
 }
-
-/*Style MOBILE*/
-@media screen and (min-width:320px) and (max-width:767px) {}
-
-/*Style LAPTOP Medium*/
-@media screen and (min-width:768px) {}

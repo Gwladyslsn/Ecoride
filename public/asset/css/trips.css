@@ -1,25 +1,29 @@
 .trip {
     background-color: var(--text-white);
-    border: solid  4px;
+    border: solid 4px;
     border-color: var(--secondary-color);
 }
 
 
 .btn-search {
-            width: 100%;
-            padding: 16px;
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 30px;
-        }
+    width: 100%;
+    padding: 16px;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 30px;
+}
 
-        .btn-search:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(102, 234, 161, 0.4);
-        }
+.btn-search:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(102, 234, 161, 0.4);
+}
+
+.details:hover{
+    box-shadow: 0 15px 30px var(--bg-section);
+}

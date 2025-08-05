@@ -75,7 +75,7 @@ editCar.addEventListener('click', (e) => {
                 input.name = spanCar.dataset.field;
                 input.classList.add('border', 'border-gray-300', 'rounded', 'px-2', 'py-1', 'w-full');
 
-                // Liste des options possibles (à adapter si besoin)
+                // Liste des options possibles
                 const options = ['Essence', 'Diesel', 'Électrique', 'Hybride'];
                 options.forEach(optionValue => {
                     const option = document.createElement('option');

@@ -15,3 +15,11 @@ footer{
     background-color: var(--bg-main);
     color: var(--text-white);
 }
+
+.bg-lightblue {
+  background-color: var(--bg-section);
+}
+
+.bg-white {
+  background-color: var(--text-white);
+}

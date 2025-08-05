@@ -2,9 +2,6 @@
 
 require_once ROOTPATH . '/src/Templates/header.php';
 
-use App\Repository\CarpoolingRepository;
-
-
 ?>
 
 
@@ -22,7 +19,7 @@ use App\Repository\CarpoolingRepository;
     <section class="body-font">
         <div class="container px-5 py-12 mx-auto">
 
-            <div class=" rounded-2xl card-shadow p-6 sm:p-8 border border-gray-100">
+            <div class="bg- rounded-2xl card-shadow p-6 sm:p-8 border border-gray-100">
                 <form id="formSearch" method="post" action="<?= BASE_URL ?>Carpoolings" class="flex flex-col lg:flex-row gap-4 lg:gap-6">
                     <div class="relative flex-grow w-full">
                         <label for="departureCity" class="leading-7 text-lg">Ville de départ</label>

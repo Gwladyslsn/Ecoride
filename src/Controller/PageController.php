@@ -106,4 +106,8 @@ class PageController extends Controller
     {
         $this->render('Templates/page/admin/dashboardAdmin', []);
     }
+    public function tripDetails()
+    {
+        $this->render('Templates/page/tripDetails', []);
+    }
 }
