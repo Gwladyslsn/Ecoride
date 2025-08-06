@@ -65,7 +65,7 @@ class UserController
         $destination = $uploadDir . $fileName;
 
         if (move_uploaded_file($_FILES['avatar_user']['tmp_name'], $destination)) {
-            
+
             // Enregistre le chemin dans la BDD via UserRepository
             $userId = $_SESSION['user'];
             require_once ROOTPATH . 'src/Database/Database.php';
@@ -117,6 +117,77 @@ class UserController
 
         echo json_encode(['success' => $success]);
         exit;
+    }
+
+    public function showDashboardUser()
+    {
+        $userId = $_SESSION['user'];
+
+        $db = new Database();
+        $pdo = $db->getConnection();
+        $userRepo = new UserRepository($pdo);
+
+        $userPrefs = $userRepo->getUserPreferences($userId);
+        $allPrefs = $userRepo->getAllPreferences();
+
+        // Rendre les variables disponibles dans la vue
+        extract([
+            'userPrefs' => $userPrefs,
+            'allPrefs' => $allPrefs
+        ]);
+        require ROOTPATH . 'src/Templates/page/dashboardUser.php';
+    }
+
+    /* UPDATE PREFERENCES */
+    public function updatePreferences()
+    {
+        // Démarrer la session si ce n'est pas déjà fait
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Vérifier que l'utilisateur est connecté
+        if (!isset($_SESSION['user'])) {
+            echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);
+            exit;
+        }
+
+        $userId = $_SESSION['user'];
+
+        // Récupérer les données envoyées par le JS
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        // Sécuriser l'accès aux clés pour éviter les warnings
+        $prefId = $data['id_preference'] ?? null;
+        $checked = $data['checked'] ?? null;
+
+        if ($prefId === null || $checked === null) {
+            echo json_encode(['success' => false, 'message' => 'Données manquantes']);
+            exit;
+        }
+
+        require_once ROOTPATH . 'src/Database/Database.php';
+        $db = new Database();
+        $pdo = $db->getConnection();
+
+        try {
+            if ($checked) {
+                // Si coché : ajouter la préférence si elle n'existe pas encore
+                $stmt = $pdo->prepare("INSERT IGNORE INTO user_has_preferences (id_user, id_preference) VALUES (?, ?)");
+                $stmt->execute([$userId, $prefId]);
+            } else {
+                // Si décoché : supprimer la préférence
+                $stmt = $pdo->prepare("DELETE FROM user_has_preferences WHERE id_user = ? AND id_preference = ?");
+                $stmt->execute([$userId, $prefId]);
+            }
+
+            // Toujours renvoyer un JSON propre
+            echo json_encode(['success' => true]);
+            exit;
+        } catch (\Exception $e) {
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            exit;
+        }
     }
 
 
@@ -209,7 +280,7 @@ class UserController
         $destination = $uploadDir . $fileName;
 
         if (move_uploaded_file($_FILES['photo_car']['tmp_name'], $destination)) {
-            
+
             // Enregistre le chemin dans la BDD via UserRepository
             $userId = $_SESSION['user'];
             require_once ROOTPATH . 'src/Database/Database.php';
@@ -223,7 +294,5 @@ class UserController
         } else {
             echo json_encode(['success' => false, 'message' => 'Erreur lors du déplacement du fichier.']);
         }
-
-        
     }
 }

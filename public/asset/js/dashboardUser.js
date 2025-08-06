@@ -137,4 +137,40 @@ editCar.addEventListener('click', (e) => {
 
     fileInputCar.addEventListener('change', () => {
     });
+
+    /* --- Préférences utilisateur : toggles live --- */
+    const prefSection = document.getElementById('preferences-section');
+    const prefInputs = prefSection.querySelectorAll('input[type="checkbox"]');
+
+    prefInputs.forEach(input => {
+        // Chaque checkbox doit avoir un data-id-preference correspondant à id_preference en BDD
+        const prefId = input.dataset.idPreference;
+
+        input.addEventListener('change', () => {
+            const checked = input.checked;
+
+            const data = {
+                id_preference: prefId,
+                checked: checked
+            };
+
+            fetch('/updatePreferences', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (!response.success) {
+                    alert('Erreur : Impossible de sauvegarder la préférence');
+                    // Revenir à l’état précédent si erreur
+                    input.checked = !checked;
+                }
+            })
+            .catch(() => {
+                alert('Erreur réseau ou serveur');
+                input.checked = !checked;
+            });
+        });
+    });
 });

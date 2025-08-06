@@ -132,7 +132,28 @@ ALTER TABLE car ADD photo_car VARCHAR(255);
 ALTER TABLE carpooling
 ADD COLUMN info_carpooling TEXT;
 
+DROP TABLE user_preferences;
 
+DROP TABLE Avoir;
+
+CREATE TABLE user_preferences (
+    id_preference INT AUTO_INCREMENT PRIMARY KEY,
+    preference_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE user_has_preferences (
+    id_user INT NOT NULL,
+    id_preference INT NOT NULL,
+    PRIMARY KEY (id_user, id_preference),
+    FOREIGN KEY (id_user) REFERENCES user(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_preference) REFERENCES user_preferences(id_preference) ON DELETE CASCADE
+);
+
+INSERT INTO user_preferences (id_preference, preference_name) VALUES
+(1, 'smoker'),
+(2, 'pet'),
+(3, 'Music'),
+(4, 'speak');
         /*test*/
 SELECT * FROM user;
 

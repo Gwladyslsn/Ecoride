@@ -31,43 +31,44 @@ if (isset($_SESSION['user'])) {
         : 'https://placehold.co/128x128/a78bfa/ffffff?text=car';
 
     // 🛠 Mise à jour des infos utilisateur si formulaire envoyé
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
-    $data = [];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
+        $data = [];
 
-    if (!empty($_POST['name_user'])) $data['name_user'] = $_POST['name_user'];
-    if (!empty($_POST['lastname_user'])) $data['lastname_user'] = $_POST['lastname_user'];
-    if (!empty($_POST['email_user'])) $data['email_user'] = $_POST['email_user'];
-    if (!empty($_POST['phone_user'])) $data['phone_user'] = $_POST['phone_user'];
+        if (!empty($_POST['name_user'])) $data['name_user'] = $_POST['name_user'];
+        if (!empty($_POST['lastname_user'])) $data['lastname_user'] = $_POST['lastname_user'];
+        if (!empty($_POST['email_user'])) $data['email_user'] = $_POST['email_user'];
+        if (!empty($_POST['phone_user'])) $data['phone_user'] = $_POST['phone_user'];
 
-    $updated = $userRepo->updateUserInfo($id_user, $data);
+        $updated = $userRepo->updateUserInfo($id_user, $data);
 
-    if ($updated) {
-        $successMessage = "Profil mis à jour avec succès.";
-    } else {
-        $errorMessage = "Échec de la mise à jour.";
+        if ($updated) {
+            $successMessage = "Profil mis à jour avec succès.";
+        } else {
+            $errorMessage = "Échec de la mise à jour.";
+        }
+    }
+
+    // 🛠 Mise à jour des infos voiture si formulaire envoyé
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
+        $dataCar = [];
+
+        if (!empty($_POST['brand_car'])) $dataCar['brand_car'] = $_POST['brand_car'];
+        if (!empty($_POST['model_car'])) $dataCar['model_car'] = $_POST['model_car'];
+        if (!empty($_POST['color_car'])) $dataCar['color_car'] = $_POST['color_car'];
+        if (!empty($_POST['year_car'])) $dataCar['year_car'] = $_POST['year_car'];
+        if (!empty($_POST['energy_car'])) $dataCar['energy_car'] = $_POST['energy_car'];
+        // Ajoute d'autres champs si besoin
+
+        $updatedCar = $userRepo->updateCarInfo($id_user, $dataCar['brand_car'], $dataCar['model_car'], $dataCar['color_car'], $dataCar['year_car'], $dataCar['energy_car']);
+
+        if ($updatedCar) {
+            $successMessage = "Voiture mise à jour avec succès.";
+        } else {
+            $errorMessage = "Échec de la mise à jour de la voiture.";
+        }
     }
 }
 
-// 🛠 Mise à jour des infos voiture si formulaire envoyé
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
-    $dataCar = [];
-
-    if (!empty($_POST['brand_car'])) $dataCar['brand_car'] = $_POST['brand_car'];
-    if (!empty($_POST['model_car'])) $dataCar['model_car'] = $_POST['model_car'];
-    if (!empty($_POST['color_car'])) $dataCar['color_car'] = $_POST['color_car'];
-    if (!empty($_POST['year_car'])) $dataCar['year_car'] = $_POST['year_car'];
-    if (!empty($_POST['energy_car'])) $dataCar['energy_car'] = $_POST['energy_car'];
-    // Ajoute d'autres champs si besoin
-
-    $updatedCar = $userRepo->updateCarInfo($id_user, $dataCar['brand_car'], $dataCar['model_car'], $dataCar['color_car'], $dataCar['year_car'], $dataCar['energy_car']);
-    
-    if ($updatedCar) {
-        $successMessage = "Voiture mise à jour avec succès.";
-    } else {
-        $errorMessage = "Échec de la mise à jour de la voiture.";
-    }
-}
-}
 ?>
 
 
@@ -112,36 +113,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
     </div>
 
     <div class="profile-section">
-        <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">Mes Préférences de Trajet</h3>
-        <div class="space-y-3">
-            <div class="flex items-center justify-between">
-                <span class="text-gray-700">Tabac :</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="flex items-center justify-between">
-                <span class="text-gray-700">Animaux :</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="flex items-center justify-between">
-                <span class="text-gray-700">Musique :</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="flex items-center justify-between">
-                <span class="text-gray-700">Parler :</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
+        <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+            Mes Préférences de Trajet
+        </h3>
+        <div class="space-y-3" id="preferences-section">
+            <?php foreach ($allPrefs as $pref): ?>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700"><?= htmlspecialchars($pref['preference_name']) ?> :</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox"
+                            data-id-preference="<?= $pref['id_preference'] ?>"
+                            <?= in_array($pref['id_preference'], $userPrefs) ? 'checked' : '' ?>>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 
@@ -159,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
             </button>
             <div class="flex-shrink-0">
                 <img
-                    src="<?= $avatarPathCar ?>"alt="Illustration de voiture" class="w-90 h-50 object-cover border-4 shadow-md">
+                    src="<?= $avatarPathCar ?>" alt="Illustration de voiture" class="w-90 h-50 object-cover border-4 shadow-md">
             </div>
             <button id="edit-photo-car" class="btn rounded-md">Modifier la photo de ma voiture</button>
             <form action="<?= BASE_URL ?>updateImgCar" method="POST" enctype="multipart/form-data" class="mt-4">
@@ -171,21 +157,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
         </div>
     <?php endif; ?>
 
-<?php if ($user['id_role'] !== 2): ?>
-    <div class="text-center mt-8">
-        <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
-            <a href="<?= BASE_URL ?>addCarpooling">Proposer un trajet</a>
-        </button>
-                <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
-            <a href="<?= BASE_URL ?>Carpoolings">Rechercher un trajet</a>
-        </button>
-    </div>
+    <?php if ($user['id_role'] !== 2): ?>
+        <div class="text-center mt-8">
+            <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
+                <a href="<?= BASE_URL ?>addCarpooling">Proposer un trajet</a>
+            </button>
+            <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
+                <a href="<?= BASE_URL ?>Carpoolings">Rechercher un trajet</a>
+            </button>
+        </div>
     <?php else: ?>
         <div class="text-center mt-8">
-        <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
-            <a href="<?= BASE_URL ?>Carpoolings">Rechercher un trajet</a>
-        </button>
-    </div>
+            <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
+                <a href="<?= BASE_URL ?>Carpoolings">Rechercher un trajet</a>
+            </button>
+        </div>
     <?php endif; ?>
 </div>
 

@@ -77,6 +77,27 @@ class UserRepository
         return $car ?: null;
     }
 
+    public function getUserPreferences(int $userId): array
+{
+    $stmt = $this->pdo->prepare("
+        SELECT id_preference
+        FROM user_has_preferences
+        WHERE id_user = ?
+    ");
+    $stmt->execute([$userId]);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
+public function getAllPreferences(): array
+{
+    $stmt = $this->pdo->query("
+        SELECT id_preference, preference_name
+        FROM user_preferences
+    ");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
     /* check email*/
     public function emailExists(string $email_user): bool
     {

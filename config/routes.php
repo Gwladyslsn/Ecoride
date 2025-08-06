@@ -22,9 +22,9 @@ return [
         'method' => 'mentions'
     ],
     '/dashboardUser' => [
-        'controller' => App\Controller\PageController::class,
-        'method' => 'dashboardUser'
-    ],
+    'controller' => App\Controller\UserController::class,
+    'method' => 'showDashboardUser'
+],
     '/logout' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'logout'
@@ -44,6 +44,10 @@ return [
     '/updateCar' => [
         'controller' => App\Controller\UserController::class,
         'method' => 'updateCar'
+    ],
+    '/updatePreferences' => [
+        'controller' => App\Controller\UserController::class,
+        'method' => 'updatePreferences'
     ],
     '/updateImgCar' => [
         'controller' => App\Controller\UserController::class,
