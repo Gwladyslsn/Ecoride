@@ -69,6 +69,13 @@ if (isset($_SESSION['user'])) {
     }
 }
 
+$prefIcons = [
+    1 => '<i class="fa-solid fa-smoking"></i>',
+    2 => '<i class="fa-solid fa-paw"></i>',     // Animaux
+    3 => '<i class="fa-solid fa-music"></i>',   // Musique
+    4 => '<i class="fa-solid fa-comments"></i>'  // Parler
+];
+
 ?>
 
 
@@ -118,8 +125,8 @@ if (isset($_SESSION['user'])) {
         </h3>
         <div class="space-y-3" id="preferences-section">
             <?php foreach ($allPrefs as $pref): ?>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700"><?= htmlspecialchars($pref['preference_name']) ?> :</span>
+                <div class="flex items-center gap-6">
+                    <span class="text-gray-700"><?= $prefIcons[$pref['id_preference']] ?? '' ?></span>
                     <label class="toggle-switch">
                         <input type="checkbox"
                             data-id-preference="<?= $pref['id_preference'] ?>"
