@@ -43,15 +43,12 @@ $avatarPathCar = !empty($car['photo_car'])
     <!-- Accordéon Trajet -->
     <details class="details border rounded p-3 bg-white">
         <summary class="font-semibold text-black cursor-pointer text-center mb-4">Trajet</summary>
-        <div class="flex flex-col md:flex-row md:justify-between gap-4">
+        <div class="flex flex-col md:flex-row md:justify-center items-center gap-4">
             <div class="mt-2 text-md text-gray-700">
                 <p><strong>Départ :</strong> <?= htmlspecialchars($trip['departure_city']) ?> - <?= date('d/m/Y', strtotime($trip['departure_date'])) ?> à <?= htmlspecialchars($trip['departure_hour']) ?></p>
                 <p><strong>Arrivée :</strong> <?= $trip['arrival_city'] ?> - <?= date('d/m/Y', strtotime($trip['arrival_date'])) ?> à <?= $trip['arrival_hour'] ?></p>
                 <p><strong>Place(s) disponible(s) :</strong> <?= htmlspecialchars($trip['nb_place']) ?></p>
                 <p><strong>EcoCrédit nécessaire :</strong> <?= htmlspecialchars($trip['price_place']) ?></p>
-                <?php if ($trip['info_carpooling']): ?>
-                    <p><strong>Informations supplémentaires :</strong> <?= htmlspecialchars($trip['info_carpooling']) ?></p>
-                <?php endif; ?>
             </div>
             <div>
                 <div id="map" style="height: 300px; width: 550px;"></div>
@@ -62,30 +59,37 @@ $avatarPathCar = !empty($car['photo_car'])
     <!-- Accordéon Chauffeur -->
     <details class="details border rounded p-3 bg-white">
         <summary class="font-semibold text-black cursor-pointer text-center mb-4">Chauffeur</summary>
-        <div class="flex flex-col md:flex-row md:justify-between gap-4">
+        <div class="flex flex-col md:flex-row md:justify-center items-center gap-8">
             <div class="mt-2 space-y-1 text-md flex flex-col items-center pl-4">
-                <img src="<?= $avatarDriver; ?>" class="w-30 h-30 rounded-full" alt="avatar chauffeur">
+                <img src="<?= $avatarDriver; ?>" class="w-25 h-25 rounded-full" alt="avatar chauffeur">
                 <p class="text-md text-gray-600"><?= htmlspecialchars($trip['name_user']) ?></p>
                 <p class="text-md text-yellow-600">★ 4.8 (23 avis)</p>
             </div>
-            <div class="driver-preferences flex gap-4 mt-4">
-                <p class="text-black">Préférences de trajet : </p>
-                <?php foreach ($allPrefs as $pref):
-                    // Est-ce que le conducteur a cette préférence ?
-                    $hasPref = in_array($pref['id_preference'], $driverPrefs);
+            <div class="flex flex-col">
+                <div class="driver-preferences flex gap-4 mt-4">
+                    <p class="text-black">Préférences de trajet : </p>
+                    <?php foreach ($allPrefs as $pref):
+                        // Est-ce que le conducteur a cette préférence ?
+                        $hasPref = in_array($pref['id_preference'], $driverPrefs);
 
-                    // Définir l'icône FontAwesome correspondante
-                    $icons = [
-                        1 => 'fa-smoking',       // Smoker
-                        2 => 'fa-dog',           // Pet
-                        3 => 'fa-music',         // Music
-                        4 => 'fa-comments'       // Speak
-                    ];
-                    $iconClass = $icons[$pref['id_preference']] ?? 'fa-circle';
-                ?>
-                    <i class="fa-solid <?= $iconClass ?> text-xl <?= $hasPref ? 'text-green-500' : 'text-red-500' ?>"
-                        title="<?= htmlspecialchars($pref['preference_name']) ?>"></i>
-                <?php endforeach; ?>
+                        // Définir l'icône FontAwesome correspondante
+                        $icons = [
+                            1 => 'fa-smoking',       // Smoker
+                            2 => 'fa-dog',           // Pet
+                            3 => 'fa-music',         // Music
+                            4 => 'fa-comments'       // Speak
+                        ];
+                        $iconClass = $icons[$pref['id_preference']] ?? 'fa-circle';
+                    ?>
+                        <i class="fa-solid <?= $iconClass ?> text-xl <?= $hasPref ? 'text-green-500' : 'text-red-500' ?>"
+                            title="<?= htmlspecialchars($pref['preference_name']) ?>"></i>
+                    <?php endforeach; ?>
+                </div>
+                <div>
+                    <?php if ($trip['info_carpooling']): ?>
+                        <p class="text-black"><strong>Message de <?= htmlspecialchars($trip['name_user']) ?> :</strong> <?= htmlspecialchars($trip['info_carpooling']) ?></p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </details>
@@ -93,14 +97,14 @@ $avatarPathCar = !empty($car['photo_car'])
     <!-- Accordéon Véhicule -->
     <details class="details border rounded p-3 bg-white">
         <summary class="font-semibold text-black cursor-pointer text-center mb-4">Véhicule</summary>
-        <div class="flex flex-col md:flex-row md:justify-between gap-4">
+        <div class="flex flex-col md:flex-row md:justify-center items-center gap-4">
             <div>
                 <p class="text-md text-gray-700 mt-1"> Marque : <?= $car['brand_car'] ?></p>
                 <p class="text-md text-gray-700 mt-1"> Modèle : <?= $car['model_car'] ?></p>
                 <p class="text-md text-gray-700 mt-1"> Année : <?= $car['year_car'] ?></p>
                 <p class="text-md text-gray-700 mt-1"> Energie : <?= $car['energy_car'] ?></p>
             </div>
-            <img src="<?= $avatarPathCar ?>" class="w-80 h-50 object-cover rounded" alt="Voiture">
+            <img src="<?= $avatarPathCar ?>" class="w-70 h-40 object-cover rounded" alt="Voiture">
         </div>
     </details>
 </div>
