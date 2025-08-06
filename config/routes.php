@@ -65,10 +65,6 @@ return [
         'controller' => App\Controller\PageController::class,
         'method' => 'tripDetails'
     ],
-    '/searchTripAPI' => [
-        'controller' => App\Controller\PageController::class,
-        'method' => 'searchTripAPI'
-    ],
     '/contactUser' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'contactUser'

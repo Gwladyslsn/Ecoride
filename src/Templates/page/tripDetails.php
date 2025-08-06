@@ -50,11 +50,11 @@ $avatarPathCar = !empty($car['photo_car'])
                 <p><strong>Places restantes :</strong> <?= htmlspecialchars($trip['nb_place']) ?></p>
                 <p><strong>EcoCrédit nécessaire :</strong> <?= htmlspecialchars($trip['price_place']) ?></p>
                 <?php if ($trip['info_carpooling']): ?>
-                <p><strong>Informations supplémentaires :</strong> <?= htmlspecialchars($trip['info_carpooling']) ?></p>
+                    <p><strong>Informations supplémentaires :</strong> <?= htmlspecialchars($trip['info_carpooling']) ?></p>
                 <?php endif; ?>
             </div>
             <div>
-                <img src="/image/map-preview.png" class="w-full mt-2 rounded" alt="Carte trajet">
+                <div id="map" style="height: 300px; width: 550px;"></div>
             </div>
         </div>
     </details>
@@ -87,18 +87,23 @@ $avatarPathCar = !empty($car['photo_car'])
                 <p class="text-md text-gray-700 mt-1"> Année : <?= $car['year_car'] ?></p>
                 <p class="text-md text-gray-700 mt-1"> Energie : <?= $car['energy_car'] ?></p>
             </div>
-            <div>
                 <img src="<?= $avatarPathCar ?>" class="w-80 h-50 object-cover rounded" alt="Voiture">
-            </div>
         </div>
     </details>
 </div>
 
 
 
+<?php
 
 
+?>
+<script>
+    const departureCity = "<?= $trip['departure_city'] ?>";
+    const arrivalCity = "<?= $trip['arrival_city'] ?>";
+</script>
 
 <?php
+$page_script = '/asset/js/tripMap.js';
 require_once ROOTPATH . '/src/Templates/footer.php';
 ?>

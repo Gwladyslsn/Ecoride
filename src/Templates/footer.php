@@ -11,6 +11,10 @@
         <p>Copyright © 2025 - All right reserved by Eco'ride - <a href="<?= BASE_URL ?>mentions" class="link link-hover">Mentions légales</a></p>
     </aside>
 </footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+
 <?php if (isset($page_script)): ?>
         <script src="<?php echo $page_script; ?>"></script>
     <?php endif; ?>
