@@ -1,3 +1,7 @@
+.searchCard{
+    background-color: rgba(110, 160, 177, 0.5);
+}
+
 .trip {
     background-color: var(--text-white);
 }
