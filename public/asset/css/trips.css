@@ -33,3 +33,8 @@
 .details:hover{
     box-shadow: 0 15px 30px var(--bg-section);
 }
+
+.map{
+    max-width:50vw;
+    max-height:40vw;
+}

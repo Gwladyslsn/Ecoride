@@ -101,7 +101,7 @@ $prefIcons = [
         </div>
         <div class="credit">
             <h3 class="text-xl font-semibold text-gray-900">Crédit restants :</h3>
-            <p class="text-black"><?= $user["credit_user"]; ?></p>
+            <p class="text-black"><?= $user["credit_user"]; ?> <i class="fa-brands fa-pagelines"></i></p>
         </div>
     </div>
 

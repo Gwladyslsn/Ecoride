@@ -23,3 +23,7 @@ footer{
 .bg-white {
   background-color: var(--text-white);
 }
+
+.fa-pagelines{
+  color:var(--secondary-color);
+}

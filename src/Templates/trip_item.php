@@ -30,6 +30,10 @@ if (!empty($trip['id_car'])) {
         </div>
     </div>
 
+    <div class="flex justify-end">
+        <p class="text-black">Prix : <?= htmlspecialchars($trip['price_place']) ?> <i class="fa-brands fa-pagelines"></i></p>
+    </div>
+
     <!-- Route Info -->
     <div class="space-y-4 mb-6">
         <div class="">

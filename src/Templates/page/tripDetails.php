@@ -48,10 +48,10 @@ $avatarPathCar = !empty($car['photo_car'])
                 <p><strong>Départ :</strong> <?= htmlspecialchars($trip['departure_city']) ?> - <?= date('d/m/Y', strtotime($trip['departure_date'])) ?> à <?= htmlspecialchars($trip['departure_hour']) ?></p>
                 <p><strong>Arrivée :</strong> <?= $trip['arrival_city'] ?> - <?= date('d/m/Y', strtotime($trip['arrival_date'])) ?> à <?= $trip['arrival_hour'] ?></p>
                 <p><strong>Place(s) disponible(s) :</strong> <?= htmlspecialchars($trip['nb_place']) ?></p>
-                <p><strong>EcoCrédit nécessaire :</strong> <?= htmlspecialchars($trip['price_place']) ?></p>
+                <p><strong>EcoCrédit nécessaire :</strong> <?= htmlspecialchars($trip['price_place']) ?> <i class="fa-brands fa-pagelines"></i></p>
             </div>
             <div>
-                <div id="map" style="height: 300px; width: 550px;"></div>
+                <div id="map" class="map"></div>
             </div>
         </div>
     </details>
@@ -106,6 +106,10 @@ $avatarPathCar = !empty($car['photo_car'])
             </div>
             <img src="<?= $avatarPathCar ?>" class="w-70 h-40 object-cover rounded" alt="Voiture">
         </div>
+        <?php if ($car['energy_car'] === 'électrique'): ?>
+            <img src="/asset/image/energy_green.webp" alt="Voiture électrique" class="w-12 h-12">
+            <span class="text-black text-sm font-medium">Véhicule électrique</span>
+        <?php endif; ?>
     </details>
 </div>
 
