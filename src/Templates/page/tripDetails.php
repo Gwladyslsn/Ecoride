@@ -41,7 +41,7 @@ $avatarPathCar = !empty($car['photo_car'])
 
 <div class="space-y-4 px-8 py-4 max-w-6xl mx-auto">
     <!-- Accordéon Trajet -->
-    <details class="details border rounded p-3 bg-white">
+    <details class="details border rounded-xl p-3 bg-white">
         <summary class="font-semibold text-black cursor-pointer text-center mb-4">Trajet</summary>
         <div class="flex flex-col md:flex-row md:justify-center items-center gap-4">
             <div class="mt-2 text-md text-gray-700">
@@ -57,7 +57,7 @@ $avatarPathCar = !empty($car['photo_car'])
     </details>
 
     <!-- Accordéon Chauffeur -->
-    <details class="details border rounded p-3 bg-white">
+    <details class="details border rounded-xl p-3 bg-white">
         <summary class="font-semibold text-black cursor-pointer text-center mb-4">Chauffeur</summary>
         <div class="flex flex-col md:flex-row md:justify-center items-center gap-8">
             <div class="mt-2 space-y-1 text-md flex flex-col items-center pl-4">
@@ -95,7 +95,7 @@ $avatarPathCar = !empty($car['photo_car'])
     </details>
 
     <!-- Accordéon Véhicule -->
-    <details class="details border rounded p-3 bg-white">
+    <details class="details border rounded-xl p-3 bg-white">
         <summary class="font-semibold text-black cursor-pointer text-center mb-4">Véhicule</summary>
         <div class="flex flex-col md:flex-row md:justify-center items-center gap-4">
             <div>
