@@ -47,7 +47,7 @@ $avatarPathCar = !empty($car['photo_car'])
             <div class="mt-2 text-md text-gray-700">
                 <p><strong>Départ :</strong> <?= htmlspecialchars($trip['departure_city']) ?> - <?= date('d/m/Y', strtotime($trip['departure_date'])) ?> à <?= htmlspecialchars($trip['departure_hour']) ?></p>
                 <p><strong>Arrivée :</strong> <?= $trip['arrival_city'] ?> - <?= date('d/m/Y', strtotime($trip['arrival_date'])) ?> à <?= $trip['arrival_hour'] ?></p>
-                <p><strong>Places restantes :</strong> <?= htmlspecialchars($trip['nb_place']) ?></p>
+                <p><strong>Place(s) disponible(s) :</strong> <?= htmlspecialchars($trip['nb_place']) ?></p>
                 <p><strong>EcoCrédit nécessaire :</strong> <?= htmlspecialchars($trip['price_place']) ?></p>
                 <?php if ($trip['info_carpooling']): ?>
                     <p><strong>Informations supplémentaires :</strong> <?= htmlspecialchars($trip['info_carpooling']) ?></p>
