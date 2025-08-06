@@ -66,9 +66,9 @@ return [
         'method' => 'showTrips'
     ],
     '/tripDetails' => [
-        'controller' => App\Controller\PageController::class,
-        'method' => 'tripDetails'
-    ],
+    'controller' => App\Controller\CarpoolingController::class,
+    'method' => 'showTripDetails'
+],
     '/contactUser' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'contactUser'

@@ -7,6 +7,7 @@ use App\Repository\CarRepository;
 use App\Entity\Carpooling;
 use App\Database\Database;
 use App\Service\CityVerifier;
+use App\Repository\UserRepository;
 
 class CarpoolingController
 {
@@ -124,23 +125,27 @@ class CarpoolingController
         // Envoie les trajets à la vue
         require_once ROOTPATH . 'src/Templates/page/Carpoolings.php';
     }
- public function showTripDetails()
+public function showTripDetails()
 {
     $tripId = $_GET['id'] ?? null;
-    if (!$tripId) {
-        // Gérer erreur
-        return;
-    }
+    if (!$tripId) return;
 
-    $carpoolingRepository = new CarpoolingRepository(Database::getConnection());
+    $pdo = Database::getConnection();
+    $carpoolingRepository = new CarpoolingRepository($pdo);
+    $userRepo = new UserRepository($pdo);
+
     $trip = $carpoolingRepository->getTripById($tripId);
 
-    if (!$trip) {
-        // Gérer erreur
-        return;
-    }
+    if (!$trip) return;
+
+    // ⚠️ Si $trip est un tableau
+    $driverId = $trip['id_user'];
+
+    $driverPrefs = $userRepo->getUserPreferences($driverId);
+    $allPrefs = $userRepo->getAllPreferences();
 
     require_once ROOTPATH . 'src/Templates/page/tripDetails.php';
 }
+
 
 }

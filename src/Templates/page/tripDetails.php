@@ -68,11 +68,24 @@ $avatarPathCar = !empty($car['photo_car'])
                 <p class="text-md text-gray-600"><?= htmlspecialchars($trip['name_user']) ?></p>
                 <p class="text-md text-yellow-600">★ 4.8 (23 avis)</p>
             </div>
-            <div>
-                <p class="text-md text-gray-700 mt-1"> Discute : Oui</p>
-                <p class="text-md text-gray-700 mt-1"> Tabac : Non</p>
-                <p class="text-md text-gray-700 mt-1"> Animaux : Oui</p>
-                <p class="text-md text-gray-700 mt-1"> Musique : Oui</p>
+            <div class="driver-preferences flex gap-4 mt-4">
+                <p class="text-black">Préférences de trajet : </p>
+                <?php foreach ($allPrefs as $pref):
+                    // Est-ce que le conducteur a cette préférence ?
+                    $hasPref = in_array($pref['id_preference'], $driverPrefs);
+
+                    // Définir l'icône FontAwesome correspondante
+                    $icons = [
+                        1 => 'fa-smoking',       // Smoker
+                        2 => 'fa-dog',           // Pet
+                        3 => 'fa-music',         // Music
+                        4 => 'fa-comments'       // Speak
+                    ];
+                    $iconClass = $icons[$pref['id_preference']] ?? 'fa-circle';
+                ?>
+                    <i class="fa-solid <?= $iconClass ?> text-xl <?= $hasPref ? 'text-green-500' : 'text-red-500' ?>"
+                        title="<?= htmlspecialchars($pref['preference_name']) ?>"></i>
+                <?php endforeach; ?>
             </div>
         </div>
     </details>
@@ -87,7 +100,7 @@ $avatarPathCar = !empty($car['photo_car'])
                 <p class="text-md text-gray-700 mt-1"> Année : <?= $car['year_car'] ?></p>
                 <p class="text-md text-gray-700 mt-1"> Energie : <?= $car['energy_car'] ?></p>
             </div>
-                <img src="<?= $avatarPathCar ?>" class="w-80 h-50 object-cover rounded" alt="Voiture">
+            <img src="<?= $avatarPathCar ?>" class="w-80 h-50 object-cover rounded" alt="Voiture">
         </div>
     </details>
 </div>

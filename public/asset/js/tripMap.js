@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             [departure.lat, departure.lng],
             [arrival.lat, arrival.lng]
         ], { color: 'blue' }).addTo(map);
-        console.log('test fonction init map');
         
     }
 });

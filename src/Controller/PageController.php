@@ -73,11 +73,6 @@ class PageController extends Controller
         $controller->newCarpooling();
     }
 
-    public function searchTripAPI()
-    {
-        $this->render('/Entity/searchTripAPI', []);
-    }
-
     public function contactUser()
     {
         $this->render('/Entity/contactUser', []);
