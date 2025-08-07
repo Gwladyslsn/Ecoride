@@ -18,7 +18,7 @@ require_once ROOTPATH . '/src/Templates/header.php';
     <!--SearchBar-->
     <section class="body-font">
         <div class="container px-5 py-12 mx-auto">
-            <div class="rounded-2xl p-6 sm:p-8 border searchCard">
+            <div class="rounded-2xl p-6 sm:p-8 border titleCard">
                 <form id="formSearch" method="post" action="<?= BASE_URL ?>Carpoolings" class="flex flex-col lg:flex-row gap-4 lg:gap-6">
                     <div class="relative flex-grow w-full">
                         <label for="departureCity" class="leading-7 text-lg">Ville de départ</label>

@@ -154,6 +154,32 @@ INSERT INTO user_preferences (id_preference, preference_name) VALUES
 (2, 'pet'),
 (3, 'Music'),
 (4, 'speak');
+
+DROP TABLE Participer;
+
+CREATE TABLE Participer (
+    id_participation INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    id_carpooling INT NOT NULL,
+    date_reservation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES user(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_carpooling) REFERENCES carpooling(id_carpooling) ON DELETE CASCADE,
+    UNIQUE KEY unique_reservation (id_user, id_carpooling)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /*test*/
 SELECT * FROM user;
 

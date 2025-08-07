@@ -75,7 +75,7 @@ class PageController extends Controller
 
     public function contactUser()
     {
-        $this->render('/Entity/contactUser', []);
+        $this->render('Templates/page/contact', []);
     }
 
     public function reviewEcoride()
@@ -102,6 +102,11 @@ class PageController extends Controller
         $this->render('Templates/page/admin/dashboardAdmin', []);
     }
     public function tripDetails()
+    {
+        $this->render('Templates/page/tripDetails', []);
+    }
+
+    public function bookTrip()
     {
         $this->render('Templates/page/tripDetails', []);
     }

@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         };
 
-        console.log('description covoit',infoCarpooling );
         
         // Envoi Back
         const data = {

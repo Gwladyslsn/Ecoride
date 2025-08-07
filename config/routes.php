@@ -92,5 +92,12 @@ return [
     '/dashboardAdmin' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'dashboardAdmin'
+    ],
+    '/bookTrip' => [
+        'controller' => App\Controller\BookingController::class,
+        'method' => 'bookTrip'
     ]
+
+
+    
 ];

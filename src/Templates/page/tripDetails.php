@@ -33,13 +33,13 @@ $avatarPathCar = !empty($car['photo_car'])
 
 ?>
 
-<div class="max-w-4xl mx-auto px-5 py-3 mt-10 mb-10 bg-lightblue rounded-lg shadow-lg">
+<div class="max-w-4xl mx-auto px-5 py-3 mt-10 mb-10 titleCard rounded-xl">
     <h2 class="text-xl text-black font-bold mb-4 text-center">Détails du trajet</h2>
 </div>
 
 
 
-<div class="space-y-4 px-8 py-4 max-w-6xl mx-auto">
+<div class="space-y-6 px-8 py-4 max-w-6xl mx-auto">
     <!-- Accordéon Trajet -->
     <details class="details border rounded-xl p-3 bg-white">
         <summary class="font-semibold text-black cursor-pointer text-center mb-4">Trajet</summary>
@@ -113,18 +113,22 @@ $avatarPathCar = !empty($car['photo_car'])
     </details>
 </div>
 
+<div class="flex justify-center">
+    <?php if (isset($_SESSION['user'])): ?>
+        <button id="book-btn" class="btn book-btn rounded-xl" data-user="<?= $_SESSION['user']['id_user'] ?>" data-carpooling="<?= $carpooling['id_carpooling'] ?>">Réserver ce trajet</button>
+    <?php else: ?>
+        <p class="text-gray-500 mt-5"><a class="text-gray-400" href="<?= BASE_URL ?>register">Inscrivez-vous</a> ou <a class="text-gray-400" href="<?= BASE_URL ?>register">connectez-vous</a> pour réserver ce trajet</p>
+    <?php endif; ?>
+</div>
 
-
-<?php
-
-
-?>
+<!-- Script pour afficher l'itinéraire sur la carte -->
 <script>
     const departureCity = "<?= $trip['departure_city'] ?>";
     const arrivalCity = "<?= $trip['arrival_city'] ?>";
 </script>
 
+<script src="/asset/js/tripMap.js"></script>
+<script src="/asset/js/bookTrip.js"></script>
 <?php
-$page_script = '/asset/js/tripMap.js';
 require_once ROOTPATH . '/src/Templates/footer.php';
 ?>

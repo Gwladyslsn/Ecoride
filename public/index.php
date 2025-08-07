@@ -2,7 +2,7 @@
 session_start();
 
 define("ROOTPATH", __DIR__ . '/../'); // Pour se baser sur le chemin racine
-require ROOTPATH . '/vendor/autoload.php';
+require ROOTPATH . '/vendor/autoload.php'; // Chargement des classes en auto
 
 
 
@@ -10,7 +10,7 @@ use App\Core\Router;
 
 $router = new Router();
 
-// Load routes from config/routes.php
+// chargement des routes via config/routes.php
 $routes = require ROOTPATH . 'config/routes.php';
 
 foreach ($routes as $path => $routeInfo) {

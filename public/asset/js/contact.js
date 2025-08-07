@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
             //console.log("Erreurs de validation côté client :", errors);
         } else {
             // Envoi en AJAX via fetch()
-            fetch('?controller=page&action=contactUser', {
+            fetch('/contactUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
