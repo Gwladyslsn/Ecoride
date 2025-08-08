@@ -105,6 +105,10 @@ return [
     'controller' =>App\Controller\PageController::class,
     'method' => 'carpoolingAdmin'
     ],
+    '/employeAdmin' => [
+    'controller' =>App\Controller\PageController::class,
+    'method' => 'employeAdmin'
+    ],
 
 
     

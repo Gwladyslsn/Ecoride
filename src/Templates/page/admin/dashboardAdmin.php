@@ -26,7 +26,7 @@ if (!isset($_SESSION['admin'])) {
         <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
             <p class="carpooling text-black">Nombre d'employés</p>
             <p class="carpooling text-black">2</p>
-            <button class="btn btn-dashboard rounded-xl"><a href="">Gérer les employés</a></button>
+            <button class="btn btn-dashboard rounded-xl"><a href="/employeAdmin">Gérer les employés</a></button>
         </div>
         <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
             <p class="carpooling text-black">Nombre d'avis</p>

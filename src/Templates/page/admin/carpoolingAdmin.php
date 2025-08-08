@@ -42,7 +42,7 @@ $carpoolings = $adminRepo->getCarpoolingsWithBookingStats();
                     <td><?= htmlspecialchars($carpooling['arrival_date']) ?> à <?= htmlspecialchars($carpooling['arrival_hour']) ?></td>
                     <td><?= htmlspecialchars($carpooling['nb_place']) ?></td>
                     <td><?= htmlspecialchars($carpooling['booked_seats']) ?></td>
-                    <td><?= htmlspecialchars($carpooling['price_place']) ?> crédits</td>
+                    <td><?= htmlspecialchars($carpooling['price_place']) ?> <i class="fa-brands fa-pagelines"></td>
                     <td><?= htmlspecialchars($carpooling['driver_id']) ?></td>
                     <td>
                         <a href="/admin/carpooling_edit.php?id=<?= $carpooling['id_carpooling'] ?>" class="btn-link">Modifier</a>
