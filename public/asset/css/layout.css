@@ -1,20 +1,20 @@
 /*Reset du user agent*/
 * {
-    text-decoration: none;
-    box-sizing: border-box;
-    list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  list-style: none;
 }
 
 
-body{
-    background-color: var(--bg-main);
-    color: var(--text-white);
-    min-height: 100vh;
+body {
+  background-color: var(--bg-main);
+  color: var(--text-white);
+  min-height: 100vh;
 }
 
-footer{
-    background-color: var(--bg-main);
-    color: var(--text-white);
+footer {
+  background-color: var(--bg-main);
+  color: var(--text-white);
 }
 
 .bg-lightblue {
@@ -25,6 +25,6 @@ footer{
   background-color: var(--text-white);
 }
 
-.fa-pagelines{
-  color:var(--secondary-color);
+.fa-pagelines {
+  color: var(--secondary-color);
 }

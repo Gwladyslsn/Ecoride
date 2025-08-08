@@ -1,5 +1,5 @@
 
-<footer class="footer footer-horizontal footer-center text-base-content rounded p-10 mt-50">
+<footer class="footer footer-horizontal footer-center text-base-content p-10">
     <nav class="grid grid-flow-col gap-4">
         <a href="<?= BASE_URL ?>about" class="link link-hover">A propos</a>
         <a href="<?= BASE_URL ?>contact" class="link link-hover">Contact</a>
