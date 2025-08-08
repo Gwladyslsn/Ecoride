@@ -101,5 +101,17 @@ class CarpoolingRepository
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function hasAvailableSeats(int $carpoolingId): bool
+{
+    $query = "SELECT nb_place FROM carpooling WHERE id_carpooling = :id_carpooling";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(':id_carpooling', $carpoolingId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result && (int)$result['nb_place'] > 0;
+}
 }
 

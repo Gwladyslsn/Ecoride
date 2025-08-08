@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\BookingRepository;
 use App\Database\Database;
+use App\Entity\Carpooling;
 
 class BookingController
 {
@@ -63,6 +64,14 @@ class BookingController
             echo json_encode(['status' => 'autre_trajet_ce_jour', 'message' => 'Vous avez déjà réservé un trajet ce jour-là']);
             exit;
         }
+
+        // Vérifie si le trajet est complet
+        if ($this->bookingRepository->isTripFull($carpoolingId)) {
+            echo json_encode(['status' => 'complet', 'message' => 'Ce trajet est complet.']);
+            exit;
+        }
+
+
 
         // Ajoute la réservation
         $added = $this->bookingRepository->addBooking($userId, $carpoolingId);

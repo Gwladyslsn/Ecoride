@@ -19,9 +19,9 @@ if (!empty($trip['id_car'])) {
 ?>
 
 <?php if ($trip['nb_place'] < 1): ?>
-    <div class="trip w-full max-w-5xl bg-white rounded-2xl shadow-md hover:shadow-lg p-6 border border-3 border-red-600 hover:border-red-custom transition-all duration-300 transform hover:-translate-y-1">
+    <div class="trip w-full max-w-5xl bg-white rounded-2xl p-6 border border-3 border-red-600">
 <?php else: ?>
-    <div class="trip w-full max-w-5xl bg-white rounded-2xl shadow-md hover:shadow-lg p-6 border transition-all duration-300 transform hover:-translate-y-1">
+    <div class="trip w-full max-w-5xl bg-white rounded-2xl p-6 border transition-all duration-300 transform hover:-translate-y-1">
 <?php endif; ?>
 
     <!-- Driver Info -->

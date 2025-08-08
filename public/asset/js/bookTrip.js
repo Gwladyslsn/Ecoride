@@ -72,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Vous avez déjà réservé ce trajet.</p>`;
                 } else if (response.status === 'autre_trajet_ce_jour') {
                     recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Vous avez déjà un trajet réservé ce jour.</p>`;
+                } else if (response.status === 'complet') {
+                    recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Ce trajet est déja complet.</p>`;
                 } else {
                     recapContainer.innerHTML = `<p style="color:red; font-weight:600;">Erreur lors de la réservation.</p>`;
                 }

@@ -24,7 +24,7 @@ class BookingRepository
         return $stmt->fetchColumn() > 0;
     }
 
-    public function userBookingOnDate($userId, $date)
+    public function userBookingOnDate($userId, $nb_place)
     {
         $query = "SELECT COUNT(*) FROM Participer p
         JOIN carpooling c ON p.id_carpooling = c.id_carpooling
@@ -36,10 +36,24 @@ class BookingRepository
         return $stmt->fetchColumn() > 0;
     }
 
+    public function isTripFull(int $carpoolingId): bool
+{
+    $query = "SELECT nb_place FROM carpooling WHERE id_carpooling = :id";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(':id', $carpoolingId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return !$result || (int)$result['nb_place'] <= 0;
+}
+
+
+
     public function addBooking(int $idUser, int $idCarpooling): bool
 {
     try {
         $this->pdo->beginTransaction();
+
 
         // 1. Récupérer le prix de la place et le driver_id
         $stmt = $this->pdo->prepare("SELECT price_place, driver_id FROM carpooling WHERE id_carpooling = :idCarpooling");
@@ -63,6 +77,8 @@ class BookingRepository
             $this->pdo->rollBack();
             return false; // crédits insuffisants
         }
+
+        
 
         // 3. Insérer réservation
         $stmt = $this->pdo->prepare("INSERT INTO Participer (id_user, id_carpooling) VALUES (:idUser, :idCarpooling)");
