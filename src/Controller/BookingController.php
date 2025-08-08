@@ -66,13 +66,24 @@ class BookingController
 
         // Ajoute la réservation
         $added = $this->bookingRepository->addBooking($userId, $carpoolingId);
-        if ($added) {
-            echo json_encode(['status' => 'ok', 'message' => 'Réservation effectuée avec succès']);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la réservation']);
+
+        switch ($added) {
+            case true:
+                echo json_encode(['status' => 'ok', 'message' => 'Réservation effectuée avec succès']);
+                break;
+            case 'insufficient_credit':
+                echo json_encode(['status' => 'error', 'message' => 'Crédits insuffisants pour réserver ce trajet.']);
+                break;
+            case 'user_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Utilisateur introuvable.']);
+                break;
+            case 'carpooling_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable.']);
+                break;
+            default:
+                echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la réservation.']);
         }
 
         exit;
     }
 }
-

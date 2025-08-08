@@ -187,7 +187,13 @@ JOIN car ca ON c.id_car = ca.id_car
 SET c.driver_id = ca.id_user;
 
 
-
+CREATE TABLE platform_earnings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_carpooling INT NOT NULL,
+    credits_earned INT NOT NULL DEFAULT 0,
+    earned_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_carpooling) REFERENCES carpooling(id_carpooling) ON DELETE CASCADE
+);
 
 
 
