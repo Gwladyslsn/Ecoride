@@ -28,7 +28,7 @@ class BookingRepository
     {
         $query = "SELECT COUNT(*) FROM Participer p
         JOIN carpooling c ON p.id_carpooling = c.id_carpooling
-        WHERE p.id_user = :userId AND DATE(c.date_depart) = :date";
+        WHERE p.id_user = :userId AND DATE(c.departure_date) = :date";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':date', $date, PDO::PARAM_STR);
@@ -42,7 +42,20 @@ class BookingRepository
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':carpoolingId', $carpoolingId, PDO::PARAM_INT);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->execute();
         return $stmt->execute();
     }
+
+    public function getDateDepart(int $carpoolingId): ?string
+{
+    $query = "SELECT departure_date FROM carpooling WHERE id_carpooling = :carpoolingId LIMIT 1";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(':carpoolingId', $carpoolingId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($result && isset($result['departure_date'])) {
+        return $result['departure_date'];
+    }
+    return null;  // si pas trouvé
+}
 }

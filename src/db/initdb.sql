@@ -167,7 +167,24 @@ CREATE TABLE Participer (
     UNIQUE KEY unique_reservation (id_user, id_carpooling)
 );
 
+ALTER TABLE carpooling ADD COLUMN driver_id INT NOT NULL;
 
+ALTER TABLE carpooling MODIFY driver_id INT NOT NULL;
+
+UPDATE carpooling SET driver_id = 3;  
+ALTER TABLE carpooling
+ADD CONSTRAINT fk_driver
+FOREIGN KEY (driver_id)
+REFERENCES user(id_user)
+ON DELETE CASCADE;
+
+SELECT driver_id FROM carpooling
+WHERE driver_id IS NOT NULL
+AND driver_id NOT IN (SELECT id_user FROM user);
+
+UPDATE carpooling c
+JOIN car ca ON c.id_car = ca.id_car
+SET c.driver_id = ca.id_user;
 
 
 
@@ -209,4 +226,5 @@ SELECT * FROM car WHERE id_user= 4;
 SELECT * FROM car WHERE id_user = 4;
 SELECT * FROM car c LEFT JOIN user u ON u.id_user = c.id_user WHERE id_car = 1;
 
-
+SELECT DISTINCT driver_id FROM carpooling
+WHERE driver_id NOT IN (SELECT id_user FROM user);

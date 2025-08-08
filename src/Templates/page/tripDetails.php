@@ -18,9 +18,9 @@ if (!$trip) {
     echo "🚫 Trajet introuvable.";
     exit;
 }
-$id_user = $trip['id_user']; // ✅ Récupération depuis le trajet
-$user = $userRepo->getDataUser($id_user); // ✅ Maintenant c’est bon
-$car = $userRepo->getDataCar($id_user);
+$driverId = $trip['driver_id'];
+$user = $userRepo->getDataUser($driverId); 
+$car = $userRepo->getDataCar($driverId);
 
 $avatarDriver = !empty($trip['avatar_user'])
     ? '/asset/uploads/avatar/' . htmlspecialchars($trip['avatar_user'])
@@ -115,7 +115,7 @@ $avatarPathCar = !empty($car['photo_car'])
 
 <div class="flex justify-center">
     <?php if (isset($_SESSION['user'])): ?>
-        <button id="book-btn" class="btn book-btn rounded-xl" data-user="<?= $_SESSION['user']['id_user'] ?>" data-carpooling="<?= $carpooling['id_carpooling'] ?>">Réserver ce trajet</button>
+        <button id="book-btn" class="btn book-btn rounded-xl" data-user="<?= $_SESSION['user'] ?>" data-carpooling="<?= $carpooling['id_carpooling'] ?>">Réserver ce trajet</button>
     <?php else: ?>
         <p class="text-gray-500 mt-5"><a class="text-gray-400" href="<?= BASE_URL ?>register">Inscrivez-vous</a> ou <a class="text-gray-400" href="<?= BASE_URL ?>register">connectez-vous</a> pour réserver ce trajet</p>
     <?php endif; ?>

@@ -16,6 +16,8 @@ class Carpooling
     private int $id_car;
     private ?string $infoCarpooling = null;
 
+    private int $driverId;
+
     public function __construct(
         string $departure_city,
         \DateTime $departure_date,
@@ -26,7 +28,8 @@ class Carpooling
         int $nb_place,
         float $price_place,
         string $infoCarpooling,
-        int $id_car
+        int $id_car,
+        int $driverId
     ) {
         $this->departure_city = $departure_city;
         $this->departure_date = $departure_date;
@@ -38,6 +41,7 @@ class Carpooling
         $this->price_place = $price_place;
         $this->infoCarpooling = $infoCarpooling;
         $this->id_car = $id_car;
+        $this->driverId = $driverId;
     }
 
     
@@ -236,5 +240,22 @@ class Carpooling
     public function setInfoCarpooling(?string $infoCarpooling): void
     {
         $this->infoCarpooling = $infoCarpooling;
+    }
+
+    /**
+     * Get the value of driverId
+     */
+    public function getDriverId(): ?int
+    {
+        return $this->driverId;
+    }
+
+    /**
+     * Set the value of driverId
+     */
+    public function setDriverId(?int $driverId): self
+    {
+        $this->driverId = $driverId;
+        return $this;
     }
 }

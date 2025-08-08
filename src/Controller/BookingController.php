@@ -17,41 +17,62 @@ class BookingController
 
     public function bookTrip(): void
     {
+        header('Content-Type: application/json');
 
+        // Vérifie si utilisateur connecté
         if (!isset($_SESSION['user'])) {
-            $_SESSION['error'] = "Vous devez être connecté pour réserver.";
-        }
-
-        $userId = $_SESSION['id_user'];
-
-        if (!isset($_SESSION['id_user'])) {
-            // Répondre avec une erreur JSON si l'utilisateur n'est pas connecté
-            echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);
+            echo json_encode(['status' => 'error', 'message' => 'Utilisateur non connecté']);
             exit;
         }
 
-        $carpoolingId = $_POST['id_carpooling'] ?? null;
-        $dateDepart = $_POST['departure_date'] ?? null;
+        // Récupération des données JSON envoyées
+        $data = json_decode(file_get_contents('php://input'), true);
+        file_put_contents('php://stderr', print_r($data, true));  // écrit dans le log Apache
 
-        if (!$carpoolingId || !$dateDepart) {
-            $_SESSION['error'] = "Données de réservation incomplètes.";
+        if (!$data) {
+            echo json_encode(['status' => 'error', 'message' => 'Données invalides']);
+            exit;
         }
 
-        // Vérifie si déjà réservé ce trajet
+        $userId = $_SESSION['user'];
+        $carpoolingId = $data['id_carpooling'] ?? null;
+
+        if (!$carpoolingId) {
+            echo json_encode(['status' => 'error', 'message' => 'ID trajet manquant']);
+            exit;
+        }
+
+        // Récupérer la date de départ liée au trajet pour vérifier la réservation à date
+        // Ici, il faut récupérer la date depuis ta table Carpooling via BookingRepository ou CarpoolingRepository
+        // Supposons que tu as une méthode getDateDepart($carpoolingId) dans BookingRepository
+
+        $dateDepart = $this->bookingRepository->getDateDepart($carpoolingId);
+        if (!$dateDepart) {
+            echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable']);
+            exit;
+        }
+
+        // Vérifie si utilisateur a déjà réservé ce trajet
         if ($this->bookingRepository->userAlreadyBooked($userId, $carpoolingId)) {
-            $_SESSION['error'] = "Vous avez déjà réservé ce trajet.";
+            echo json_encode(['status' => 'deja_reserve', 'message' => 'Vous avez déjà réservé ce trajet']);
+            exit;
         }
 
-        // Vérifie si déjà une réservation ce jour-là
+        // Vérifie si utilisateur a déjà une réservation à la même date
         if ($this->bookingRepository->userBookingOnDate($userId, $dateDepart)) {
-            $_SESSION['error'] = "Vous avez déjà réservé un trajet ce jour-là.";
+            echo json_encode(['status' => 'autre_trajet_ce_jour', 'message' => 'Vous avez déjà réservé un trajet ce jour-là']);
+            exit;
         }
 
-        // Tente la réservation
-        if ($this->bookingRepository->addBooking($userId, $carpoolingId)) {
-            $_SESSION['success'] = "Réservation effectuée avec succès.";
+        // Ajoute la réservation
+        $added = $this->bookingRepository->addBooking($userId, $carpoolingId);
+        if ($added) {
+            echo json_encode(['status' => 'ok', 'message' => 'Réservation effectuée avec succès']);
         } else {
-            $_SESSION['error'] = "Une erreur est survenue lors de la réservation.";
+            echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la réservation']);
         }
+
+        exit;
     }
 }
+

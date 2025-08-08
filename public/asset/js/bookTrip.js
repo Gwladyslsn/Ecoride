@@ -3,15 +3,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const idUser = btnBook.dataset.user;
     const idCarpooling = btnBook.dataset.carpooling;
 
+    // Création du conteneur de récap sous le bouton
+    const recapContainer = document.createElement('div');
+    recapContainer.id = 'recap-container';
+    recapContainer.style.marginTop = '60px';
+    btnBook.parentNode.insertBefore(recapContainer, btnBook.nextSibling);
+
     btnBook.addEventListener('click', (e) => {
         e.preventDefault();
-        firstCheck();
 
+        if (!document.getElementById('confirm-btn')) {
+            recapContainer.innerHTML = `
+        <div style="
+          background-color: white;
+          border: 1px solid #ccc;
+          border-radius: 12px;
+          padding: 15px;
+          box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+          max-width: 320px;
+        ">
+          <p class="text-black" style="margin-bottom: 15px; font-weight: 500;">Êtes-vous sûr de vouloir réserver ce trajet ? Pensez à vérifier les informations ci-dessus</p>
+          <button id="confirm-btn" style="
+            background-color: #7A9E7E;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+          ">Confirmer</button>
+          <button id="cancel-btn" style="
+            background-color: #E5690B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+          ">Annuler</button>
+        </div>
+      `;
+
+            document.getElementById('confirm-btn').addEventListener('click', confirmBooking);
+            document.getElementById('cancel-btn').addEventListener('click', () => {
+                recapContainer.innerHTML = '';
+            });
+        }
     });
 
-
-    function firstCheck() {
-        // Envoi Back
+    function confirmBooking() {
         const data = {
             id_user: idUser,
             id_carpooling: idCarpooling,
@@ -20,28 +61,26 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('/bookTrip', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         })
-            .then(res => res.json())
-            .then(response => {
-                if (response.status === "ok") {
-                    // Afficher bloc de confirmation
-                    console.log('afficher bloc de resa');
-
-                } else if (response.status === "deja_reserve") {
-                    // Message spécifique
-                    console.log('deja reservé');
-                } else if (response.status === "autre_trajet_ce_jour") {
-                    // Autre message spécifique
-                    console.log('deja trajet ce jour');
+            .then((res) => res.json())
+            .then((response) => {
+                if (response.status === 'ok') {
+                    recapContainer.innerHTML = `<p style="color:green; font-weight:600;">Réservation confirmée avec succès ! Retrouvez votre voyage dans l'onglet "Historique"</p>`;
+                    btnBook.style.display = 'none';
+                } else if (response.status === 'deja_reserve') {
+                    recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Vous avez déjà réservé ce trajet.</p>`;
+                } else if (response.status === 'autre_trajet_ce_jour') {
+                    recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Vous avez déjà un trajet réservé ce jour.</p>`;
+                } else {
+                    recapContainer.innerHTML = `<p style="color:red; font-weight:600;">Erreur lors de la réservation.</p>`;
                 }
             })
             .catch((errors) => {
                 console.error('Fetch error:', errors);
-                alert('Erreur réseau ou serveur : ' + errors.message);
+                recapContainer.innerHTML = `<p style="color:red; font-weight:600;">Erreur réseau ou serveur.</p>`;
             });
-
-
-
     }
 });
+
+

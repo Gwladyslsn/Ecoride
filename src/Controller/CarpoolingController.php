@@ -12,8 +12,6 @@ use App\Repository\UserRepository;
 class CarpoolingController
 {
 
-
-
     // READ
     public function newCarpooling(): void
     {
@@ -89,7 +87,8 @@ class CarpoolingController
                 (int) $data['nb_place'],
                 (float) $data['price_place'],
                 $data['info_carpooling'],
-                (int) $idCar
+                (int) $idCar,
+                (int) $userId 
             );
         } catch (\Exception $e) {
             echo json_encode(['success' => false, 'message' => 'Erreur de format des dates']);
@@ -139,10 +138,11 @@ public function showTripDetails()
     if (!$trip) return;
 
     // ⚠️ Si $trip est un tableau
-    $driverId = $trip['id_user'];
+    $driverId = $trip['driver_id'];
 
     $driverPrefs = $userRepo->getUserPreferences($driverId);
     $allPrefs = $userRepo->getAllPreferences();
+    $carpooling = $carpoolingRepository->getTripById($tripId);
 
     require_once ROOTPATH . 'src/Templates/page/tripDetails.php';
 }
