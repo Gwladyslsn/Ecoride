@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Auth;
+use App\Controller\AdminController;
 
 
 class PageController extends Controller
@@ -88,6 +89,17 @@ class PageController extends Controller
         $this->render('/Entity/addReviewEcoride', []);
     }
 
+
+    public function tripDetails()
+    {
+        $this->render('Templates/page/tripDetails', []);
+    }
+
+    public function bookTrip()
+    {
+        $this->render('Templates/page/tripDetails', []);
+    }
+
     public function createAdmin()
     {
         $this->render('/Entity/createAdmin', []);
@@ -97,17 +109,22 @@ class PageController extends Controller
     {
         $this->render('/Templates/page/admin/homeAdmin', []);
     }
-    public function dashboardAdmin()
+
+    public function dashboardAdmin(): void
     {
-        $this->render('Templates/page/admin/dashboardAdmin', []);
-    }
-    public function tripDetails()
-    {
-        $this->render('Templates/page/tripDetails', []);
+        $adminController = new AdminController();
+        $data = $adminController->getDashboardData();
+
+        $this->render("Templates/page/admin/dashboardAdmin", $data);
     }
 
-    public function bookTrip()
+    public function userAdmin()
     {
-        $this->render('Templates/page/tripDetails', []);
+        $this->render('Templates/page/admin/userAdmin', []);
+    }
+
+    public function carpoolingAdmin()
+    {
+        $this->render('Templates/page/admin/carpoolingAdmin', []);
     }
 }

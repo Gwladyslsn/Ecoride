@@ -96,7 +96,15 @@ return [
     '/bookTrip' => [
         'controller' => App\Controller\BookingController::class,
         'method' => 'bookTrip'
-    ]
+    ],
+    '/userAdmin' => [
+    'controller' =>App\Controller\PageController::class,
+    'method' => 'userAdmin'
+    ],
+    '/carpoolingAdmin' => [
+    'controller' =>App\Controller\PageController::class,
+    'method' => 'carpoolingAdmin'
+    ],
 
 
     

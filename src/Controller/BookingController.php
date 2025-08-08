@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\BookingRepository;
 use App\Database\Database;
-use App\Entity\Carpooling;
 
 class BookingController
 {

@@ -47,6 +47,12 @@ class UserRepository
     return $admin ?: null;
 }
 
+public function getAllUsers(): array
+{
+    $stmt = $this->pdo->query("SELECT * FROM user ORDER BY id_user");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
     /* get user by id*/
     public function getDataUser(string $id_user): ?array
     {
