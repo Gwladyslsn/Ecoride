@@ -29,28 +29,37 @@ class AdminRepository
 
     // trajets avec prise en compte des resa
     public function getCarpoolingsWithBookingStats(): array
-    {
-        $query = "
-            SELECT 
-                c.id_carpooling,
-                c.departure_city,
-                c.arrival_city,
-                c.departure_date,
-                c.arrival_date,
-                c.departure_hour,
-                c.arrival_hour,
-                c.nb_place,
-                c.price_place,
-                c.driver_id,
-                COUNT(p.id_participation) AS booked_seats
-            FROM carpooling c
-            JOIN user u ON c.driver_id = u.id_user
-            LEFT JOIN Participer p ON p.id_carpooling = c.id_carpooling
-            GROUP BY c.id_carpooling
-            ORDER BY c.departure_date
-        ";
+{
+    $query = "
+        SELECT 
+            c.id_carpooling,
+            c.departure_city,
+            c.arrival_city,
+            c.departure_date,
+            c.arrival_date,
+            c.departure_hour,
+            c.arrival_hour,
+            c.nb_place,
+            c.price_place,
+            c.driver_id,
+            COUNT(p.id_participation) AS booked_seats,
+            CASE 
+                WHEN ca.energy_car = 'Electrique' THEN 1
+                ELSE 0
+            END AS is_ecologic
+        FROM carpooling c
+        JOIN user u 
+            ON c.driver_id = u.id_user
+        JOIN car ca 
+            ON c.id_car = ca.id_car
+        LEFT JOIN Participer p 
+            ON p.id_carpooling = c.id_carpooling
+        GROUP BY c.id_carpooling
+        ORDER BY c.departure_date
+    ";
 
-        $stmt = $this->pdo->query($query);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt = $this->pdo->query($query);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

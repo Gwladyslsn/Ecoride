@@ -25,7 +25,7 @@ class CarRepository
     }
 
     /* Check if user -> car*/
-        public function hasCar(int $userId): bool
+    public function hasCar(int $userId): bool
     {
         $sql = "SELECT COUNT(*) FROM car WHERE id_user = :userId";
         $stmt = $this->pdo->prepare($sql);
@@ -34,10 +34,13 @@ class CarRepository
         return (bool) $stmt->fetchColumn();
     }
 
-    public function getCarById(int $carId): ?array {
-    $stmt = $this->pdo->prepare("SELECT * FROM car WHERE id_car = :id");
-    $stmt->execute(['id' => $carId]);
-    $car = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $car ?: null;
-}
+    public function getCarById(int $carId): ?array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM car WHERE id_car = :id");
+        $stmt->execute(['id' => $carId]);
+        $car = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $car ?: null;
+    }
+
+
 }

@@ -28,3 +28,11 @@ footer {
 .fa-pagelines {
   color: var(--secondary-color);
 }
+
+.fa-envira {
+  color: green;
+}
+
+.fa-ban{
+  color:red;
+}
