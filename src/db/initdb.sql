@@ -15,11 +15,14 @@ CREATE TABLE user (
     password_user VARCHAR(255),
     phone_user VARCHAR(12),
     postcode_user VARCHAR(10),
-    photo_user VARCHAR(255),
     credit_user INT,
     id_role INT,
     FOREIGN KEY (id_role) REFERENCES role(id_role)
 );
+
+ALTER TABLE user ADD avatar_user VARCHAR(255);
+
+ALTER TABLE user DROP photo_user;
 
 
 
@@ -125,7 +128,7 @@ CREATE TABLE Avoir (
     FOREIGN KEY (id_preferences) REFERENCES user_preferences(id_preferences)
 );
 
-ALTER TABLE user ADD avatar_user VARCHAR(255);
+
 
 ALTER TABLE car ADD photo_car VARCHAR(255);
 

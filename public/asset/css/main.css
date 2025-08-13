@@ -9,6 +9,6 @@
 @import './about.css';
 @import './contact.css';
 
-@import './dashboardAdmin.css';
+@import './admin/dashboardAdmin.css';
 @import './admin/userAdmin.css';
 @import './admin/employeAdmin.css';

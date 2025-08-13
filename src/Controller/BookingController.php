@@ -42,10 +42,7 @@ class BookingController
             exit;
         }
 
-        // Récupérer la date de départ liée au trajet pour vérifier la réservation à date
-        // Ici, il faut récupérer la date depuis ta table Carpooling via BookingRepository ou CarpoolingRepository
-        // Supposons que tu as une méthode getDateDepart($carpoolingId) dans BookingRepository
-
+        // vérifier la réservation
         $dateDepart = $this->bookingRepository->getDateDepart($carpoolingId);
         if (!$dateDepart) {
             echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable']);

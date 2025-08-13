@@ -22,7 +22,6 @@ class UserController
 
         switch ($_FILES['avatar_user']['error']) {
             case UPLOAD_ERR_OK:
-                // Tout va bien
                 break;
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
@@ -74,11 +73,30 @@ class UserController
             $userRepo = new UserRepository($pdo);
             $userRepo->updateAvatar($userId, $fileName);
 
-            header('Location: /dashboardUser'); // ou la page d’origine
+            header('Location: /dashboardUser'); 
             exit;
         } else {
             echo json_encode(['success' => false, 'message' => 'Erreur lors du déplacement du fichier.']);
         }
+    }
+
+        public function showDashboardUser()
+    {
+        $userId = $_SESSION['user'];
+
+        $db = new Database();
+        $pdo = $db->getConnection();
+        $userRepo = new UserRepository($pdo);
+
+        $userPrefs = $userRepo->getUserPreferences($userId);
+        $allPrefs = $userRepo->getAllPreferences();
+
+        // Rendre les variables disponibles dans la vue
+        extract([
+            'userPrefs' => $userPrefs,
+            'allPrefs' => $allPrefs
+        ]);
+        require ROOTPATH . 'src/Templates/page/dashboardUser.php';
     }
 
     /*UPDATE USER*/
@@ -119,33 +137,11 @@ class UserController
         exit;
     }
 
-    public function showDashboardUser()
-    {
-        $userId = $_SESSION['user'];
 
-        $db = new Database();
-        $pdo = $db->getConnection();
-        $userRepo = new UserRepository($pdo);
-
-        $userPrefs = $userRepo->getUserPreferences($userId);
-        $allPrefs = $userRepo->getAllPreferences();
-
-        // Rendre les variables disponibles dans la vue
-        extract([
-            'userPrefs' => $userPrefs,
-            'allPrefs' => $allPrefs
-        ]);
-        require ROOTPATH . 'src/Templates/page/dashboardUser.php';
-    }
 
     /* UPDATE PREFERENCES */
     public function updatePreferences()
     {
-        // Démarrer la session si ce n'est pas déjà fait
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         // Vérifier que l'utilisateur est connecté
         if (!isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);

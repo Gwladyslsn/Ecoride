@@ -55,12 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($userRepo->emailExists($email_user)) {
                 echo '<div class="alert alert-success">
                         <p class="text-white bg-gray-900 body-font">Un compte avec cette adresse email existe déjà. Veuillez vous connecter ou utiliser une autre adresse.</p>
-                      </div>';
+                        </div>';
             } else {
                 if ($userRepo->addUser($name_user, $lastname_user, $email_user, $password_user, $id_role, $credit_user)) {
                     echo '<div class="alert alert-success">
                             <p class="text-gray-400 bg-gray-900 body-font">✅ Inscription réussie ! Vous pouvez maintenant vous connecter !</p>
-                          </div>';
+                            </div>';
                 } else {
                     $errors[] = "Une erreur est survenue";
                 }

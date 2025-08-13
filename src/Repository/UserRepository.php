@@ -53,6 +53,28 @@ public function getAllUsers(): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function countUsersWithCredit(): int
+{
+    $stmt = $this->pdo->query("SELECT COUNT(*) AS total FROM user WHERE credit_user > 0");
+    return (int) $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+public function getTotalCredits(): float
+{
+    $sql = "SELECT SUM(credit_user) AS total FROM user";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+    return (float) $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+public function getAverageCredit(): float
+{
+    $sql = "SELECT AVG(credit_user) AS average FROM user";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+    return (float) $stmt->fetch(PDO::FETCH_ASSOC)['average'];
+}
+
     /* get user by id*/
     public function getDataUser(string $id_user): ?array
     {

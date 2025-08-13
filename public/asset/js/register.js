@@ -137,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnSign.addEventListener("click", function (event) {
         event.preventDefault();
-        //console.log("click btn login");
 
         //Nettoyage des input
         let nameSign = nameSignInput.value.trim();
@@ -152,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //Vérification des champs
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (emailSign === "") {
-            errors['emailSign'] = "Le Mail ne doit pas etre vide !"
+            errors['emailSign'] = "Le Mail ne doit pas etre vide "
         } else if (!emailRegex.test(emailSign)) {
             errors['emailSign'] = "Le format de l'adresse mail est invalide !"
         }
