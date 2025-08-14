@@ -29,8 +29,8 @@ class AdminRepository
 
     // trajets avec prise en compte des resa
     public function getCarpoolingsWithBookingStats(): array
-{
-    $query = "
+    {
+        $query = "
         SELECT 
             c.id_carpooling,
             c.departure_city,
@@ -58,8 +58,60 @@ class AdminRepository
         ORDER BY c.departure_date
     ";
 
-    $stmt = $this->pdo->query($query);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCarpoolingStats(): array
+    {
+        $sql = "
+            SELECT
+                -- Covoiturages en cours (date + heure >= maintenant)
+                (SELECT COUNT(*) 
+                 FROM carpooling 
+                 WHERE TIMESTAMP(departure_date, departure_hour) >= NOW()) AS nb_carpoolings_in_progress,
+
+                -- Covoiturages passés (date + heure < maintenant)
+                (SELECT COUNT(*) 
+                 FROM carpooling 
+                 WHERE TIMESTAMP(departure_date, departure_hour) < NOW()) AS nb_carpoolings_past,
+
+                -- Covoiturages prévus aujourd'hui
+                (SELECT COUNT(*) 
+                 FROM carpooling 
+                 WHERE departure_date = CURDATE()) AS nb_carpoolings_today,
+
+                -- Nombre total de covoiturages
+                (SELECT COUNT(*) 
+                 FROM carpooling) AS nb_carpoolings_total,
+
+                 -- Nombre total de réservations
+                (SELECT COUNT(*) 
+                 FROM Participer) AS nb_reservations_total,
+
+                -- Conducteur avec le plus de covoiturages
+                (SELECT driver_id
+                 FROM carpooling
+                 GROUP BY driver_id
+                 ORDER BY COUNT(*) DESC
+                 LIMIT 1) AS top_driver_id,
+
+                -- Trajet le plus populaire
+                (SELECT CONCAT(departure_city, ' → ', arrival_city)
+                 FROM carpooling
+                 GROUP BY departure_city, arrival_city
+                 ORDER BY COUNT(*) DESC
+                 LIMIT 1) AS top_route
+        ";
+
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 
-}
+/*         -- Conducteur avec le plus de covoiturages
+        (SELECT driver_id
+         FROM carpoolings
+         GROUP BY driver_id
+         ORDER BY COUNT(*) DESC
+         LIMIT 1) AS top_driver_id, */

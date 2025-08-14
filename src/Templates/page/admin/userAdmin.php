@@ -20,6 +20,11 @@ $averageCredit = $userRepo->getAverageCredit();
 
 <h1 class="page-title">Gestion des utilisateurs</h1>
 
+<div class="pl-4 text-lg">
+    <i class="fa-solid fa-arrow-left-long"></i>
+    <a href="<?= BASE_URL ?>dashboardAdmin">Retour</a>
+</div>
+
 <div class="main-content p-8">
 
     <div class="stats-grid">
@@ -85,6 +90,11 @@ $averageCredit = $userRepo->getAverageCredit();
             </table>
         </div>
     </section>
+</div>
+
+<div class="pl-4 text-lg">
+    <i class="fa-solid fa-arrow-left-long"></i>
+    <a href="<?= BASE_URL ?>dashboardAdmin">Retour</a>
 </div>
 
 <?php require_once ROOTPATH . '/src/Templates/footer.php'; ?>
