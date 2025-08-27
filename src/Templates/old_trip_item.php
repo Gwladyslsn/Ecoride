@@ -37,7 +37,7 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
     </div>
 
         <div class="trip-actions">
-            <button class="action-btn contact-btn text-black">
+            <button class="action-btn contact-btn text-black" id="">
                 <i class="fa-solid fa-pencil"></i></i>
                 Laisser un avis
             </button>

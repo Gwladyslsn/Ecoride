@@ -4,6 +4,14 @@ use App\Repository\CarpoolingRepository;
 
 $carpoolingRepository = new CarpoolingRepository($pdo);
 
+$modalId = 'modal-discussion-' . $nextTrip['id_carpooling'];
+$btnId = 'btn-contact-user-' . $nextTrip['id_carpooling'];
+$closeId = 'close-modal-' . $nextTrip['id_carpooling'];
+$formId = 'form-message-' . $nextTrip['id_carpooling'];
+
+$passagers = [];
+$passagers = $carpoolingRepository->getPassengersByTripId($nextTrip['id_carpooling']);
+
 ?>
 
 <div class="trip-item">
@@ -22,7 +30,7 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
             <svg class="detail-icon" viewBox="0 0 24 24">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
-            <span><?= htmlspecialchars($nextTrip['nb_passagers']) ?> passager</span>
+            <span><?= htmlspecialchars($nextTrip['nb_passagers']) ?> passager(s)</span>
         </div>
         <div class="detail-item">
             <svg class="detail-icon" viewBox="0 0 24 24">
@@ -39,13 +47,43 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
     </div>
 
     <div class="trip-actions">
-        <button class="action-btn contact-btn text-black">
-            <i class="fa-solid fa-comments"></i></i>
-            Contacter
+        <button class="action-btn contact-btn text-black" id="<?= $btnId ?>">
+            <i class="fa-solid fa-comments"></i>
+            Discuter du trajet
         </button>
-        <button class="action-btn cancel-btn text-black">
+        <button class="action-btn cancel-btn text-black" id="btn-cancel-trip">
             <i class="fa-solid fa-xmark text-blak"></i>
             Annuler trajet
         </button>
+    </div>
+
+
+</div>
+
+<!-- Modal de discussion -->
+<div id="<?= $modalId ?>" class="modal-contact" style="display:none;">
+    <div class="modal-content gap-5">
+        <span class="close" id="<?= $closeId ?>">&times;</span>
+        <h3 class="text-black text-center mb-4">Envoyer un message</h3>
+        <form id="<?= $formId ?>">
+            <div class="mb-4">
+                <label for="recipient" class="text-black">Destinataire :</label>
+                <select id="recipient" name="recipient">
+                    <option value="<?= htmlspecialchars($nextTrip['conducteur']) ?>">
+                        <?= htmlspecialchars($nextTrip['conducteur']) ?> (Conducteur)
+                    </option>
+                    <?php foreach ($passagers as $passager): ?>
+                        <option value="<?= htmlspecialchars($passager['name_user'] . ' ' . $passager['lastname_user']) ?>">
+                            <?= htmlspecialchars($passager['name_user'] . ' ' . $passager['lastname_user']) ?> (Passager)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="message" class="text-black">Votre message :</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn">Envoyer</button>
+        </form>
     </div>
 </div>

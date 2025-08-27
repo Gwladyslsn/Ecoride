@@ -1,6 +1,9 @@
 <?php
 require_once ROOTPATH . '/src/Templates/header.php'; 
 $nextTrips = $nextTrips ?? [];
+$oldTrips = $oldTrips ?? [];
+
+
 ?>
 
 <body>
@@ -17,7 +20,7 @@ $nextTrips = $nextTrips ?? [];
             </div>
             <div class="section-content">
                 <?php if (empty($nextTrips)): ?>
-                    <p>Aucun trajet à venir.</p>
+                    <p class="text-black">Aucun trajet à venir.</p>
                 <?php else: ?>
                 <?php foreach ($nextTrips as $nextTrip): ?>
                 <?php include ROOTPATH . 'src/Templates/next_trip_item.php'; ?>
@@ -140,6 +143,8 @@ $nextTrips = $nextTrips ?? [];
             <a href="<?= BASE_URL ?>Carpoolings">Rechercher un trajet</a>
         </button>
     </div>
+
+    <script src="/asset/js/history.js"></script>
 
     <?php
     require_once ROOTPATH . '/src/Templates/footer.php';?>

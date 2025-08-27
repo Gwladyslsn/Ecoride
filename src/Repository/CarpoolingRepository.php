@@ -235,4 +235,25 @@ class CarpoolingRepository
 
         return $oldTrips;
     }
+
+    public function getPassengersByTripId(int $carpoolingId): array
+{
+    $sql = "
+        SELECT u.name_user, u.lastname_user
+        FROM Participer p
+        INNER JOIN user u ON p.id_user = u.id_user
+        WHERE p.id_carpooling = :carpoolingId
+    ";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['carpoolingId' => $carpoolingId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+    /* DELETE */
+    public function deleteCarpooling(int $id): bool
+    {
+        $sql = "DELETE FROM carpooling WHERE id_carpooling = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute(['id' => $id]);
+    }
 }
