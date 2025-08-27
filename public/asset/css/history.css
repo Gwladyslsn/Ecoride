@@ -189,11 +189,13 @@
     text-decoration: none;
 }
 
+.review-btn,
 .contact-btn {
     background-color: var(--secondary-color);
     color: white;
 }
 
+.review-btn:hover,
 .contact-btn:hover {
     background-color: #709173;
     transform: translateY(-1px);
@@ -224,6 +226,7 @@
 }
 
 /* Modal styles */
+.modal-review,
 .modal-contact {
     position: fixed;
     z-index: 1000;

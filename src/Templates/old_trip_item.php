@@ -3,6 +3,14 @@
 use App\Repository\CarpoolingRepository;
 
 $carpoolingRepository = new CarpoolingRepository($pdo);
+
+$passagers = [];
+$passagers = $carpoolingRepository->getPassengersByTripId($oldTrip['id_carpooling']);
+
+$modalId = 'modal-discussion-' . $oldTrip['id_carpooling'];
+$btnId = 'btn-review-' . $oldTrip['id_carpooling'];
+$closeId = 'close-modal-' . $oldTrip['id_carpooling'];
+$formId = 'form-message-' . $oldTrip['id_carpooling'];
 ?>
 
 <div class="trip-item">
@@ -20,7 +28,7 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
             <svg class="detail-icon" viewBox="0 0 24 24">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
-            <span><?= htmlspecialchars($oldTrip['nb_passagers']) ?> passager</span>
+            <span><?= htmlspecialchars($oldTrip['nb_passagers']) ?> passager(s)</span>
         </div>
         <div class="detail-item">
             <svg class="detail-icon" viewBox="0 0 24 24">
@@ -36,14 +44,55 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
         </div>
     </div>
 
-        <div class="trip-actions">
-            <button class="action-btn contact-btn text-black" id="">
+
+    <div class="trip-actions">
+        <?php if (count($passagers) > 0 && $id_user != $driver_id):  ?>
+            <button class="action-btn review-btn text-black" id="<?= $btnId ?>">
                 <i class="fa-solid fa-pencil"></i></i>
                 Laisser un avis
             </button>
-            <button class="action-btn help-btn text-black">
-                <i class="fa-solid fa-circle-info"></i>
-                Contacter Ecoride
-            </button>
-        </div>
+        <?php endif; ?>
+        <button class="action-btn help-btn text-black">
+            <i class="fa-solid fa-circle-info"></i>
+            Contacter Ecoride
+        </button>
+    </div>
+</div>
+
+<!-- Modal avis -->
+<div id="<?= $modalId ?>" class="modal-review" style="display:none;">
+    <div class="modal-content gap-5">
+        <span class="close text-black" id="<?= $closeId ?>">&times;</span>
+        <h3 class="text-black text-center mb-4">Laisser un avis</h3>
+        <form id="<?= $formId ?>">
+            <div class="mb-4">
+                <label for="recipient" class="text-black">Destinataire :</label>
+                <select id="recipient" name="recipient">
+                    <option value="<?= htmlspecialchars($oldTrip['conducteur']) ?>">
+                        <?= htmlspecialchars($oldTrip['conducteur']) ?> (Conducteur)
+                    </option>
+                    <?php foreach ($passagers as $passager): ?>
+                        <option value="<?= htmlspecialchars($passager['name_user'] . ' ' . $passager['lastname_user']) ?>">
+                            <?= htmlspecialchars($passager['name_user'] . ' ' . $passager['lastname_user']) ?> (Passager)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="mb-4 relative">
+                <label for="rating" class="text-lg text-black">Votre note :</label>
+                <div class="rating w-full text-black" id="rating">
+                    <input type="radio" name="rating-4" value="1" class="mask mask-star-2 bg-green-500" aria-label="1 star" />
+                    <input type="radio" name="rating-4" value="2" class="mask mask-star-2 bg-green-500" aria-label="2 star" />
+                    <input type="radio" name="rating-4" value="3" class="mask mask-star-2 bg-green-500" aria-label="3 star" />
+                    <input type="radio" name="rating-4" value="4" class="mask mask-star-2 bg-green-500" aria-label="4 star" />
+                    <input type="radio" name="rating-4" value="5" class="mask mask-star-2 bg-green-500" aria-label="5 star" />
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="message" class="text-black">Votre message :</label>
+                <textarea id="comment-review" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn">Envoyer</button>
+        </form>
+    </div>
 </div>
