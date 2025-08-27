@@ -291,4 +291,34 @@ class UserController
             echo json_encode(['success' => false, 'message' => 'Erreur lors du déplacement du fichier.']);
         }
     }
+
+    public function showHistoryUser()
+{
+    // Vérifier que l'utilisateur est connecté
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit;
+    }
+
+    $userId = $_SESSION['user'];
+
+    // Connexion à la base de données
+    $db = new Database();
+    $pdo = $db->getConnection();
+
+    // Récupérer les trajets à venir
+    $carpoolingRepo = new \App\Repository\CarpoolingRepository($pdo);
+    $nextTrips = $carpoolingRepo->nextCarpooling($userId);
+    $oldTrips = $carpoolingRepo->oldCarpooling($userId);
+
+    // (Optionnel) Récupérer l'historique des anciens trajets ici si besoin
+
+    // Rendre les variables disponibles dans la vue
+    extract([
+        'nextTrips' => $nextTrips,
+        'oldTrips' => $oldTrips,
+    ]);
+
+    require ROOTPATH . 'src/Templates/page/history.php';
+}
 }

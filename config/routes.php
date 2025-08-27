@@ -30,8 +30,8 @@ return [
         'method' => 'logout'
     ],
     '/history' => [
-        'controller' => App\Controller\PageController::class,
-        'method' => 'history'
+        'controller' => App\Controller\UserController::class,
+        'method' => 'showHistoryUser'
     ],
     '/updateUser' => [
         'controller' => App\Controller\UserController::class,

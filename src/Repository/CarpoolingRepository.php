@@ -79,8 +79,8 @@ class CarpoolingRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             'dateSearch' => $date,
-            'departureCitySearch' => "%".strtolower($departure)."%",
-            'arrivalCitySearch' => "%".strtolower($arrival)."%"
+            'departureCitySearch' => "%" . strtolower($departure) . "%",
+            'arrivalCitySearch' => "%" . strtolower($arrival) . "%"
         ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -103,15 +103,136 @@ class CarpoolingRepository
     }
 
     public function hasAvailableSeats(int $carpoolingId): bool
-{
-    $query = "SELECT nb_place FROM carpooling WHERE id_carpooling = :id_carpooling";
-    $stmt = $this->pdo->prepare($query);
-    $stmt->bindParam(':id_carpooling', $carpoolingId, PDO::PARAM_INT);
-    $stmt->execute();
+    {
+        $query = "SELECT nb_place FROM carpooling WHERE id_carpooling = :id_carpooling";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id_carpooling', $carpoolingId, PDO::PARAM_INT);
+        $stmt->execute();
 
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $result && (int)$result['nb_place'] > 0;
+        return $result && (int)$result['nb_place'] > 0;
+    }
+
+    public function nextCarpooling(int $idUser): array
+    {
+        $sql = " SELECT 
+        c.id_carpooling,
+        c.departure_city,
+        c.arrival_city,
+        c.departure_date,
+        c.departure_hour,
+        (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
+        COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
+        c.price_place,
+        CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
+        'passager' AS role_utilisateur
+        FROM carpooling c
+        INNER JOIN Participer p ON c.id_carpooling = p.id_carpooling
+        INNER JOIN user u ON p.id_user = u.id_user
+        INNER JOIN user driver ON c.driver_id = driver.id_user
+        LEFT JOIN (
+        SELECT id_carpooling, COUNT(*) AS nb_passengers
+        FROM Participer
+        GROUP BY id_carpooling
+        ) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
+        WHERE u.id_user = :idUser1
+        AND CONCAT(c.departure_date, ' ', c.departure_hour) > NOW()
+        
+            UNION
+        
+        SELECT 
+        c.id_carpooling,
+        c.departure_city,
+        c.arrival_city,
+        c.departure_date,
+        c.departure_hour,
+        (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
+        COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
+        c.price_place,
+        CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
+        'conducteur' AS role_utilisateur
+        FROM carpooling c
+        INNER JOIN user driver ON c.driver_id = driver.id_user
+        LEFT JOIN (
+        SELECT id_carpooling, COUNT(*) AS nb_passengers
+        FROM Participer
+        GROUP BY id_carpooling
+        ) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
+        WHERE c.driver_id = :idUser2
+        AND CONCAT(c.departure_date, ' ', c.departure_hour) > NOW()
+        
+        ORDER BY departure_date ASC, departure_hour ASC;
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'idUser1' => $idUser,
+            'idUser2' => $idUser,
+        ]);
+        $nextTrips =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $nextTrips;
+    }
+
+    public function oldCarpooling(int $idUser): array
+    {
+        $sql = " SELECT 
+        c.id_carpooling,
+        c.departure_city,
+        c.arrival_city,
+        c.departure_date,
+        c.departure_hour,
+        (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
+        COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
+        c.price_place,
+        CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
+        'passager' AS role_utilisateur
+        FROM carpooling c
+        INNER JOIN Participer p ON c.id_carpooling = p.id_carpooling
+        INNER JOIN user u ON p.id_user = u.id_user
+        INNER JOIN user driver ON c.driver_id = driver.id_user
+        LEFT JOIN (
+        SELECT id_carpooling, COUNT(*) AS nb_passengers
+        FROM Participer
+        GROUP BY id_carpooling
+        ) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
+        WHERE u.id_user = :idUser1
+        AND CONCAT(c.departure_date, ' ', c.departure_hour) < NOW()
+        
+            UNION
+        
+        SELECT 
+        c.id_carpooling,
+        c.departure_city,
+        c.arrival_city,
+        c.departure_date,
+        c.departure_hour,
+        (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
+        COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
+        c.price_place,
+        CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
+        'conducteur' AS role_utilisateur
+        FROM carpooling c
+        INNER JOIN user driver ON c.driver_id = driver.id_user
+        LEFT JOIN (
+        SELECT id_carpooling, COUNT(*) AS nb_passengers
+        FROM Participer
+        GROUP BY id_carpooling
+        ) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
+        WHERE c.driver_id = :idUser2
+        AND CONCAT(c.departure_date, ' ', c.departure_hour) < NOW()
+        
+        ORDER BY departure_date ASC;
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'idUser1' => $idUser,
+            'idUser2' => $idUser,
+        ]);
+        $oldTrips =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $oldTrips;
+    }
 }
-}
-

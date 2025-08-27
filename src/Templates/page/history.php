@@ -1,7 +1,7 @@
 <?php
-
-
-require_once ROOTPATH . '/src/Templates/header.php'; ?>
+require_once ROOTPATH . '/src/Templates/header.php'; 
+$nextTrips = $nextTrips ?? [];
+?>
 
 <body>
     <div class="container">
@@ -16,71 +16,13 @@ require_once ROOTPATH . '/src/Templates/header.php'; ?>
                 Trajets à venir
             </div>
             <div class="section-content">
-                <div class="trip-item">
-                    <div class="trip-header">
-                        <div class="trip-route">Paris → Lyon</div>
-                        <div class="trip-status status-upcoming">Confirmé</div>
-                    </div>
-                    <div class="trip-details">
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8z" />
-                            </svg>
-                            <span>15 Mars 2025, 08:30</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <span>3 places disponibles</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
-                            </svg>
-                            <span>25€ par personne</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                            </svg>
-                            <span>Conducteur: Marie D.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="trip-item">
-                    <div class="trip-header">
-                        <div class="trip-route">Marseille → Nice</div>
-                        <div class="trip-status status-upcoming">En attente</div>
-                    </div>
-                    <div class="trip-details">
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8z" />
-                            </svg>
-                            <span>22 Mars 2025, 14:00</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <span>1 place réservée</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
-                            </svg>
-                            <span>15€ par personne</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                            </svg>
-                            <span>Conducteur: Pierre L.</span>
-                        </div>
-                    </div>
-                </div>
+                <?php if (empty($nextTrips)): ?>
+                    <p>Aucun trajet à venir.</p>
+                <?php else: ?>
+                <?php foreach ($nextTrips as $nextTrip): ?>
+                <?php include ROOTPATH . 'src/Templates/next_trip_item.php'; ?>
+                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -93,71 +35,13 @@ require_once ROOTPATH . '/src/Templates/header.php'; ?>
                 Trajets passés
             </div>
             <div class="section-content">
-                <div class="trip-item">
-                    <div class="trip-header">
-                        <div class="trip-route">Toulouse → Bordeaux</div>
-                        <div class="trip-status status-completed">Terminé</div>
-                    </div>
-                    <div class="trip-details">
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8z" />
-                            </svg>
-                            <span>5 Mars 2025</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <span>2 passagers</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
-                            </svg>
-                            <span>20€ par personne</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                            </svg>
-                            <span>Conducteur: Vous</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="trip-item">
-                    <div class="trip-header">
-                        <div class="trip-route">Nantes → Rennes</div>
-                        <div class="trip-status status-completed">Terminé</div>
-                    </div>
-                    <div class="trip-details">
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8z" />
-                            </svg>
-                            <span>28 Février 2025</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <span>Passager</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
-                            </svg>
-                            <span>12€</span>
-                        </div>
-                        <div class="detail-item">
-                            <svg class="detail-icon" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                            </svg>
-                            <span>Conducteur: Sophie M.</span>
-                        </div>
-                    </div>
-                </div>
+                <?php if (empty($oldTrips)): ?>
+                    <p class="text-black">Aucun trajet passé.</p>
+                <?php else: ?>
+                <?php foreach ($oldTrips as $oldTrip): ?>
+                <?php include ROOTPATH . 'src/Templates/old_trip_item.php'; ?>
+                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -258,5 +142,4 @@ require_once ROOTPATH . '/src/Templates/header.php'; ?>
     </div>
 
     <?php
-    require_once ROOTPATH . '/src/Templates/footer.php';
-    ?>
+    require_once ROOTPATH . '/src/Templates/footer.php';?>
