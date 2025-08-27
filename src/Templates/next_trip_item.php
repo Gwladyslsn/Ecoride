@@ -37,4 +37,16 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
             <span>Conducteur: <?= htmlspecialchars($nextTrip['conducteur']) ?></span>
         </div>
     </div>
+
+    <div class="trip-actions">
+        <button class="action-btn contact-btn text-black">
+            <i class="fa-solid fa-message text-black"></i>
+            Contacter
+        </button>
+        <button class="action-btn cancel-btn text-black">
+            <i class="fa-solid fa-xmark text-blak"></i>
+            Annuler trajet
+        </button>
+
+    </div>
 </div>

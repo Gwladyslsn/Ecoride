@@ -185,6 +185,54 @@
             fill: #ccc;
             margin-bottom: 15px;
         }
+.trip-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e6ed;
+    justify-content: flex-end;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.contact-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.contact-btn:hover {
+    background-color: #709173;
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    background-color: #ef4444;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+.action-btn i {
+    font-size: 12px;
+}
+
+/* Responsive */
 
         @media (max-width: 768px) {
             .container {
@@ -203,4 +251,13 @@
             .trip-details {
                 grid-template-columns: 1fr;
             }
+
+            .trip-actions {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        justify-content: center;
+        width: 100%;
+    }
         }
