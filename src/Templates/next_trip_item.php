@@ -63,7 +63,7 @@ $passagers = $carpoolingRepository->getPassengersByTripId($nextTrip['id_carpooli
 <!-- Modal de discussion -->
 <div id="<?= $modalId ?>" class="modal-contact" style="display:none;">
     <div class="modal-content gap-5">
-        <span class="close" id="<?= $closeId ?>">&times;</span>
+        <span class="close text-black" id="<?= $closeId ?>">&times;</span>
         <h3 class="text-black text-center mb-4">Envoyer un message</h3>
         <form id="<?= $formId ?>">
             <div class="mb-4">
