@@ -1,12 +1,13 @@
 <?php
+
 use App\Repository\CarpoolingRepository;
+
 $carpoolingRepository = new CarpoolingRepository($pdo);
 ?>
 
 <div class="trip-item">
     <div class="trip-header">
         <div class="trip-route"><?= htmlspecialchars($oldTrip['departure_city']) ?> <i class="fa-solid fa-arrow-right"></i> <?= htmlspecialchars($oldTrip['arrival_city']) ?></div>
-        <div class="trip-status status-completed">Terminé</div>
     </div>
     <div class="trip-details">
         <div class="detail-item">
@@ -34,4 +35,15 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
             <span>Conducteur: <?= htmlspecialchars($oldTrip['conducteur']) ?></span>
         </div>
     </div>
+
+        <div class="trip-actions">
+            <button class="action-btn contact-btn text-black">
+                <i class="fa-solid fa-pencil"></i></i>
+                Laisser un avis
+            </button>
+            <button class="action-btn help-btn text-black">
+                <i class="fa-solid fa-circle-info"></i>
+                Contacter Ecoride
+            </button>
+        </div>
 </div>

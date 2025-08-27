@@ -1,190 +1,171 @@
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-        .page-title {
-            text-align: center;
-            color: var(--darkblue);
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            font-weight: bold;
-        }
+.page-title {
+    text-align: center;
+    color: var(--darkblue);
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
 
-        .section {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(38, 64, 89, 0.1);
-            margin-bottom: 30px;
-            overflow: hidden;
-            border: solid 2px;
-        }
+.section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(38, 64, 89, 0.1);
+    margin-bottom: 30px;
+    overflow: hidden;
+    border: solid 2px;
+}
 
-        .section-header {
-            padding: 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.section-header {
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .upcoming-trips .section-header {
-            background: var(--lightblue);
-        }
+.upcoming-trips .section-header {
+    background: var(--lightblue);
+}
 
-        .past-trips .section-header {
-            background: var(--darkblue);
-        }
+.past-trips .section-header {
+    background: var(--darkblue);
+}
 
-        .reviews-given .section-header {
-            background: var(--orange);
-        }
+.reviews-given .section-header {
+    background: var(--orange);
+}
 
-        .reviews-received .section-header {
-            background: var(--green);
-        }
+.reviews-received .section-header {
+    background: var(--green);
+}
 
-        .section-content {
-            padding: 20px;
-        }
+.section-content {
+    padding: 20px;
+}
 
-        .trip-item,
-        .review-item {
-            background: var(--white);
-            border-left: 4px solid var(--lightblue);
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
+.trip-item,
+.review-item {
+    background: var(--white);
+    border-left: 4px solid var(--lightblue);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
 
-        .trip-item:hover,
-        .review-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
+.trip-item:hover,
+.review-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 
-        .past-trips .trip-item {
-            border-left-color: var(--darkblue);
-        }
+.past-trips .trip-item {
+    border-left-color: var(--darkblue);
+}
 
-        .reviews-given .review-item {
-            border-left-color: var(--orange);
-        }
+.reviews-given .review-item {
+    border-left-color: var(--orange);
+}
 
-        .reviews-received .review-item {
-            border-left-color: var(--green);
-        }
+.reviews-received .review-item {
+    border-left-color: var(--green);
+}
 
-        .trip-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+.trip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
-        .trip-route {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--darkblue);
-        }
+.trip-route {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--darkblue);
+}
 
-        .trip-status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
 
-        .status-upcoming {
-            background: var(--lightblue);
-            color: white;
-        }
 
-        .status-completed {
-            background: var(--green);
-            color: white;
-        }
+.trip-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
 
-        .status-cancelled {
-            background: #dc3545;
-            color: white;
-        }
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--darkblue);
+}
 
-        .trip-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
+.detail-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--orange);
+}
 
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--darkblue);
-        }
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-        .detail-icon {
-            width: 20px;
-            height: 20px;
-            fill: var(--orange);
-        }
+.review-user {
+    font-weight: bold;
+    color: var(--darkblue);
+}
 
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+.review-rating {
+    display: flex;
+    gap: 2px;
+}
 
-        .review-user {
-            font-weight: bold;
-            color: var(--darkblue);
-        }
+.star {
+    color: var(--orange);
+    font-size: 1.2rem;
+}
 
-        .review-rating {
-            display: flex;
-            gap: 2px;
-        }
+.review-text {
+    color: var(--black);
+    font-style: italic;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(245, 245, 245, 0.5);
+    border-radius: 6px;
+}
 
-        .star {
-            color: var(--orange);
-            font-size: 1.2rem;
-        }
+.review-date {
+    color: #666;
+    font-size: 0.9rem;
+}
 
-        .review-text {
-            color: var(--black);
-            font-style: italic;
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(245, 245, 245, 0.5);
-            border-radius: 6px;
-        }
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
 
-        .review-date {
-            color: #666;
-            font-size: 0.9rem;
-        }
+.empty-icon {
+    width: 60px;
+    height: 60px;
+    fill: #ccc;
+    margin-bottom: 15px;
+}
 
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        .empty-icon {
-            width: 60px;
-            height: 60px;
-            fill: #ccc;
-            margin-bottom: 15px;
-        }
 .trip-actions {
     display: flex;
     gap: 10px;
@@ -228,36 +209,46 @@
     transform: translateY(-1px);
 }
 
+.help-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.help-btn:hover {
+    background-color: #cc5e0b;
+    transform: translateY(-1px);
+}
+
 .action-btn i {
     font-size: 12px;
 }
 
 /* Responsive */
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
 
-            .page-title {
-                font-size: 2rem;
-            }
+    .page-title {
+        font-size: 2rem;
+    }
 
-            .trip-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+    .trip-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-            .trip-details {
-                grid-template-columns: 1fr;
-            }
+    .trip-details {
+        grid-template-columns: 1fr;
+    }
 
-            .trip-actions {
+    .trip-actions {
         flex-direction: column;
     }
-    
+
     .action-btn {
         justify-content: center;
         width: 100%;
     }
-        }
+}

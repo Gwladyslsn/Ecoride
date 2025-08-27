@@ -9,7 +9,7 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
 <div class="trip-item">
     <div class="trip-header">
         <div class="trip-route"><?= htmlspecialchars($nextTrip['departure_city']) ?> <i class="fa-solid fa-arrow-right"></i> <?= htmlspecialchars($nextTrip['arrival_city']) ?></div>
-        <div class="trip-status status-upcoming">Confirmé</div>
+
     </div>
     <div class="trip-details">
         <div class="detail-item">
@@ -40,13 +40,12 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
 
     <div class="trip-actions">
         <button class="action-btn contact-btn text-black">
-            <i class="fa-solid fa-message text-black"></i>
+            <i class="fa-solid fa-comments"></i></i>
             Contacter
         </button>
         <button class="action-btn cancel-btn text-black">
             <i class="fa-solid fa-xmark text-blak"></i>
             Annuler trajet
         </button>
-
     </div>
 </div>
