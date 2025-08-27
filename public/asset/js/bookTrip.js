@@ -15,15 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!document.getElementById('confirm-btn')) {
             recapContainer.innerHTML = `
         <div style="
-          background-color: white;
-          border: 1px solid #ccc;
-          border-radius: 12px;
-          padding: 15px;
-          box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-          max-width: 320px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+        max-width: 320px;
         ">
-          <p class="text-black" style="margin-bottom: 15px; font-weight: 500;">Êtes-vous sûr de vouloir réserver ce trajet ? Pensez à vérifier les informations ci-dessus</p>
-          <button id="confirm-btn" style="
+        <p class="text-black" style="margin-bottom: 15px; font-weight: 500;">Êtes-vous sûr de vouloir réserver ce trajet ? Pensez à vérifier les informations ci-dessus</p>
+        <button id="confirm-btn" style="
             background-color: #7A9E7E;
             color: white;
             border: none;
@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cursor: pointer;
             font-weight: 600;
             margin-right: 10px;
-          ">Confirmer</button>
-          <button id="cancel-btn" style="
+        ">Confirmer</button>
+        <button id="cancel-btn" style="
             background-color: #E5690B;
             color: white;
             border: none;
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-          ">Annuler</button>
+        ">Annuler</button>
         </div>
-      `;
+    `;
 
             document.getElementById('confirm-btn').addEventListener('click', confirmBooking);
             document.getElementById('cancel-btn').addEventListener('click', () => {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((res) => res.json())
             .then((response) => {
                 if (response.status === 'ok') {
-                    recapContainer.innerHTML = `<p style="color:green; font-weight:600;">Réservation confirmée avec succès ! Retrouvez votre voyage dans l'onglet "Historique"</p>`;
+                    recapContainer.innerHTML = `<p style="color:green; font-weight:600;">Réservation confirmée avec succès ! Retrouvez votre voyage dans votre onglet "Historique"</p>`;
                     btnBook.style.display = 'none';
                 } else if (response.status === 'deja_reserve') {
                     recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Vous avez déjà réservé ce trajet.</p>`;
