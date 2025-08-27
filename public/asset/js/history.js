@@ -41,5 +41,12 @@ document.addEventListener('DOMContentLoaded', function () {
             form.reset();
         });
     });
+
+
+    // Annuler trajet si conducteur
+
+
+
+    // Annuler participation si passager
 });
 

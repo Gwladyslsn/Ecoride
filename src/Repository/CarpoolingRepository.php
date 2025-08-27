@@ -116,53 +116,56 @@ class CarpoolingRepository
 
     public function nextCarpooling(int $idUser): array
     {
-        $sql = " SELECT 
-        c.id_carpooling,
-        c.departure_city,
-        c.arrival_city,
-        c.departure_date,
-        c.departure_hour,
-        (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
-        COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
-        c.price_place,
-        CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
-        'passager' AS role_utilisateur
-        FROM carpooling c
-        INNER JOIN Participer p ON c.id_carpooling = p.id_carpooling
-        INNER JOIN user u ON p.id_user = u.id_user
-        INNER JOIN user driver ON c.driver_id = driver.id_user
-        LEFT JOIN (
-        SELECT id_carpooling, COUNT(*) AS nb_passengers
-        FROM Participer
-        GROUP BY id_carpooling
-        ) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
-        WHERE u.id_user = :idUser1
-        AND CONCAT(c.departure_date, ' ', c.departure_hour) > NOW()
-        
-            UNION
-        
-        SELECT 
-        c.id_carpooling,
-        c.departure_city,
-        c.arrival_city,
-        c.departure_date,
-        c.departure_hour,
-        (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
-        COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
-        c.price_place,
-        CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
-        'conducteur' AS role_utilisateur
-        FROM carpooling c
-        INNER JOIN user driver ON c.driver_id = driver.id_user
-        LEFT JOIN (
-        SELECT id_carpooling, COUNT(*) AS nb_passengers
-        FROM Participer
-        GROUP BY id_carpooling
-        ) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
-        WHERE c.driver_id = :idUser2
-        AND CONCAT(c.departure_date, ' ', c.departure_hour) > NOW()
-        
-        ORDER BY departure_date ASC, departure_hour ASC;
+        $sql = "SELECT 
+    c.id_carpooling,
+    c.driver_id,
+    c.departure_city,
+    c.arrival_city,
+    c.departure_date,
+    c.departure_hour,
+    (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
+    COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
+    c.price_place,
+    CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
+    'passager' AS role_utilisateur
+FROM carpooling c
+INNER JOIN Participer p ON c.id_carpooling = p.id_carpooling
+INNER JOIN user u ON p.id_user = u.id_user
+INNER JOIN user driver ON c.driver_id = driver.id_user
+LEFT JOIN (
+    SELECT id_carpooling, COUNT(*) AS nb_passengers
+    FROM Participer
+    GROUP BY id_carpooling
+) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
+WHERE u.id_user = :idUser1
+AND CONCAT(c.departure_date, ' ', c.departure_hour) > NOW()
+
+UNION
+
+SELECT 
+    c.id_carpooling,
+    c.driver_id,
+    c.departure_city,
+    c.arrival_city,
+    c.departure_date,
+    c.departure_hour,
+    (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
+    COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
+    c.price_place,
+    CONCAT(driver.name_user, ' ', driver.lastname_user) AS conducteur,
+    'conducteur' AS role_utilisateur
+FROM carpooling c
+INNER JOIN user driver ON c.driver_id = driver.id_user
+LEFT JOIN (
+    SELECT id_carpooling, COUNT(*) AS nb_passengers
+    FROM Participer
+    GROUP BY id_carpooling
+) AS passenger_count ON c.id_carpooling = passenger_count.id_carpooling
+WHERE c.driver_id = :idUser2
+AND CONCAT(c.departure_date, ' ', c.departure_hour) > NOW()
+
+ORDER BY departure_date ASC, departure_hour ASC;
+
     ";
 
         $stmt = $this->pdo->prepare($sql);
@@ -237,17 +240,17 @@ class CarpoolingRepository
     }
 
     public function getPassengersByTripId(int $carpoolingId): array
-{
-    $sql = "
+    {
+        $sql = "
         SELECT u.name_user, u.lastname_user
         FROM Participer p
         INNER JOIN user u ON p.id_user = u.id_user
         WHERE p.id_carpooling = :carpoolingId
     ";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute(['carpoolingId' => $carpoolingId]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['carpoolingId' => $carpoolingId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     /* DELETE */
     public function deleteCarpooling(int $id): bool

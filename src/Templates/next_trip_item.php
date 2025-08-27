@@ -12,6 +12,8 @@ $formId = 'form-message-' . $nextTrip['id_carpooling'];
 $passagers = [];
 $passagers = $carpoolingRepository->getPassengersByTripId($nextTrip['id_carpooling']);
 
+$id_user = $_SESSION['user'];
+$driver_id = $nextTrip['driver_id'];
 ?>
 
 <div class="trip-item">
@@ -51,10 +53,18 @@ $passagers = $carpoolingRepository->getPassengersByTripId($nextTrip['id_carpooli
             <i class="fa-solid fa-comments"></i>
             Discuter du trajet
         </button>
+
+        <?php if ($driver_id === $id_user): ?>
         <button class="action-btn cancel-btn text-black" id="btn-cancel-trip">
             <i class="fa-solid fa-xmark text-blak"></i>
-            Annuler trajet
+            Annuler mon trajet
         </button>
+        <?php else: ?>
+            <button class="action-btn cancel-btn text-black" id="btn-cancel-trip">
+            <i class="fa-solid fa-xmark text-blak"></i>
+            Annuler ma participation
+        </button>
+        <?php endif; ?>
     </div>
 
 
