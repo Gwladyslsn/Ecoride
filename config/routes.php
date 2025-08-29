@@ -114,6 +114,13 @@ return [
     'controller' =>App\Controller\PageController::class,
     'method' => 'employeAdmin'
     ],
+    '/addEmployee' => [
+    'controller' =>App\Controller\PageController::class,
+    'method' => 'addEmployee'
+    ],
+
+
+    
 
 
     

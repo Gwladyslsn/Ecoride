@@ -13,6 +13,10 @@ class AdminRepository
         $this->pdo = $pdo;
     }
 
+
+
+
+    // READ
     // Compte tous les utilisateurs
     public function countUsers(): int
     {

@@ -7,9 +7,9 @@ if (!isset($_SESSION['admin'])) {
 }
 ?>
 
-<h1 class="text-3xl text-center mt-20 mb-10">Mon dashboard</h1>
+<h1 class="text-3xl text-center mt-15 mb-10">Mon dashboard</h1>
 
-<h2 class="text-xl text-center text-green-600 mb-8">Bienvenue sur l'espace de gestion de la plateforme</h2>
+<h2 class="text-xl text-center text-white mb-8">Bienvenue sur votre espace de gestion</h2>
 
 <section class="flex column justify-center">
     <div class="flex flex-wrap justify-center gap-8 w-full">

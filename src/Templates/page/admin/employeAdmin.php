@@ -35,7 +35,9 @@ if (!isset($_SESSION['admin'])) {
             <span class="search-icon">🔍</span>
             <input type="text" class="search-input" placeholder="Rechercher un employé..." id="searchInput">
         </div>
-        <button class="add-btn" onclick="addEmployee()">+ Ajouter un employé</button>
+            <a href="<?= BASE_URL ?>addEmployee" target="_blank" rel="noopener noreferrer">
+                <button class="add-btn" onclick="addEmployee()">+ Ajouter un employé</button>
+            </a>
     </div>
 
     <div class="table-container">

@@ -132,4 +132,9 @@ class PageController extends Controller
     {
         $this->render('Templates/page/admin/employeAdmin', []);
     }
+
+    public function addEmployee()
+    {
+        $this->render('Templates/page/admin/addEmployee', []);
+    }
 }
