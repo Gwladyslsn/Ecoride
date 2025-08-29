@@ -40,8 +40,8 @@ class ReviewController
         $note_reviews    = isset($data['note_reviews']) ? (int)$data['note_reviews'] : null;
         $comment_reviews = $data['comment_reviews'] ?? null;
         $idUser  = $_SESSION['user'] ?? null;
-        $idCarpooling = isset($data['id_carpooling']) ? (int)$data['id_carpooling'] : null;
         $idRecipient = isset($data['id_recipient']) ? (int)$data['id_recipient'] : null;
+        $idCarpooling = isset($data['id_carpooling']) ? (int)$data['id_carpooling'] : null;
 
         if (is_null($note_reviews)) {
             echo json_encode(['status' => 'error', 'message' => 'note_reviews = null']);
@@ -66,9 +66,10 @@ class ReviewController
             $comment_reviews,
             'pending',
             $idUser,
-            $idCarpooling,
-            $idRecipient
+            $idRecipient,
+            $idCarpooling
         );
+
 
         $success = $this->reviewRepository->newTripReview($tripReview);
 
@@ -80,4 +81,5 @@ class ReviewController
 
         exit;
     }
+
 }

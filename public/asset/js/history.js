@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const comment = form.querySelector('textarea[name="comment_reviews"]').value;
             const idCarpooling = form.dataset.carpooling; // via dataset
 
+            console.log('Form ID:', form.id);
+            console.log('Selected recipient:', recipientId);
+
             if (!recipientId || !rating || !idCarpooling) {
                 alert('Veuillez remplir tous les champs.');
                 return;
@@ -70,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.status === 'ok') {
                     const alertSuccess = document.getElementById('alert-success');
                     if (alertSuccess) alertSuccess.classList.remove('hidden');
-                    setTimeout(() => window.location.reload(), 3000);
+                    setTimeout(() => window.location.reload(), 10000);
                 } else {
                     alert('Erreur : ' + (response.message || 'Impossible de sauvegarder'));
                 }

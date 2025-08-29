@@ -150,6 +150,27 @@ public function getAllPreferences(): array
         return false;
     }
 
+    // Dans UserRepository
+public function Userexists(int $idUser): bool {
+    $stmt = $this->pdo->prepare("SELECT 1 FROM user WHERE id_user = :idUser");
+    $stmt->execute(['idUser' => $idUser]);
+    return (bool) $stmt->fetchColumn();
+}
+
+// Dans TripReviewRepository
+public function hasReview(int $idUser, int $idRecipient, int $idCarpooling): bool {
+    $stmt = $this->pdo->prepare("
+        SELECT 1 FROM reviews 
+        WHERE id_user = :idUser AND id_recipient = :idRecipient AND id_carpooling = :idCarpooling
+    ");
+    $stmt->execute([
+        'idUser' => $idUser,
+        'idRecipient' => $idRecipient,
+        'idCarpooling' => $idCarpooling
+    ]);
+    return (bool) $stmt->fetchColumn();
+}
+
     // --- UPDATE ---
 
     /* update avatar user*/

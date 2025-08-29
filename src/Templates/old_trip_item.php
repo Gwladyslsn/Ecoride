@@ -7,6 +7,7 @@ $carpoolingRepository = new CarpoolingRepository($pdo);
 $passagers = [];
 $passagers = $carpoolingRepository->getPassengersByTripId($oldTrip['id_carpooling']);
 
+
 $modalId = 'modal-discussion-' . $oldTrip['id_carpooling'];
 $btnId = 'btn-review-' . $oldTrip['id_carpooling'];
 $closeId = 'close-modal-' . $oldTrip['id_carpooling'];
@@ -46,7 +47,7 @@ $formId = 'form-review-' . $oldTrip['id_carpooling'];
 
 
     <div class="trip-actions">
-        <?php if (count($passagers) > 0 && $id_user != $driver_id):  ?>
+        <?php if (count($passagers) > 0 ):  ?>
             <button class="action-btn review-btn text-black" id="<?= $btnId ?>">
                 <i class="fa-solid fa-pencil"></i></i>
                 Laisser un avis

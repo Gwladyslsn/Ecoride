@@ -243,3 +243,15 @@ SELECT * FROM car c LEFT JOIN user u ON u.id_user = c.id_user WHERE id_car = 1;
 
 SELECT DISTINCT driver_id FROM carpooling
 WHERE driver_id NOT IN (SELECT id_user FROM user);
+
+SELECT * FROM carpooling WHERE id_carpooling = 6;
+
+SELECT * FROM carpooling WHERE id_carpooling = 6;
+SELECT * FROM user WHERE id_user = 10;
+
+SELECT * FROM Participer WHERE id_carpooling = 6 AND id_user = 10;
+SHOW CREATE TABLE reviews;
+
+
+
+

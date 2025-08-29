@@ -254,6 +254,24 @@ ORDER BY departure_date ASC, departure_hour ASC;
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Dans CarpoolingRepository
+public function Carpoolingexists(int $idCarpooling): bool {
+    $stmt = $this->pdo->prepare("SELECT 1 FROM carpooling WHERE id_carpooling = :id");
+    $stmt->execute(['id' => $idCarpooling]);
+    return (bool) $stmt->fetchColumn();
+}
+
+public function isUserInTrip(int $idCarpooling, int $idUser): bool {
+    $stmt = $this->pdo->prepare("
+        SELECT 1 FROM carpooling_passengers 
+        WHERE id_carpooling = :idCarpooling AND id_user = :idUser
+        UNION
+        SELECT 1 FROM carpooling WHERE id_carpooling = :idCarpooling AND driver_id = :idUser
+    ");
+    $stmt->execute(['idCarpooling' => $idCarpooling, 'idUser' => $idUser]);
+    return (bool) $stmt->fetchColumn();
+}
+
     /* DELETE */
     public function deleteCarpooling(int $id): bool
     {
