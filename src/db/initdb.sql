@@ -114,6 +114,12 @@ CREATE TABLE reviews (
     FOREIGN KEY (id_employee) REFERENCES employee(id_employee)
 );
 
+ALTER TABLE reviews ADD COLUMN id_recipient INT NOT NULL AFTER id_user;
+ALTER TABLE reviews 
+ADD CONSTRAINT fk_recipient FOREIGN KEY (id_recipient) REFERENCES user(id_user);
+
+
+
 CREATE TABLE user_preferences (
     id_preferences INT AUTO_INCREMENT PRIMARY KEY,
     smoker BOOL,

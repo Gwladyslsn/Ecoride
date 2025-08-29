@@ -186,6 +186,7 @@ ORDER BY departure_date ASC, departure_hour ASC;
         c.arrival_city,
         c.departure_date,
         c.departure_hour,
+        c.driver_id,
         (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
         COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
         c.price_place,
@@ -211,6 +212,7 @@ ORDER BY departure_date ASC, departure_hour ASC;
         c.arrival_city,
         c.departure_date,
         c.departure_hour,
+        c.driver_id,
         (c.nb_place - COALESCE(passenger_count.nb_passengers, 0)) AS places_restantes,
         COALESCE(passenger_count.nb_passengers, 0) AS nb_passagers,
         c.price_place,
@@ -242,7 +244,7 @@ ORDER BY departure_date ASC, departure_hour ASC;
     public function getPassengersByTripId(int $carpoolingId): array
     {
         $sql = "
-        SELECT u.name_user, u.lastname_user
+        SELECT u.name_user, u.lastname_user, u.id_user
         FROM Participer p
         INNER JOIN user u ON p.id_user = u.id_user
         WHERE p.id_carpooling = :carpoolingId

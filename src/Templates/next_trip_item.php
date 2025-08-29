@@ -79,11 +79,11 @@ $driver_id = $nextTrip['driver_id'];
             <div class="mb-4">
                 <label for="recipient" class="text-black">Destinataire :</label>
                 <select id="recipient" name="recipient">
-                    <option value="<?= htmlspecialchars($nextTrip['conducteur']) ?>">
+                    <option value="<?= $nextTrip['driver_id'] ?>">
                         <?= htmlspecialchars($nextTrip['conducteur']) ?> (Conducteur)
                     </option>
                     <?php foreach ($passagers as $passager): ?>
-                        <option value="<?= htmlspecialchars($passager['name_user'] . ' ' . $passager['lastname_user']) ?>">
+                        <option value="<?= $passager['id_user'] ?>">
                             <?= htmlspecialchars($passager['name_user'] . ' ' . $passager['lastname_user']) ?> (Passager)
                         </option>
                     <?php endforeach; ?>

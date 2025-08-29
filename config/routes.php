@@ -97,6 +97,11 @@ return [
         'controller' => App\Controller\BookingController::class,
         'method' => 'bookTrip'
     ],
+    '/addReview' => [
+        'controller' => App\Controller\ReviewController::class,
+        'method' => 'addReview'
+    ],
+
     '/userAdmin' => [
     'controller' =>App\Controller\PageController::class,
     'method' => 'userAdmin'

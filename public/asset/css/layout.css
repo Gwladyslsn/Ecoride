@@ -25,6 +25,10 @@ footer {
   background-color: var(--text-white);
 }
 
+.bg-green {
+  background-color: var(--secondary-color);
+}
+
 .fa-pagelines {
   color: var(--secondary-color);
 }
