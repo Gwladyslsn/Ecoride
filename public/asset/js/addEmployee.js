@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const errors = {};
 
         // Simple validation
-        if (!LastnameEmployee){
+        if (!LastnameEmployee) {
             errors['LastnameEmployee'] = 'Le champ Nom ne doit pas etre vide.';
         }
-        if (!NameEmployee){
+        if (!NameEmployee) {
             errors['NameEmployee'] = 'Le champ Prénom ne doit pas etre vide.';
         }
-        if (!DateHireEmployee){
+        if (!DateHireEmployee) {
             errors['DateHireEmployee'] = 'Le champ Date d\'embauche ne doit pas etre vide.';
         }
 
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!telPattern.test(TelEmployee)) {
             errors['TelEmployee'] = ('Veuillez entrer un numéro de téléphone valide.');
         }
-        if (TelEmployee === ""){
+        if (TelEmployee === "") {
             errors['TelEmployee'] = "Le champ Téléphone ne doit pas etre vide."
         }
 
@@ -60,8 +60,34 @@ document.addEventListener('DOMContentLoaded', () => {
             errors['PasswordEmployee'] = "Le mot de passe doit contenir au moins un caractère special."
         }
 
-        
-        
+        const inputs = document.querySelectorAll('input[name]');
+        const data = {};
+        inputs.forEach(input => {
+            data[input.name] = input.value.trim();
+        });
+
+        fetch('/addNewEmployee', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(response => {
+                if (response.success) {
+                    //debug : alert('Informations mises à jour !');
+                    setTimeout(()=>{
+                        window.location.reload();
+                    }, 8000);
+                } else {
+                    alert('Erreur : ' + (response.message || 'Impossible de sauvegarder'));
+                }
+            })
+            .catch(() => {
+                alert('Erreur réseau ou serveur');
+            });
+
+
+
 
         //Afficher message si erreur
         if (Object.keys(errors).length > 0) {
@@ -85,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log("Erreurs de validation côté client :", errors);
         } else {
+            feedbackAddEmployee.innerHTML = `L'\employé ${NameEmployee} ${LastnameEmployee} a bien été créé.`;
             //formEmployee.submit();
-            console.log('data');
         }
     });
 

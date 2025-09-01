@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+
 use App\Repository\EmployeeRepository;
 use App\Database\Database;
 
@@ -34,6 +35,42 @@ class EmployeeController
         if (!$data) {
             echo json_encode(['status' => 'error', 'message' => 'Données invalides']);
             exit;
+        }
+
+        $name_employee     = $data['name_employee'] ?? null;
+        $lastname_employee = $data['lastname_employee'] ?? null;
+        $email_employee    = $data['email_employee'] ?? null;
+        $tel_employee      = $data['tel_employee'] ?? null;
+        $password_employee = $data['password_employee'] ?? null;
+        $dateHire_employee = $data['dateHire_employee'] ?? null;
+        $id_role           = 5; // Rôle par défaut pour un employé
+
+        $dataEmployee = [
+            'name_employee'     => $name_employee,
+            'lastname_employee' => $lastname_employee,
+            'email_employee'    => $email_employee,
+            'tel_employee'    => $tel_employee,
+            'password_employee' => $password_employee,
+            'dateHire_employee' => new \DateTime($dateHire_employee),
+            'id_role'           => $id_role
+        ];
+
+        try {
+            $success = $this->employeeRepository->newEmployee($dataEmployee);
+
+            if ($success) {
+                echo json_encode(['success' => true, 'message' => 'Employé ajouté avec succès']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'ajout de l\'employé']);
+            }
+        } catch (\Throwable $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Exception : ' . $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+                'trace'   => $e->getTraceAsString()
+            ]);
         }
     }
 }

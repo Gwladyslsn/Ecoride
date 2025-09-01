@@ -60,6 +60,8 @@ CREATE TABLE employee (
     FOREIGN KEY (id_role) REFERENCES role(id_role)
 );
 
+ALTER TABLE employee 
+ADD COLUMN tel_employee VARCHAR(12) NULL AFTER email_employee;
 
 
 CREATE TABLE car (

@@ -118,6 +118,10 @@ return [
     'controller' =>App\Controller\PageController::class,
     'method' => 'addEmployee'
     ],
+    '/addNewEmployee' => [
+    'controller' =>App\Controller\EmployeeController::class,
+    'method' => 'addNewEmployee'
+    ],
 
 
     

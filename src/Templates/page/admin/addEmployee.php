@@ -13,7 +13,7 @@ require_once ROOTPATH . '/src/Templates/header.php';
 
             <div id="feedbackAddEmployee"></div><br>
 
-            <form class="form-section" id="employeeForm">
+            <form class="form-section" id="employeeForm" method="POST" action="/addNewEmployee">
                 <h2 class="section-title">Informations de l'employé</h2>
 
                 <div class="form-grid">
