@@ -26,23 +26,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const errors = {};
 
         // Simple validation
-        if (!LastnameEmployee || !NameEmployee || !EmailEmployee || !TelEmployee || !DateHireEmployee || !PasswordEmployee) {
-            alert('Veuillez remplir tous les champs obligatoires.');
-            return;
+        if (!LastnameEmployee){
+            errors['LastnameEmployee'] = 'Le champ Nom ne doit pas etre vide.';
+        }
+        if (!NameEmployee){
+            errors['NameEmployee'] = 'Le champ Prénom ne doit pas etre vide.';
+        }
+        if (!DateHireEmployee){
+            errors['DateHireEmployee'] = 'Le champ Date d\'embauche ne doit pas etre vide.';
         }
 
         // Email format validation
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(inputEmailEmployee.value)) {
-            alert('Veuillez entrer une adresse e-mail valide.');
-            return;
+        if (!emailPattern.test(EmailEmployee)) {
+            errors['EmailEmployee'] = 'Veuillez entrer une adresse e-mail valide.';
         }
 
-        // Telephone format validation (basic)
+        // Telephone validation
         const telPattern = /^\+?[0-9\s\-]{7,15}$/;
-        if (!telPattern.test(inputTelEmployee.value)) {
-            alert('Veuillez entrer un numéro de téléphone valide.');
-            return;
+        if (!telPattern.test(TelEmployee)) {
+            errors['TelEmployee'] = ('Veuillez entrer un numéro de téléphone valide.');
+        }
+        if (TelEmployee === ""){
+            errors['TelEmployee'] = "Le champ Téléphone ne doit pas etre vide."
         }
 
         const specialCharRegex = /[^A-Za-z0-9]/;
