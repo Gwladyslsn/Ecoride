@@ -42,7 +42,7 @@ class TripReviewRepository
     return null;
 }
 
-// Dans TripReviewRepository
+
 public function hasReview(int $idUser, int $idRecipient, int $idCarpooling): bool {
     $stmt = $this->pdo->prepare("
         SELECT 1 FROM reviews 
@@ -55,6 +55,57 @@ public function hasReview(int $idUser, int $idRecipient, int $idCarpooling): boo
     ]);
     return (bool) $stmt->fetchColumn();
 }
+
+public function getAllTripReviews()
+{
+    $sql = "SELECT * FROM reviews ORDER BY id_reviews";
+    $stmt = $this->pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function getTripsPending()
+{
+    $sql = "SELECT * FROM reviews WHERE status_reviews = 'pending' ORDER BY id_reviews";
+    $tripsPending = $this->pdo->query($sql);
+    $tripsPending->fetchAll(PDO::FETCH_ASSOC);
+    return $tripsPending;
+}
+
+public function getNoteAverage(): ?float
+{
+    $sql = "SELECT AVG(note_reviews) AS average_note FROM reviews";
+    $stmt = $this->pdo->query($sql);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['average_note'] ?? null;
+}
+
+public function getDataReviews()
+{
+    $sql = "SELECT 
+            r.id_reviews,
+            r.note_reviews,
+            r.comment_reviews,
+            r.date_reviews,
+            u_from.id_user   AS author_id,
+            CONCAT(u_from.name_user, ' ', u_from.lastname_user) AS author_name,
+            u_to.id_user     AS recipient_id,
+            CONCAT(u_to.name_user, ' ', u_to.lastname_user) AS recipient_name,
+            c.departure_city,
+            c.arrival_city,
+            c.departure_date,
+            c.departure_hour
+        FROM reviews r
+        INNER JOIN user u_from ON r.id_user = u_from.id_user
+        INNER JOIN user u_to   ON r.id_recipient = u_to.id_user
+        INNER JOIN carpooling c ON r.id_carpooling = c.id_carpooling
+        ORDER BY r.date_reviews DESC
+    ";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 
 

@@ -73,4 +73,18 @@ class EmployeeController
             ]);
         }
     }
+
+    public function dashboardEmployees()
+    {
+        $pdo = (new Database())->getConnection();
+        $tripReviewRepo = new \App\Repository\TripReviewRepository($pdo);
+
+        $allTripsPending = $tripReviewRepo->getAllTripReviews();
+        $tripsPending = count($allTripsPending);
+        $noteAverage = $tripReviewRepo->getNoteAverage();
+        $reviews = $tripReviewRepo->getDataReviews();
+        $totalReviews = count($reviews);
+
+        require_once ROOTPATH . '/src/Templates/page/employee/dashboardEmployee.php';
+    }
 }

@@ -123,8 +123,8 @@ return [
     'method' => 'addNewEmployee'
     ],
     '/dashboardEmployee' => [
-    'controller' =>App\Controller\PageController::class,
-    'method' => 'dashboardEmployee'
+    'controller' =>App\Controller\EmployeeController::class,
+    'method' => 'dashboardEmployees'
     ],
 
 
