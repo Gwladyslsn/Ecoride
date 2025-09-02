@@ -1,31 +1,40 @@
 <?php
 require_once ROOTPATH . '/src/Templates/header.php';
 
+use App\Repository\AdminRepository;
+use App\Database\Database;
+use App\Repository\EmployeeRepository;
+
 if (!isset($_SESSION['admin'])) {
     header('Location: /register');
     exit;
 }
+
+$pdo = (new Database())->getConnection();
+$employeeRepo = new EmployeeRepository($pdo);
+$employees = $employeeRepo->getAllEmployees();
+$totalEmployees = count($employees);
 ?>
 
 <div class="container">
     <h1 class="page-title">Gestion des employés</h1>
 
-<div class="pl-4 text-lg">
-    <i class="fa-solid fa-arrow-left-long"></i>
-    <a href="<?= BASE_URL ?>dashboardAdmin">Retour</a>
-</div>
+    <div class="pl-4 text-lg">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        <a href="<?= BASE_URL ?>dashboardAdmin">Retour</a>
+    </div>
 
     <div class="stats-grid">
         <div class="stat-card">
-            <span class="stat-number">12</span>
+            <span class="stat-number"><?= $totalEmployees ?></span>
             <div class="stat-label">Employés actifs</div>
         </div>
         <div class="stat-card">
-            <span class="stat-number">47</span>
+            <span class="stat-number"></span>
             <div class="stat-label">Avis en attente</div>
         </div>
         <div class="stat-card">
-            <span class="stat-number">8</span>
+            <span class="stat-number"></span>
             <div class="stat-label">Signalements</div>
         </div>
     </div>
@@ -35,26 +44,39 @@ if (!isset($_SESSION['admin'])) {
             <span class="search-icon">🔍</span>
             <input type="text" class="search-input" placeholder="Rechercher un employé..." id="searchInput">
         </div>
-            <a href="<?= BASE_URL ?>addEmployee" target="_blank" rel="noopener noreferrer">
-                <button class="add-btn" onclick="addEmployee()">+ Ajouter un employé</button>
-            </a>
+        <a href="<?= BASE_URL ?>addEmployee" target="_blank" rel="noopener noreferrer">
+            <button class="add-btn" onclick="addEmployee()">+ Ajouter un employé</button>
+        </a>
     </div>
 
     <div class="table-container">
         <table class="employee-table">
             <thead>
                 <tr>
-                    <th>Employé</th>
-                    <th>Rôle</th>
+                    <th>id employé</th>
+                    <th>Identité</th>
                     <th>Date d'embauche</th>
+                    <th>Email</th>
                     <th>Avis traités</th>
-                    <th>Signalements résolus</th>
-                    <th>Statut compte</th>
+                    <th>Avis en cours de traitement</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="employeeTableBody">
-                <!-- Les données seront insérées ici par JavaScript -->
+                <?php foreach ($employees as $employee): ?>
+                    <tr></tr>
+                    <td><?= htmlspecialchars($employee['id_employee']) ?></td>
+                    <td><?= htmlspecialchars($employee['name_employee']) ?> <?= htmlspecialchars($employee['lastname_employee']) ?></td>
+                    <td><?= htmlspecialchars($employee['dateHire_employee']) ?></td>
+                    <td><?= htmlspecialchars($employee['email_employee']) ?></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a href="/admin/carpooling_edit.php?id=<?= $carpooling['id_carpooling'] ?>" class="btn-link">Modifier</a>
+                        <a href="/admin/carpooling_delete.php?id=<?= $carpooling['id_carpooling'] ?>" class="btn-link">Supprimer</a>
+                    </td>
+                <?php endforeach; ?>
+                </tr>
             </tbody>
         </table>
     </div>

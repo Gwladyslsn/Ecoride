@@ -34,4 +34,11 @@ class EmployeeRepository
             throw $e;
         }
     }
+
+    public function getAllEmployees():array
+    {
+        $sql = "SELECT * FROM employee ORDER BY id_employee";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

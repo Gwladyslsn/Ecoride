@@ -2,9 +2,17 @@
 require_once ROOTPATH . '/src/Templates/header.php';
 
 if (!isset($_SESSION['admin'])) {
-    header('Location: /dashboardAdmin');
+    header('Location: /register');
     exit;
 }
+
+use App\Database\Database;
+use App\Repository\EmployeeRepository;
+
+$pdo = (new Database())->getConnection();
+$employeeRepo = new EmployeeRepository($pdo);
+$employees = $employeeRepo->getAllEmployees();
+$totalEmployees = count($employees);
 ?>
 
 <h1 class="text-3xl text-center mt-15 mb-10">Mon dashboard</h1>
@@ -25,7 +33,7 @@ if (!isset($_SESSION['admin'])) {
         </div>
         <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
             <p class="carpooling text-black">Nombre d'employés</p>
-            <p class="carpooling text-black">2</p>
+            <p class="carpooling text-black"><?= $totalEmployees ?></p>
             <button class="btn btn-dashboard rounded-xl"><a href="/employeAdmin">Gérer les employés</a></button>
         </div>
         <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">

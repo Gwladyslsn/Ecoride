@@ -12,9 +12,8 @@ if (!isset($_SESSION['admin'])) {
 $pdo = (new Database())->getConnection();
 $adminRepo = new AdminRepository($pdo);
 $carpoolings = $adminRepo->getCarpoolingsWithBookingStats();
-
-$adminRepo = new AdminRepository($pdo);
 $stats = $adminRepo->getCarpoolingStats();
+
 ?>
 
 <h1 class="page-title">Gestion des trajets</h1>
