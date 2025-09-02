@@ -41,6 +41,8 @@ require_once ROOTPATH . 'config/config.php';
                             <a href="<?= BASE_URL ?>history" class="text-lg">Historique</a>
                         <?php elseif(isset($_SESSION['admin'])): ?>
                             <a href="<?= BASE_URL ?>dashboardAdmin" class="text-lg">Dashboard</a>
+                            <?php elseif(isset($_SESSION['employee'])): ?>
+                            <a href="<?= BASE_URL ?>dashboardEmployee" class="text-lg">Dashboard</a>
                         <?php else: ?>
                             <a href="<?= BASE_URL ?>about" class="text-lg">A propos</a>
                         <?php endif; ?>
@@ -66,6 +68,8 @@ require_once ROOTPATH . 'config/config.php';
                             <a href="<?= BASE_URL ?>history" class="text-lg">Historique</a>
                             <?php elseif(isset($_SESSION['admin'])): ?>
                             <a href="<?= BASE_URL ?>dashboardAdmin" class="text-lg">Dashboard</a>
+                            <?php elseif(isset($_SESSION['employee'])): ?>
+                            <a href="<?= BASE_URL ?>dashboardEmployee" class="text-lg">Dashboard</a>
                         <?php else: ?>
                             <a href="<?= BASE_URL ?>about" class="text-lg">A propos</a>
                         <?php endif; ?>
@@ -81,7 +85,7 @@ require_once ROOTPATH . 'config/config.php';
             </ul>
         </div>
         <div class="navbar-end">
-            <?php  if (isset($_SESSION['user']) || isset($_SESSION['admin'])): ?>
+            <?php  if (isset($_SESSION['user']) || isset($_SESSION['admin']) || isset($_SESSION['employee'])): ?>
                 <a href="<?= BASE_URL ?>logout" class="btn btn-header">Déconnexion</a>
             <?php else: ?>
                 <a href="<?= BASE_URL ?>register" class="btn btn-header">Connexion / Inscription</a>
