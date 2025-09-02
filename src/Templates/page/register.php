@@ -32,7 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
-        // 2. Sinon tentative connexion utilisateur
+        // 2. Tentative connexion employé
+        $employee = $userRepo->getEmployeeByEmail($email);
+        if ($employee && password_verify($password, $employee['password_employee'])) {
+            $_SESSION['employee'] = $employee;
+            header('Location: dashboardEmployee');
+            exit;
+        }
+
+        // 3. Sinon tentative connexion utilisateur
         $id_user = $userRepo->verifUserExists($email, $password);
         if ($id_user !== false) {
             $_SESSION['user'] = $id_user;

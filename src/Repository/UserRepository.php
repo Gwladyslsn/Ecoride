@@ -47,6 +47,16 @@ class UserRepository
     return $admin ?: null;
 }
 
+    /* get employees*/
+    public function getEmployeeByEmail(string $email)
+    {
+    $sql = "SELECT * FROM employee WHERE email_employee = :email";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['email' => $email]);
+    $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $employee ?: null;
+}
+
 public function getAllUsers(): array
 {
     $stmt = $this->pdo->query("SELECT * FROM user ORDER BY id_user");

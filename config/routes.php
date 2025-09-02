@@ -122,6 +122,10 @@ return [
     'controller' =>App\Controller\EmployeeController::class,
     'method' => 'addNewEmployee'
     ],
+    '/dashboardEmployee' => [
+    'controller' =>App\Controller\PageController::class,
+    'method' => 'dashboardEmployee'
+    ],
 
 
     
