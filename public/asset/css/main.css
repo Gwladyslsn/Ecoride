@@ -14,3 +14,5 @@
 @import './admin/userAdmin.css';
 @import './admin/employeAdmin.css';
 @import './admin/addEmployee.css';
+
+@import './employee/dashboardEmployee.css';
