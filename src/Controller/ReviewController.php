@@ -82,4 +82,22 @@ class ReviewController
         exit;
     }
 
+        public function acceptReview(){
+        $data = json_decode(file_get_contents("php://input"), true);
+        $idReview = $data['id_reviews'] ?? null;
+
+        if (!$idReview) {
+            echo json_encode(['success' => false, 'message' => 'ID manquant']);
+            return;
+        }
+
+        $updated = $this->reviewRepository->updateStatus($idReview, 'accept');
+
+        if ($updated) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Impossible de mettre à jour']);
+        }
+    }
+
 }

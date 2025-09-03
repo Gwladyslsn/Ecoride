@@ -126,6 +126,10 @@ return [
     'controller' =>App\Controller\EmployeeController::class,
     'method' => 'dashboardEmployees'
     ],
+    '/acceptReview'=> [
+    'controller' =>App\Controller\ReviewController::class,
+    'method' => 'acceptReview'
+    ],
 
 
     

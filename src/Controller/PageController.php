@@ -145,4 +145,10 @@ class PageController extends Controller
     {
         $this->render('Templates/page/employee/dashboardEmployee', []);
     }
+    public function acceptReview()
+    {
+        $reviewController = new ReviewController();
+        $data = $reviewController->acceptReview();
+        $this->render('Templates/page/employee/dashboardEmployee', [$data]);
+    }
 }

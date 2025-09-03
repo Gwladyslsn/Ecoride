@@ -6,8 +6,6 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['employee'])) {
     exit;
 }
 
-
-
 ?>
 
 <!-- Header -->
@@ -25,7 +23,7 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['employee'])) {
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-600">Avis en attente</p>
-                    <p class="text-2xl font-bold text-black" id="pending-count"><?= $tripsPending ?></p>
+                    <p class="text-2xl font-bold text-black" id="pending-count"><?= $nbTripsPending ?></p>
                 </div>
                 <div class="p-3 rounded-full bg-orange-light">
                     <svg class="w-6 h-6 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,10 +79,10 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['employee'])) {
     <!-- Avis en attente -->
     <div class="mb-8">
         <h2 class="text-xl font-semibold mb-4 text-darkblue">
-            Avis en attente de traitement (<span id="pending-title-count"><?= $tripsPending ?></span>)
+            Avis en attente de traitement (<span id="pending-title-count"><?= $nbTripsPending ?></span>)
         </h2>
         <div class="grid gap-6">
-            <? foreach ($reviews as $review): ?>
+            <? foreach ($reviews  as $review): ?>
                 <div id="pending-reviews">
                     <div class="review-card bg-white rounded-xl p-6 shadow-sm border" data-review-id="1">
                         <div class="flex items-start justify-between mb-4">
@@ -130,25 +128,26 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['employee'])) {
                         </div>
 
                         <div class="flex space-x-3 pt-4 border-t">
-                            <button onclick="handleReviewAction(1, 'accepted')" class="btn-transition flex items-center space-x-2 px-4 py-2 bg-green text-white rounded-lg font-medium">
+                            <button class="btn-transition flex items-center space-x-2 px-4 py-2 bg-green text-white rounded-lg font-medium">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <span>Accepter</span>
-                            </button>
+                                <span class="accept-review-btn"
+                                    data-review-id="<?= $review['id_reviews'] ?>">Accepter</span>
+                            </button> 
 
-                            <button onclick="handleReviewAction(1, 'rejected')" class="btn-transition flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg font-medium">
+                            <button class="btn-transition flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg font-medium">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <span>Refuser</span>
+                                <a href="" id="btn-reject-review">Refuser</a>
                             </button>
 
                             <button class="btn-transition flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-medium">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                                 </svg>
-                                <span>Contacter</span>
+                                <a href="" id="btn-contact-review">Contacter</a>
                             </button>
                         </div>
                     </div>
@@ -217,6 +216,8 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['employee'])) {
         </div>
     </div>
 </div>
+
+<script src="/asset/js/dashboardEmployee.js"></script>
 
 <?php
 require_once ROOTPATH . '/src/Templates/footer.php'; ?>

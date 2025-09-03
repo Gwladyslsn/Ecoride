@@ -74,15 +74,15 @@ class EmployeeController
         }
     }
 
-    public function dashboardEmployees()
+    public function dashboardEmployees():void
     {
         $pdo = (new Database())->getConnection();
         $tripReviewRepo = new \App\Repository\TripReviewRepository($pdo);
 
-        $allTripsPending = $tripReviewRepo->getAllTripReviews();
-        $tripsPending = count($allTripsPending);
+        $reviewsPending = $tripReviewRepo->getTripsPending();
+        $nbTripsPending = count($reviewsPending);
         $noteAverage = $tripReviewRepo->getNoteAverage();
-        $reviews = $tripReviewRepo->getDataReviews();
+        $reviews = $tripReviewRepo->getDataNewReviews();
         $totalReviews = count($reviews);
 
         require_once ROOTPATH . '/src/Templates/page/employee/dashboardEmployee.php';
