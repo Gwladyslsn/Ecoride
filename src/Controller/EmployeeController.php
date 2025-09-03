@@ -79,8 +79,10 @@ class EmployeeController
         $pdo = (new Database())->getConnection();
         $tripReviewRepo = new \App\Repository\TripReviewRepository($pdo);
 
-        $reviewsPending = $tripReviewRepo->getTripsPending();
+        $reviewsPending = $tripReviewRepo->getReviewsPending();
         $nbTripsPending = count($reviewsPending);
+        $reviewsAccept = $tripReviewRepo->getReviewsAccept();
+        $nbTripsAccept = count($reviewsAccept);
         $noteAverage = $tripReviewRepo->getNoteAverage();
         $reviews = $tripReviewRepo->getDataNewReviews();
         $totalReviews = count($reviews);

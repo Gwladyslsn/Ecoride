@@ -85,13 +85,33 @@ class ReviewController
         public function acceptReview(){
         $data = json_decode(file_get_contents("php://input"), true);
         $idReview = $data['id_reviews'] ?? null;
+        $idEmployee = $_SESSION['employee']['id_employee'];
 
         if (!$idReview) {
             echo json_encode(['success' => false, 'message' => 'ID manquant']);
             return;
         }
 
-        $updated = $this->reviewRepository->updateStatus($idReview, 'accept');
+        $updated = $this->reviewRepository->updateStatus($idReview, 'accept',  $idEmployee);
+
+        if ($updated) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Impossible de mettre à jour']);
+        }
+    }
+
+    public function rejectReview(){
+        $data = json_decode(file_get_contents("php://input"), true);
+        $idReview = $data['id_reviews'] ?? null;
+        $idEmployee = $_SESSION['employee']['id_employee'];
+
+        if (!$idReview) {
+            echo json_encode(['success' => false, 'message' => 'ID manquant']);
+            return;
+        }
+
+        $updated = $this->reviewRepository->updateStatus($idReview, 'reject',  $idEmployee);
 
         if ($updated) {
             echo json_encode(['success' => true]);

@@ -65,12 +65,20 @@ class TripReviewRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTripsPending(): array
+    public function getReviewsPending(): array
 {
     $sql = "SELECT * FROM reviews WHERE status_reviews = 'pending' ORDER BY id_reviews";
     $stmt = $this->pdo->query($sql);
     $tripsPending = $stmt->fetchAll(\PDO::FETCH_ASSOC);
     return $tripsPending; // ✅ retourne un array
+}
+
+    public function getReviewsAccept(): array
+{
+    $sql = "SELECT * FROM reviews WHERE status_reviews = 'accept' ORDER BY id_reviews";
+    $stmt = $this->pdo->query($sql);
+    $tripsAccepted = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $tripsAccepted; // ✅ retourne un array
 }
 
     public function getNoteAverage(): ?float
@@ -109,13 +117,18 @@ class TripReviewRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateStatus(int $idReview, string $status): bool
+
+    // UPDATE
+
+    public function updateStatus(int $idReview, string $status, int $idEmployee): bool
     {
-        $sql = "UPDATE reviews SET status_reviews = :status WHERE id_reviews = :id";
+        $sql = "UPDATE reviews SET status_reviews = :status, id_employee = :id_employee WHERE id_reviews = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             'status' => $status,
-            'id' => $idReview
+            'id_employee' => $idEmployee,
+            'id' => $idReview            
+
         ]);
     }
 }

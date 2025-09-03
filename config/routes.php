@@ -130,6 +130,10 @@ return [
     'controller' =>App\Controller\ReviewController::class,
     'method' => 'acceptReview'
     ],
+    '/rejectReview'=> [
+    'controller' =>App\Controller\ReviewController::class,
+    'method' => 'rejectReview'
+    ],
 
 
     

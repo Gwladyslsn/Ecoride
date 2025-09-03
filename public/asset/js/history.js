@@ -44,9 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const comment = form.querySelector('textarea[name="comment_reviews"]').value;
             const idCarpooling = form.dataset.carpooling; // via dataset
 
-            console.log('Form ID:', form.id);
-            console.log('Selected recipient:', recipientId);
-
             if (!recipientId || !rating || !idCarpooling) {
                 alert('Veuillez remplir tous les champs.');
                 return;
@@ -59,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 id_carpooling: parseInt(idCarpooling),
                 id_user: null
             };
-            console.log(data);
             
 
             try {

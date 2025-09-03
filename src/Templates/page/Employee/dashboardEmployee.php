@@ -77,6 +77,9 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['employee'])) {
     </div>
 
     <!-- Avis en attente -->
+    <div id="loader-overlay" style="display:none;">
+        <div class="loader"></div>
+    </div>
     <div class="mb-8">
         <h2 class="text-xl font-semibold mb-4 text-darkblue">
             Avis en attente de traitement (<span id="pending-title-count"><?= $nbTripsPending ?></span>)
@@ -128,19 +131,19 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['employee'])) {
                         </div>
 
                         <div class="flex space-x-3 pt-4 border-t">
-                            <button class="btn-transition flex items-center space-x-2 px-4 py-2 bg-green text-white rounded-lg font-medium">
+                            <button class="accept-review-btn btn-transition flex items-center space-x-2 px-4 py-2 bg-green text-white rounded-lg font-medium" data-review-id="<?= $review['id_reviews'] ?>">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <span class="accept-review-btn"
-                                    data-review-id="<?= $review['id_reviews'] ?>">Accepter</span>
-                            </button> 
+                                <span>Accepter</span>
 
-                            <button class="btn-transition flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg font-medium">
+                            </button>
+
+                            <button class="reject-review-btn btn-transition flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg font-medium" data-review-id="<?= $review['id_reviews'] ?>">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <a href="" id="btn-reject-review">Refuser</a>
+                                <span >Refuser</span>
                             </button>
 
                             <button class="btn-transition flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-medium">

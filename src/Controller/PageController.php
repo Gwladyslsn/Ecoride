@@ -148,7 +148,9 @@ class PageController extends Controller
     public function acceptReview()
     {
         $reviewController = new ReviewController();
-        $data = $reviewController->acceptReview();
-        $this->render('Templates/page/employee/dashboardEmployee', [$data]);
+        $reviewController->acceptReview();
+        $this->render(
+            template: 'Templates/page/employee/dashboardEmployee'
+        );
     }
 }
