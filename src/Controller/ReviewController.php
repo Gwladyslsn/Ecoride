@@ -73,8 +73,10 @@ class ReviewController
 
         $success = $this->reviewRepository->newTripReview($tripReview);
 
-        if ($success) {
+        if ($success && $success > 0) {
             echo json_encode(['status' => 'ok', 'message' => 'Avis ajouté avec succès']);
+        } elseif ($success === 0) {
+            echo json_encode(['status' => 'error', 'message' => 'Vous avez déjà laissé un avis pour cet utilisateur sur ce trajet']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout de l\'avis']);
         }
@@ -82,7 +84,8 @@ class ReviewController
         exit;
     }
 
-        public function acceptReview(){
+    public function acceptReview()
+    {
         $data = json_decode(file_get_contents("php://input"), true);
         $idReview = $data['id_reviews'] ?? null;
         $idEmployee = $_SESSION['employee']['id_employee'];
@@ -101,7 +104,8 @@ class ReviewController
         }
     }
 
-    public function rejectReview(){
+    public function rejectReview()
+    {
         $data = json_decode(file_get_contents("php://input"), true);
         $idReview = $data['id_reviews'] ?? null;
         $idEmployee = $_SESSION['employee']['id_employee'];
@@ -119,5 +123,4 @@ class ReviewController
             echo json_encode(['success' => false, 'message' => 'Impossible de mettre à jour']);
         }
     }
-
 }

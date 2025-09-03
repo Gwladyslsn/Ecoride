@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const rating = form.querySelector('input[name="note_reviews"]:checked')?.value;
             const comment = form.querySelector('textarea[name="comment_reviews"]').value;
             const idCarpooling = form.dataset.carpooling; // via dataset
+            const loaderOverlay = document.getElementById('loader-overlay');
 
             if (!recipientId || !rating || !idCarpooling) {
                 alert('Veuillez remplir tous les champs.');
@@ -56,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 id_carpooling: parseInt(idCarpooling),
                 id_user: null
             };
-            
+
+            loaderOverlay.style.display = 'flex';
 
             try {
                 const res = await fetch('/addReview', {
@@ -69,13 +71,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.status === 'ok') {
                     const alertSuccess = document.getElementById('alert-success');
                     if (alertSuccess) alertSuccess.classList.remove('hidden');
-                    setTimeout(() => window.location.reload(), 10000);
+                    setTimeout(() => window.location.reload(), 2000);
                 } else {
                     alert('Erreur : ' + (response.message || 'Impossible de sauvegarder'));
+                    loaderOverlay.style.display = 'none';
                 }
 
             } catch (error) {
-                console.error('Fetch error:', error);
+                //console.error('Fetch error:', error);
+                loaderOverlay.style.display = 'none';
                 alert('Erreur réseau ou serveur : ' + error.message);
             }
 

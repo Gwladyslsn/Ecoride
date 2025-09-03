@@ -1,5 +1,5 @@
 <?php
-require_once ROOTPATH . '/src/Templates/header.php'; 
+require_once ROOTPATH . '/src/Templates/header.php';
 $nextTrips = $nextTrips ?? [];
 $oldTrips = $oldTrips ?? [];
 
@@ -9,7 +9,9 @@ $oldTrips = $oldTrips ?? [];
 <body>
     <div class="container">
         <h1 class="page-title">Mon Historique</h1>
-
+        <div id="loader-overlay" style="display:none;">
+            <div class="loader"></div>
+        </div>
         <!-- Trajets à venir -->
         <section class="section upcoming-trips">
             <div class="section-header">
@@ -22,9 +24,9 @@ $oldTrips = $oldTrips ?? [];
                 <?php if (empty($nextTrips)): ?>
                     <p class="text-black">Aucun trajet à venir.</p>
                 <?php else: ?>
-                <?php foreach ($nextTrips as $nextTrip): ?>
-                <?php include ROOTPATH . 'src/Templates/next_trip_item.php'; ?>
-                <?php endforeach; ?>
+                    <?php foreach ($nextTrips as $nextTrip): ?>
+                        <?php include ROOTPATH . 'src/Templates/next_trip_item.php'; ?>
+                    <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </section>
@@ -41,9 +43,9 @@ $oldTrips = $oldTrips ?? [];
                 <?php if (empty($oldTrips)): ?>
                     <p class="text-black">Aucun trajet passé.</p>
                 <?php else: ?>
-                <?php foreach ($oldTrips as $oldTrip): ?>
-                <?php include ROOTPATH . 'src/Templates/old_trip_item.php'; ?>
-                <?php endforeach; ?>
+                    <?php foreach ($oldTrips as $oldTrip): ?>
+                        <?php include ROOTPATH . 'src/Templates/old_trip_item.php'; ?>
+                    <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </section>
@@ -147,4 +149,4 @@ $oldTrips = $oldTrips ?? [];
     <script src="/asset/js/history.js"></script>
 
     <?php
-    require_once ROOTPATH . '/src/Templates/footer.php';?>
+    require_once ROOTPATH . '/src/Templates/footer.php'; ?>

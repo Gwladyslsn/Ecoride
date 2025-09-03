@@ -16,32 +16,46 @@ class TripReviewRepository
     }
 
     public function newTripReview(TripReview $tripReview): ?int
-    {
-        $sql = "INSERT INTO reviews (
-        note_reviews, date_reviews, comment_reviews, status_reviews, id_user, id_recipient, id_carpooling
-    ) VALUES (
-        :note_reviews, :date_reviews, :comment_reviews, :status_reviews, :id_user, :id_recipient, :id_carpooling
-    )";
+{
+    // Vérifier si l'avis existe déjà
+    $sqlCheck = "SELECT COUNT(*) FROM reviews 
+                WHERE id_user = :id_user 
+                AND id_recipient = :id_recipient 
+                AND id_carpooling = :id_carpooling";
+    $stmtCheck = $this->pdo->prepare($sqlCheck);
+    $stmtCheck->execute([
+        'id_user' => $tripReview->getIdUser(),
+        'id_recipient' => $tripReview->getIdRecipient(),
+        'id_carpooling' => $tripReview->getIdCarpooling()
+    ]);
 
-        $stmt = $this->pdo->prepare($sql);
+    if ($stmtCheck->fetchColumn() > 0) {
+        // L'avis existe déjà
+        return 0; // <- on renvoie 0 pour indiquer "déjà laissé"
+    }
 
-        $success = $stmt->execute([
-            'note_reviews'   => $tripReview->getNoteReviews(),
-            'date_reviews'   => $tripReview->getDateReviews()->format('Y-m-d'),
-            'comment_reviews' => $tripReview->getCommentReviews(),
-            'status_reviews' => $tripReview->getStatusReviews(),
-            'id_user'        => $tripReview->getIdUser(),
-            'id_recipient'   => $tripReview->getIdRecipient(),
-            'id_carpooling'  => $tripReview->getIdCarpooling(),
+    // Insérer l'avis
+    $sqlInsert = "INSERT INTO reviews (note_reviews, date_reviews, comment_reviews, status_reviews, id_user, id_recipient, id_carpooling) 
+                VALUES (:note, :date, :comment, :status, :id_user, :id_recipient, :id_carpooling)";
+    $stmtInsert = $this->pdo->prepare($sqlInsert);
+
+    try {
+        $stmtInsert->execute([
+            'note' => $tripReview->getNoteReviews(),
+            'date' => $tripReview->getDateReviews()->format('Y-m-d H:i:s'),
+            'comment' => $tripReview->getCommentReviews(),
+            'status' => $tripReview->getStatusReviews(),
+            'id_user' => $tripReview->getIdUser(),
+            'id_recipient' => $tripReview->getIdRecipient(),
+            'id_carpooling' => $tripReview->getIdCarpooling()
         ]);
 
-
-        if ($success) {
-            return (int)$this->pdo->lastInsertId();
-        }
-
-        return null;
+        return (int)$this->pdo->lastInsertId();
+    } catch (\PDOException $e) {
+        return null; // erreur SQL
     }
+}
+
 
 
     public function hasReview(int $idUser, int $idRecipient, int $idCarpooling): bool
