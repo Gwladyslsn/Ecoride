@@ -134,6 +134,14 @@ return [
     'controller' =>App\Controller\ReviewController::class,
     'method' => 'rejectReview'
     ],
+    '/api/stats/carpoolings-per-day'=> [
+        'controller' =>App\Controller\StatsController::class,
+        'method' => 'getCarpoolingsPerDay'
+    ],
+    '/api/stats/credits-per-day'=> [
+        'controller' =>App\Controller\StatsController::class,
+        'method' => 'getCreditPerDay'
+    ],
 
 
     
