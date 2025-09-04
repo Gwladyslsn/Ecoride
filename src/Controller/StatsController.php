@@ -2,44 +2,41 @@
 
 namespace App\Controller;
 
+use App\Repository\StatsRepository;
 use App\Database\Database;
-
 class StatsController
 {
-    private \PDO $pdo;
+    private StatsRepository $statRepo;
 
     public function __construct()
     {
-        $this->pdo = (new Database())->getConnection();
+        $pdo = (new Database())->getConnection();
+        $this->statRepo = new StatsRepository($pdo);
     }
 
-    // Renvoyer le nombre de covoiturages par jour
     public function getCarpoolingsPerDay(): void
     {
         header('Content-Type: application/json');
 
-        $sql = "SELECT DATE(departure_date) as day, COUNT(*) as total
-                FROM carpooling
-                GROUP BY day
-                ORDER BY day ASC";
-
-        $stmt = $this->pdo->query($sql);
-        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        echo json_encode($results);
+        try {
+            $results = $this->statRepo->getCarpoolingsPerDay();
+            echo json_encode($results);
+        } catch (\Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Impossible de récupérer les statistiques']);
+        }
     }
 
-    // renvoie le nombre de crédit gagnés par jour
-    public function getCreditPerDay(): void
+    public function getCreditsPerDay()
     {
         header('Content-Type: application/json');
 
-        $sql = "SELECT DATE(earned_at) as day, SUM(credits_earned) as total
-                FROM platform_earnings
-                GROUP BY day
-                ORDER BY day ASC";
-        $creditPerDay = $this->pdo->query($sql);
-        $results = $creditPerDay->fetchAll(\PDO::FETCH_ASSOC);
-        echo json_encode($results);
+        try {
+            $results = $this->statRepo->getCreditsPerDay();
+            echo json_encode($results);
+        } catch (\Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Impossible de récupérer les statistiques']);
+        }
     }
 }

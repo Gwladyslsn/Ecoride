@@ -140,7 +140,7 @@ return [
     ],
     '/api/stats/credits-per-day'=> [
         'controller' =>App\Controller\StatsController::class,
-        'method' => 'getCreditPerDay'
+        'method' => 'getCreditsPerDay'
     ],
 
 

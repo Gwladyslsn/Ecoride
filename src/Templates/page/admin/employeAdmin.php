@@ -1,16 +1,12 @@
 <?php
 require_once ROOTPATH . '/src/Templates/header.php';
 
-use App\Repository\AdminRepository;
-use App\Database\Database;
-use App\Repository\EmployeeRepository;
 
 if (!isset($_SESSION['admin'])) {
     header('Location: /register');
     exit;
 }
 
-$pdo = (new Database())->getConnection();
 
 ?>
 
