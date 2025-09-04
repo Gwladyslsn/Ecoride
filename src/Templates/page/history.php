@@ -52,46 +52,18 @@ $oldTrips = $oldTrips ?? [];
         <!-- Avis donnés -->
         <section class="section reviews-given">
             <div class="section-header">
-                <svg class="detail-icon" viewBox="0 0 24 24">
+                <svg class="detail-icon bg-white" viewBox="0 0 24 24">
                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                 </svg>
                 Avis donnés
             </div>
-            <div class="section-content">
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="review-user">Marie D.</div>
-                        <div class="review-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                    </div>
-                    <div class="review-text">
-                        "Excellente conductrice ! Très ponctuelle et conduite souple. Conversation agréable pendant le trajet. Je recommande vivement."
-                    </div>
-                    <div class="review-date">Trajet Paris → Lyon - 15 Mars 2025</div>
-                </div>
-
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="review-user">Sophie M.</div>
-                        <div class="review-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">☆</span>
-                        </div>
-                    </div>
-                    <div class="review-text">
-                        "Bon trajet dans l'ensemble. Quelques minutes de retard au départ mais elle a prévenu. Véhicule propre et conduite sécurisée."
-                    </div>
-                    <div class="review-date">Trajet Nantes → Rennes - 28 Février 2025</div>
-                </div>
-            </div>
+            <?php if (empty($reviewsGiven)): ?>
+                <p class="text-black">Aucun avis donné.</p>
+            <?php else: ?>
+                <?php foreach ($reviewsGiven as $reviewGiven): ?>
+                    <?php include ROOTPATH . 'src/Templates/given_review.php'; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </section>
 
         <!-- Avis reçus -->
@@ -103,15 +75,15 @@ $oldTrips = $oldTrips ?? [];
                 Avis reçues
             </div>
             <?php if (empty($reviewsReceived)): ?>
-                    <p class="text-black">Aucun avis reçus.</p>
-                <?php else: ?>
-                    <?php foreach ($reviewsReceived as $reviewReceived): ?>
-                        <?php include ROOTPATH . 'src/Templates/received_review.php'; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <p class="text-black">Aucun avis reçu.</p>
+            <?php else: ?>
+                <?php foreach ($reviewsReceived as $reviewReceived): ?>
+                    <?php include ROOTPATH . 'src/Templates/received_review.php'; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </section>
     </div>
-    
+
     <div class="text-center mt-8">
         <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
             <a href="<?= BASE_URL ?>Carpoolings">Rechercher un trajet</a>

@@ -136,19 +136,39 @@ class ReviewController
             exit;
         }
 
-        $userId = $_SESSION['user']['id_user']; // Ajuste selon ta structure de session
-        echo "<pre>showReviewsReceived() appelé, userId = {$userId}</pre>";
+        $userId = $_SESSION['user']['id_user'];
 
         // Appel au repository
         $reviewsReceived = $this->tripReviewRepository->getReviewReceivedByUser($userId);
-        echo "<pre>";
-        var_dump($reviewsReceived);
-        echo "</pre>";
+
 
         extract([
-            'reviewsReceived' => $reviewsReceived
+            'reviewsReceived' => $reviewsReceived,
         ]);
         require_once ROOTPATH . 'src/Templates/page/received_review.php';
-        // Dans la vue, tu pourras utiliser $reviewsReceived
+    }
+
+    public function showReviewGiven(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            // Redirection ou message d'erreur
+            header('Location: /register');
+            exit;
+        }
+
+        $userId = $_SESSION['user']['id_user']; 
+
+        // Appel au repository
+        $reviewsGiven = $this->tripReviewRepository->getReviewGivenByUser($userId);
+
+
+        extract([
+            'reviewsGiven' => $reviewsGiven
+        ]);
+        require_once ROOTPATH . 'src/Templates/page/given_review.php';
     }
 }

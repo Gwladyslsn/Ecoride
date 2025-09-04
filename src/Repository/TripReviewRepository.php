@@ -208,6 +208,37 @@ class TripReviewRepository
     return $reviewsReceived;
 }
 
+    public function getReviewGivenByUser(int $id_user): array
+{
+    $sql = "SELECT 
+                r.id_reviews,
+                r.note_reviews,
+                r.comment_reviews,
+                r.date_reviews,
+                r.status_reviews,
+                u_from.id_user   AS author_id,
+                CONCAT(u_from.name_user, ' ', u_from.lastname_user) AS author_name,
+                u_to.id_user     AS recipient_id,
+                CONCAT(u_to.name_user, ' ', u_to.lastname_user) AS recipient_name,
+                c.departure_city,
+                c.arrival_city,
+                c.departure_date,
+                c.departure_hour
+            FROM reviews r
+            INNER JOIN user u_from ON r.id_user = u_from.id_user
+            INNER JOIN user u_to   ON r.id_recipient = u_to.id_user
+            INNER JOIN carpooling c ON r.id_carpooling = c.id_carpooling
+            WHERE r.id_user = :id_user
+            AND r.status_reviews = 'accept' OR r.status_reviews = 'pending'
+            ORDER BY r.date_reviews DESC
+    ";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['id_user' => $id_user]);
+    $reviewsGiven = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $reviewsGiven;
+}
+
     
 
     // UPDATE

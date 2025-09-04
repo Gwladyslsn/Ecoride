@@ -313,6 +313,7 @@ class UserController
 
     $tripReviewRepository = new \App\Repository\TripReviewRepository($pdo);
     $reviewsReceived = $tripReviewRepository->getReviewReceivedByUser($userId);
+    $reviewsGiven = $tripReviewRepository->getReviewGivenByUser($userId);
 
 
     // Rendre les variables disponibles dans la vue
