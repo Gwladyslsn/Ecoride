@@ -15,37 +15,53 @@ $employees = $employeeRepo->getAllEmployees();
 $totalEmployees = count($employees);
 ?>
 
-<h1 class="text-3xl text-center mt-15 mb-10">Mon dashboard</h1>
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl sm:text-3xl lg:text-4xl text-center mt-8 sm:mt-12 lg:mt-15 mb-6 sm:mb-8 lg:mb-10 font-bold">Mon dashboard</h1>
 
-
-
-
-
-<section class="flex column justify-center mb-8">
-    <div class="flex flex-wrap justify-center gap-6 w-full">
-        <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
-            <p class="carpooling text-black">Nombre d'employés</p>
-            <p class="carpooling text-black"><?= $totalEmployees ?></p>
-            <button class="btn btn-dashboard rounded-xl"><a href="/employeAdmin">Gérer les employés</a></button>
+    <!-- Section des cartes de statistiques -->
+    <section class="mb-8 sm:mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 w-full">
+            <div class="card-dashboard border bg-white rounded-xl p-4 sm:p-6 shadow-md hover:shadow-lg transition-shadow">
+                <p class="carpooling text-black text-sm sm:text-base font-semibold mb-2">Nombre d'employés</p>
+                <p class="carpooling text-black text-xl sm:text-2xl font-bold mb-4"><?= $totalEmployees ?></p>
+                <button class="btn btn-dashboard rounded-xl w-full sm:w-auto px-4 py-2">
+                    <a href="/employeAdmin" class="block">Gérer les employés</a>
+                </button>
+            </div>
+            
+            <div class="card-dashboard border bg-white rounded-xl p-4 sm:p-6 shadow-md hover:shadow-lg transition-shadow">
+                <p class="user text-black text-sm sm:text-base font-semibold mb-2">Nombre d'utilisateurs</p>
+                <p class="user text-black text-xl sm:text-2xl font-bold mb-4"><?= $totalUsers ?></p>
+                <button class="btn btn-dashboard rounded-xl w-full sm:w-auto px-4 py-2">
+                    <a href="/userAdmin" class="block">Gérer les utilisateurs</a>
+                </button>
+            </div>
+            
+            <div class="card-dashboard border bg-white rounded-xl p-4 sm:p-6 shadow-md hover:shadow-lg transition-shadow md:col-span-2 xl:col-span-1">
+                <p class="carpooling text-black text-sm sm:text-base font-semibold mb-2">Nombre de covoiturages</p>
+                <p class="carpooling text-black text-xl sm:text-2xl font-bold mb-4"><?= $totalCarpoolings ?></p>
+                <button class="btn btn-dashboard rounded-xl w-full sm:w-auto px-4 py-2">
+                    <a href="/carpoolingAdmin" class="block">Gérer les covoiturages</a>
+                </button>
+            </div>
         </div>
-        <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
-            <p class="user text-black">Nombre d'utilisateurs</p>
-            <p class="user text-black"><?= $totalUsers ?></p>
-            <button class="btn btn-dashboard rounded-xl"><a href="/userAdmin">Gérer les utilisateurs</a></button>
-        </div>
-        <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
-            <p class="carpooling text-black">Nombre de covoiturages</p>
-            <p class="carpooling text-black"><?= $totalCarpoolings ?></p>
-            <button class="btn btn-dashboard rounded-xl"><a href="/carpoolingAdmin">Gérer les covoiturages</a></button>
-        </div>
-    </div>
-</section>
+    </section>
 
-<section>
-    <h2 class="text-center text-2xl mt-15 mb-10">Chiffres clés</h2>
-    <canvas id="ridesPerDayChart" class="bg-white rounded-xl w-[700px] h-[400px] mx-auto mb-10"></canvas>
-    <canvas id="creditsPerDayChart" class="bg-white rounded-xl w-[700px] h-[400px] mx-auto"></canvas>
-</section>
+    <!-- Section des graphiques -->
+    <section>
+        <h2 class="text-center text-xl sm:text-2xl lg:text-3xl mt-8 sm:mt-12 lg:mt-15 mb-6 sm:mb-8 lg:mb-10 font-bold">Chiffres clés</h2>
+        
+        <div class="space-y-6 sm:space-y-8 lg:space-y-10">
+            <div class="w-full overflow-x-auto">
+                <canvas id="ridesPerDayChart" class="bg-white rounded-xl w-full max-w-4xl h-64 sm:h-80 lg:h-96 mx-auto shadow-md"></canvas>
+            </div>
+            
+            <div class="w-full overflow-x-auto">
+                <canvas id="creditsPerDayChart" class="bg-white rounded-xl w-full max-w-4xl h-64 sm:h-80 lg:h-96 mx-auto shadow-md"></canvas>
+            </div>
+        </div>
+    </section>
+</div>
 
 <script src="/asset/js/charts.js"></script>
 
