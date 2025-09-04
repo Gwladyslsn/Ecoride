@@ -8,12 +8,12 @@ use App\Database\Database;
 
 class ReviewController
 {
-    private TripReviewRepository $reviewRepository;
+    private TripReviewRepository $tripReviewRepository;
 
     public function __construct()
     {
         $pdo = (new Database())->getConnection();
-        $this->reviewRepository = new TripReviewRepository($pdo);
+        $this->tripReviewRepository = new TripReviewRepository($pdo);
     }
 
     /*Ajoute un avis depuis un formulaire */
@@ -71,7 +71,7 @@ class ReviewController
         );
 
 
-        $success = $this->reviewRepository->newTripReview($tripReview);
+        $success = $this->tripReviewRepository->newTripReview($tripReview);
 
         if ($success && $success > 0) {
             echo json_encode(['status' => 'ok', 'message' => 'Avis ajouté avec succès']);
@@ -95,7 +95,7 @@ class ReviewController
             return;
         }
 
-        $updated = $this->reviewRepository->updateStatus($idReview, 'accept',  $idEmployee);
+        $updated = $this->tripReviewRepository->updateStatus($idReview, 'accept',  $idEmployee);
 
         if ($updated) {
             echo json_encode(['success' => true]);
@@ -115,12 +115,40 @@ class ReviewController
             return;
         }
 
-        $updated = $this->reviewRepository->updateStatus($idReview, 'reject',  $idEmployee);
+        $updated = $this->tripReviewRepository->updateStatus($idReview, 'reject',  $idEmployee);
 
         if ($updated) {
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Impossible de mettre à jour']);
         }
+    }
+
+    public function showReviewsReceived(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            // Redirection ou message d'erreur
+            header('Location: /register');
+            exit;
+        }
+
+        $userId = $_SESSION['user']['id_user']; // Ajuste selon ta structure de session
+        echo "<pre>showReviewsReceived() appelé, userId = {$userId}</pre>";
+
+        // Appel au repository
+        $reviewsReceived = $this->tripReviewRepository->getReviewReceivedByUser($userId);
+        echo "<pre>";
+        var_dump($reviewsReceived);
+        echo "</pre>";
+
+        extract([
+            'reviewsReceived' => $reviewsReceived
+        ]);
+        require_once ROOTPATH . 'src/Templates/page/received_review.php';
+        // Dans la vue, tu pourras utiliser $reviewsReceived
     }
 }

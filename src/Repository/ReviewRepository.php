@@ -19,19 +19,8 @@ class ReviewRepository
         $this->collection = $client->ecoride->reviews;
     }
 
-    public function getAllReviews(): array
-    {
-        $cursor = $this->collection->find();
-        $reviews = [];
-
-        foreach ($cursor as $review) {
-            $reviews[] = $review;
-        }
-
-        return $reviews;
-    }
-
-    public function addReview(array $data): array
+    //CREATE
+        public function addReview(array $data): array
     {
         $name = $data['nameReviewEcoride'] ?? '';
         $email = $data['emailReviewEcoride'] ?? '';
@@ -52,4 +41,20 @@ class ReviewRepository
             'insertedId' => (string)$result->getInsertedId()
         ];
     }
+
+    //READ
+
+    public function getAllReviews(): array
+    {
+        $cursor = $this->collection->find();
+        $reviews = [];
+
+        foreach ($cursor as $review) {
+            $reviews[] = $review;
+        }
+
+        return $reviews;
+    }
+
+
 }

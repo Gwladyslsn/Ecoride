@@ -3,7 +3,6 @@ require_once ROOTPATH . '/src/Templates/header.php';
 $nextTrips = $nextTrips ?? [];
 $oldTrips = $oldTrips ?? [];
 
-
 ?>
 
 <body>
@@ -101,45 +100,18 @@ $oldTrips = $oldTrips ?? [];
                 <svg class="detail-icon" viewBox="0 0 24 24">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                Avis reçus
+                Avis reçues
             </div>
-            <div class="section-content">
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="review-user">Thomas K.</div>
-                        <div class="review-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                    </div>
-                    <div class="review-text">
-                        "Passager très sympa et respectueux. À l'heure au point de rendez-vous et bonne compagnie pour le trajet. Je le recommande !"
-                    </div>
-                    <div class="review-date">Trajet Toulouse → Bordeaux - 5 Mars 2025</div>
-                </div>
-
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="review-user">Lisa R.</div>
-                        <div class="review-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                    </div>
-                    <div class="review-text">
-                        "Conducteur fiable et sérieux. Trajet agréable, véhicule en bon état. Communication claire avant le départ. Parfait !"
-                    </div>
-                    <div class="review-date">Trajet Toulouse → Bordeaux - 5 Mars 2025</div>
-                </div>
-            </div>
+            <?php if (empty($reviewsReceived)): ?>
+                    <p class="text-black">Aucun avis reçus.</p>
+                <?php else: ?>
+                    <?php foreach ($reviewsReceived as $reviewReceived): ?>
+                        <?php include ROOTPATH . 'src/Templates/received_review.php'; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
         </section>
     </div>
+    
     <div class="text-center mt-8">
         <button class="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition-colors shadow-md">
             <a href="<?= BASE_URL ?>Carpoolings">Rechercher un trajet</a>

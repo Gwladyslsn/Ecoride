@@ -311,7 +311,9 @@ class UserController
     $nextTrips = $carpoolingRepo->nextCarpooling($userId);
     $oldTrips = $carpoolingRepo->oldCarpooling($userId);
 
-    // (Optionnel) Récupérer l'historique des anciens trajets ici si besoin
+    $tripReviewRepository = new \App\Repository\TripReviewRepository($pdo);
+    $reviewsReceived = $tripReviewRepository->getReviewReceivedByUser($userId);
+
 
     // Rendre les variables disponibles dans la vue
     extract([

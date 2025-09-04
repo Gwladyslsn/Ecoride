@@ -101,7 +101,10 @@ return [
         'controller' => App\Controller\ReviewController::class,
         'method' => 'addReview'
     ],
-
+    '/showReviewsReceived'=> [
+    'controller' =>App\Controller\ReviewController::class,
+    'method' => 'showReviewsReceived'
+    ],
     '/userAdmin' => [
     'controller' =>App\Controller\PageController::class,
     'method' => 'userAdmin'
