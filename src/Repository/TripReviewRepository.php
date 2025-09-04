@@ -83,16 +83,32 @@ class TripReviewRepository
 {
     $sql = "SELECT * FROM reviews WHERE status_reviews = 'pending' ORDER BY id_reviews";
     $stmt = $this->pdo->query($sql);
-    $tripsPending = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    return $tripsPending; // ✅ retourne un array
+    $reviewPending = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $reviewPending; // ✅ retourne un array
 }
 
     public function getReviewsAccept(): array
 {
     $sql = "SELECT * FROM reviews WHERE status_reviews = 'accept' ORDER BY id_reviews";
     $stmt = $this->pdo->query($sql);
-    $tripsAccepted = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    return $tripsAccepted; // ✅ retourne un array
+    $reviewsAccepted = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $reviewsAccepted; // ✅ retourne un array
+}
+
+    public function getReviewsReject(): array
+{
+    $sql = "SELECT * FROM reviews WHERE status_reviews = 'reject' ORDER BY id_reviews";
+    $stmt = $this->pdo->query($sql);
+    $reviewsRejected = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $reviewsRejected; // ✅ retourne un array
+}
+
+    public function getReviewsProcessed(): array
+{
+    $sql = "SELECT * FROM reviews WHERE status_reviews = 'reject' OR status_reviews = 'accept' ORDER BY id_reviews";
+    $stmt = $this->pdo->query($sql);
+    $reviewsProcessed = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $reviewsProcessed; // ✅ retourne un array
 }
 
     public function getNoteAverage(): ?float
@@ -100,7 +116,9 @@ class TripReviewRepository
         $sql = "SELECT AVG(note_reviews) AS average_note FROM reviews";
         $stmt = $this->pdo->query($sql);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['average_note'] ?? null;
+        return $result['average_note'] !== null 
+        ? round((float)$result['average_note'], 1) 
+        : null;
     }
 
     public function getDataNewReviews()
@@ -110,6 +128,7 @@ class TripReviewRepository
             r.note_reviews,
             r.comment_reviews,
             r.date_reviews,
+            r.status_reviews,
             u_from.id_user   AS author_id,
             CONCAT(u_from.name_user, ' ', u_from.lastname_user) AS author_name,
             u_to.id_user     AS recipient_id,
@@ -123,6 +142,35 @@ class TripReviewRepository
         INNER JOIN user u_to   ON r.id_recipient = u_to.id_user
         INNER JOIN carpooling c ON r.id_carpooling = c.id_carpooling
         WHERE r.status_reviews = 'pending'
+        ORDER BY r.date_reviews DESC
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getDataOldReviews()
+    {
+        $sql = "SELECT 
+            r.id_reviews,
+            r.note_reviews,
+            r.comment_reviews,
+            r.date_reviews,
+            r.status_reviews,
+            u_from.id_user   AS author_id,
+            CONCAT(u_from.name_user, ' ', u_from.lastname_user) AS author_name,
+            u_to.id_user     AS recipient_id,
+            CONCAT(u_to.name_user, ' ', u_to.lastname_user) AS recipient_name,
+            c.departure_city,
+            c.arrival_city,
+            c.departure_date,
+            c.departure_hour
+        FROM reviews r
+        INNER JOIN user u_from ON r.id_user = u_from.id_user
+        INNER JOIN user u_to   ON r.id_recipient = u_to.id_user
+        INNER JOIN carpooling c ON r.id_carpooling = c.id_carpooling
+        WHERE r.status_reviews = 'accept' OR r.status_reviews = 'reject'
         ORDER BY r.date_reviews DESC
     ";
 

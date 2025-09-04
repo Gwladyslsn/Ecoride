@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const btnCheckReview = document.querySelector('.accept-review-btn');
     const btnRejectReview = document.querySelector('.reject-review-btn');
     const btnContactReview = document.getElementById('btn-contact-review');
 
     btnCheckReview.addEventListener('click', (e) => {
         e.preventDefault();
+        console.log('click accept');
+        
         const reviewId = btnCheckReview.dataset.reviewId;
         //console.log('Review ID to accept:', reviewId);
         const text = btnCheckReview.querySelector('.btn-text');

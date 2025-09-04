@@ -80,12 +80,16 @@ class EmployeeController
         $tripReviewRepo = new \App\Repository\TripReviewRepository($pdo);
 
         $reviewsPending = $tripReviewRepo->getReviewsPending();
-        $nbTripsPending = count($reviewsPending);
+        $nbReviewPending = count($reviewsPending);
         $reviewsAccept = $tripReviewRepo->getReviewsAccept();
         $nbTripsAccept = count($reviewsAccept);
         $noteAverage = $tripReviewRepo->getNoteAverage();
-        $reviews = $tripReviewRepo->getDataNewReviews();
-        $totalReviews = count($reviews);
+        $newReviews = $tripReviewRepo->getDataNewReviews();
+        $allReviews = $tripReviewRepo->getAllTripReviews();
+        $totalReviews = count($allReviews);
+        $allReviewProcessed = $tripReviewRepo->getReviewsProcessed();
+        $nbReviewProcessed = count($allReviewProcessed);
+        $processedReviews = $tripReviewRepo->getDataOldReviews();
 
         require_once ROOTPATH . '/src/Templates/page/employee/dashboardEmployee.php';
     }
