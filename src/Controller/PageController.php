@@ -110,7 +110,7 @@ class PageController extends Controller
         $this->render('/Templates/page/admin/homeAdmin', []);
     }
 
-    public function dashboardAdmin(): void
+    public function dashboardAdmin():void
     {
         $adminController = new AdminController();
         $data = $adminController->getDashboardData();
@@ -130,7 +130,10 @@ class PageController extends Controller
 
     public function employeAdmin()
     {
-        $this->render('Templates/page/admin/employeAdmin', []);
+        $adminController = new AdminController();
+        $data = $adminController->EmployeeAdminDashboard();
+
+        $this->render('Templates/page/admin/employeAdmin', [$data]);
     }
 
     public function addEmployee()

@@ -11,9 +11,7 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $pdo = (new Database())->getConnection();
-$employeeRepo = new EmployeeRepository($pdo);
-$employees = $employeeRepo->getAllEmployees();
-$totalEmployees = count($employees);
+
 ?>
 
 <div class="container">
@@ -30,11 +28,11 @@ $totalEmployees = count($employees);
             <div class="stat-label">Employés actifs</div>
         </div>
         <div class="stat-card">
-            <span class="stat-number"></span>
+            <span class="stat-number"><?= $nbReviewPending ?></span>
             <div class="stat-label">Avis en attente</div>
         </div>
         <div class="stat-card">
-            <span class="stat-number"></span>
+            <span class="stat-number"><?= $nbReviewProcessed ?></span>
             <div class="stat-label">Avis traités</div>
         </div>
     </div>
