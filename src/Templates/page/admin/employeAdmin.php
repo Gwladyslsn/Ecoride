@@ -35,7 +35,7 @@ $totalEmployees = count($employees);
         </div>
         <div class="stat-card">
             <span class="stat-number"></span>
-            <div class="stat-label">Signalements</div>
+            <div class="stat-label">Avis traités</div>
         </div>
     </div>
 
@@ -57,8 +57,8 @@ $totalEmployees = count($employees);
                     <th>Identité</th>
                     <th>Date d'embauche</th>
                     <th>Email</th>
-                    <th>Avis traités</th>
-                    <th>Avis en cours de traitement</th>
+                    <th>Avis acceptés</th>
+                    <th>Avis rejetés</th>
                     <th>Actions</th>
                 </tr>
             </thead>

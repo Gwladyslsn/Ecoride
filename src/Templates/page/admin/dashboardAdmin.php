@@ -22,6 +22,11 @@ $totalEmployees = count($employees);
 <section class="flex column justify-center">
     <div class="flex flex-wrap justify-center gap-8 w-full">
         <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
+        <p class="carpooling text-black">Nombre d'employés</p>
+        <p class="carpooling text-black"><?= $totalEmployees ?></p>
+        <button class="btn btn-dashboard rounded-xl"><a href="/employeAdmin">Gérer les employés</a></button>
+    </div>
+        <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
             <p class="user text-black">Nombre d'utilisateurs</p>
             <p class="user text-black"><?= $totalUsers ?></p>
             <button class="btn btn-dashboard rounded-xl"><a href="/userAdmin">Gérer les utilisateurs</a></button>
@@ -31,18 +36,7 @@ $totalEmployees = count($employees);
             <p class="carpooling text-black"><?= $totalCarpoolings ?></p>
             <button class="btn btn-dashboard rounded-xl"><a href="/carpoolingAdmin">Gérer les covoiturages</a></button>
         </div>
-        <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
-            <p class="carpooling text-black">Nombre d'employés</p>
-            <p class="carpooling text-black"><?= $totalEmployees ?></p>
-            <button class="btn btn-dashboard rounded-xl"><a href="/employeAdmin">Gérer les employés</a></button>
-        </div>
-        <div class="card-dashboard border bg-white w-1/3 rounded-xl p-4">
-            <p class="carpooling text-black">Nombre d'avis</p>
-            <p class="carpooling text-black">5</p>
-            <button class="btn btn-dashboard rounded-xl"><a href="">Gérer les avis</a></button>
-        </div>
     </div>
-
 </section>
 
 
