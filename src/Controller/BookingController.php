@@ -91,4 +91,88 @@ class BookingController
 
         exit;
     }
+
+    public function deleteBooking()
+    {
+        // Vérifie si l'utilisateur est connecté
+        if (!isset($_SESSION['user'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Utilisateur non connecté']);
+            exit;
+        }
+
+        $userId = $_SESSION['user'];
+
+        // Récupère les données POST
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        if (!is_array($data) || !isset($data['carpoolingId'])) {
+            echo json_encode(['status' => 'error', 'message' => 'ID du trajet manquant ou données invalides']);
+            exit;
+        }
+
+        $carpoolingId = (int) $data['carpoolingId'];
+
+        // Appelle la méthode repository
+        $cancelBooking = $this->bookingRepository->cancelBooking($userId, $carpoolingId);
+
+        switch ($cancelBooking) {
+            case true:
+                echo json_encode(['status' => 'ok', 'message' => 'Réservation annulée avec succès']);
+                break;
+            case 'user_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Utilisateur introuvable']);
+                break;
+            case 'carpooling_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable']);
+                break;
+            case 'booking_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Réservation introuvable']);
+                break;
+            default:
+                echo json_encode(['status' => 'error', 'message' => 'Erreur.']);
+        }
+    }
+
+    public function deleteTrip()
+    {
+        // Vérifie si l'utilisateur est connecté
+        if (!isset($_SESSION['user'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Utilisateur non connecté']);
+            exit;
+        }
+
+        $userId = $_SESSION['user'];
+
+        // Récupère les données POST
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        if (!is_array($data) || !isset($data['carpoolingId'])) {
+            echo json_encode(['status' => 'error', 'message' => 'ID du trajet manquant ou données invalides']);
+            exit;
+        }
+
+        $carpoolingId = (int) $data['carpoolingId'];
+
+        // Appelle la méthode repository
+        $cancelTrip = $this->bookingRepository->cancelTrip($userId, $carpoolingId);
+
+        switch ($cancelTrip) {
+            case true:
+                echo json_encode(['status' => 'ok', 'message' => 'Réservation annulée avec succès']);
+                break;
+            case 'user_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Utilisateur introuvable']);
+                break;
+            case 'carpooling_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable']);
+                break;
+            case 'booking_not_found':
+                echo json_encode(['status' => 'error', 'message' => 'Réservation introuvable']);
+                break;
+            default:
+                echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'annulation']);
+        }
+    }
 }

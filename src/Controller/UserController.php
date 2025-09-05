@@ -189,7 +189,7 @@ class UserController
 
 
     /* UPDATE VOITURE */
-    public function updateCar()
+    public function updateCar():void
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Requête invalide ou utilisateur non connecté.']);

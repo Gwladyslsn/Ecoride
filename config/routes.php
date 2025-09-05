@@ -97,6 +97,14 @@ return [
         'controller' => App\Controller\BookingController::class,
         'method' => 'bookTrip'
     ],
+    '/cancelBooking' => [
+        'controller' => App\Controller\BookingController::class,
+        'method' => 'deleteBooking'
+    ],
+    '/cancelTrip' => [
+        'controller' => App\Controller\BookingController::class,
+        'method' => 'deleteTrip'
+    ],
     '/addReview' => [
         'controller' => App\Controller\ReviewController::class,
         'method' => 'addReview'

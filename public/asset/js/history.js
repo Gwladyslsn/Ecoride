@@ -23,6 +23,97 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
+    // Annuler sa participation au trajet
+    document.querySelectorAll('[id^="btn-cancel-booking-"]').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            const id = btn.id.replace('btn-cancel-booking-', '');
+            const modal = document.getElementById('modal-cancel-booking-' + id);
+            if (!modal) return;
+
+            modal.style.display = 'flex';
+
+            const carpoolingId = btn.dataset.carpoolingId;
+            const btnYes = modal.querySelector('.btn-yes');
+            const btnNo = modal.querySelector('.btn-no');
+
+            btnYes.onclick = async () => {
+                try {
+                    const response = await fetch('/cancelBooking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({carpoolingId})
+                    });
+                    const data = await response.json();
+                    alert(data.message);
+
+                    if (data.status === 'ok') {
+                        // Optionnel : masquer le trajet annulé
+                        document.getElementById('trip-' + id)?.remove();
+                    }
+
+                    modal.style.display = 'none';
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            btnNo.onclick = () => {
+                modal.style.display = 'none';
+            };
+        });
+    });
+
+
+    // Annuler son trajet
+    document.querySelectorAll('[id^="btn-cancel-trip-"]').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            const id = btn.id.replace('btn-cancel-trip-', '');
+            const modal = document.getElementById('modal-cancel-trip-' + id);
+            if (!modal) return;
+
+            modal.style.display = 'flex';
+
+            const carpoolingId = btn.dataset.carpoolingId;
+            const btnYes = modal.querySelector('.btn-yes');
+            const btnNo = modal.querySelector('.btn-no');
+
+            btnYes.onclick = async () => {
+                try {
+                    const response = await fetch('/cancelTrip', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({carpoolingId})
+                    });
+                    const data = await response.json();
+                    alert(data.message);
+
+                    if (data.status === 'ok') {
+                        // Optionnel : masquer le trajet annulé
+                        document.getElementById('trip-' + id)?.remove();
+                    }
+
+                    modal.style.display = 'none';
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            btnNo.onclick = () => {
+                modal.style.display = 'none';
+            };
+        });
+    });
+
+
+
+
+
+
+
+
     // --- AVIS TRAJET ---
     document.querySelectorAll('[id^="btn-review-"]').forEach(btn => {
         btn.addEventListener('click', e => {
@@ -89,6 +180,9 @@ document.addEventListener('DOMContentLoaded', function () {
             form.reset();
         });
     });
+
+
+
 
 });
 

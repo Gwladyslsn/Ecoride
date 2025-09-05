@@ -9,6 +9,12 @@ $btnId = 'btn-contact-user-' . $nextTrip['id_carpooling'];
 $closeId = 'close-modal-' . $nextTrip['id_carpooling'];
 $formId = 'form-message-' . $nextTrip['id_carpooling'];
 
+$btnCancelBookId = 'btn-cancel-booking-' . $nextTrip['id_carpooling'];
+$modalCancelBookId = 'modal-cancel-booking-' . $nextTrip['id_carpooling'];
+
+$btnCancelTripId = 'btn-cancel-trip-' . $nextTrip['id_carpooling'];
+$modalCancelTripId = 'modal-cancel-trip-' . $nextTrip['id_carpooling'];
+
 $passagers = [];
 $passagers = $carpoolingRepository->getPassengersByTripId($nextTrip['id_carpooling']);
 
@@ -49,18 +55,24 @@ $driver_id = $nextTrip['driver_id'];
     </div>
 
     <div class="trip-actions">
+        <?php if ($driver_id === $id_user): ?>
+        <button class="action-btn start-btn text-black" id="btn-start-trip">
+            <i class="fa-solid fa-xmark text-blak"></i>
+            Démarrer le trajet
+        </button>
+        <?php endif; ?>
         <button class="action-btn contact-btn text-black" id="<?= $btnId ?>">
             <i class="fa-solid fa-comments"></i>
             Discuter du trajet
         </button>
 
         <?php if ($driver_id === $id_user): ?>
-        <button class="action-btn cancel-btn text-black" id="btn-cancel-trip">
+        <button class="action-btn cancel-btn text-black" id="<?= $btnCancelTripId ?>" data-carpooling-id="<?= $nextTrip['id_carpooling'] ?>">
             <i class="fa-solid fa-xmark text-blak"></i>
             Annuler mon trajet
         </button>
         <?php else: ?>
-            <button class="action-btn cancel-btn text-black" id="btn-cancel-trip">
+            <button class="action-btn cancel-btn text-black" id="<?= $btnCancelBookId ?>" data-carpooling-id="<?= $nextTrip['id_carpooling'] ?>">
             <i class="fa-solid fa-xmark text-blak"></i>
             Annuler ma participation
         </button>
@@ -95,5 +107,29 @@ $driver_id = $nextTrip['driver_id'];
             </div>
             <button type="submit" class="btn">Envoyer</button>
         </form>
+    </div>
+</div>
+
+<!-- Modal annulation participation -->
+<div id="<?= $modalCancelBookId ?>" class="modal-cancel" style="display:none;">
+    <div class="modal-content gap-5">
+        <span class="close text-black" id="<?= $closeId ?>">&times;</span>
+        <h3 class="text-black text-center mb-4">Voulez-vous vraiment annuler votre participation à ce trajet ?</h3>
+        <div class="flex gap-4 justify-center">
+            <button type="button" class="btn btn-yes" data-user-id="<?= $_SESSION['user']['id_user'] ?>">Oui</button>
+            <button type="button" class="btn btn-no">Non</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal annulation trajet -->
+<div id="<?= $modalCancelTripId ?>" class="modal-cancel" style="display:none;">
+    <div class="modal-content gap-5">
+        <span class="close text-black" id="<?= $closeId ?>">&times;</span>
+        <h3 class="text-black text-center mb-4">Voulez-vous vraiment annuler ce trajet ?</h3>
+        <div class="flex gap-4 justify-center">
+            <button type="button" class="btn btn-yes" data-user-id="<?= $_SESSION['user']['id_user'] ?>">Oui</button>
+            <button type="button" class="btn btn-no">Non</button>
+        </div>
     </div>
 </div>
