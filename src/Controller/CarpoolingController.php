@@ -105,25 +105,41 @@ class CarpoolingController
     // READ
 
     public function showTrips()
-    {
-        $database = new Database();
-        $pdo = $database->getConnection();
+{
+    $database = new Database();
+    $pdo = $database->getConnection();
 
-        $carpoolingRepo = new CarpoolingRepository($pdo);
+    $carpoolingRepo = new CarpoolingRepository($pdo);
 
-        $departure = $_POST['departureCitySearch'] ?? null;
-        $arrival = $_POST['arrivalCitySearch'] ?? null;
-        $date = $_POST['dateSearch'] ?? null;
+    $departure = $_POST['departureCitySearch'] ?? null;
+    $arrival   = $_POST['arrivalCitySearch'] ?? null;
+    $date      = $_POST['dateSearch'] ?? null;
 
-        if ($departure && $arrival && $date) {
-            $trips = $carpoolingRepo->showTripsSearched($departure, $arrival, $date);
-        } else {
-            $trips = $carpoolingRepo->getAllTrips();
+    $exactTrips = [];
+    $alternativeTrips = [];
+
+    if ($departure && $arrival && $date) {
+        // 1️⃣ Recherche trajets exacts
+        $exactTrips = $carpoolingRepo->showTripsSearched($departure, $arrival, $date);
+
+        // 2️⃣ Si aucun, on va chercher les trajets alternatifs
+        if (empty($exactTrips)) {
+            $alternativeTrips = $carpoolingRepo->findTripsAlternativeDates($departure, $arrival, $date);
         }
-
-        // Envoie les trajets à la vue
-        require_once ROOTPATH . 'src/Templates/page/Carpoolings.php';
+    } else {
+        // 3️⃣ Si pas de critères → on affiche tout
+        $exactTrips = $carpoolingRepo->getAllTrips();
     }
+
+    // On envoie les deux tableaux à la vue
+    $tripsData = [
+        'exactTrips' => $exactTrips,
+        'alternativeTrips' => $alternativeTrips
+    ];
+
+    require ROOTPATH . 'src/Templates/page/Carpoolings.php';
+}
+
 public function showTripDetails()
 {
     $tripId = $_GET['id'] ?? null;

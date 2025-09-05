@@ -64,26 +64,56 @@ class CarpoolingRepository
     }
 
     public function showTripsSearched($departure, $arrival, $date)
-    {
-        $sql = "
-            SELECT carpooling.*, user.name_user, user.avatar_user, car.brand_car, car.model_car, car.photo_car, car.year_car, car.energy_car
+{
+    $sql = "SELECT carpooling.*, user.name_user, user.avatar_user, car.brand_car, car.model_car, car.photo_car, car.year_car, car.energy_car
             FROM carpooling
             JOIN car ON carpooling.id_car = car.id_car
             JOIN user ON carpooling.driver_id = user.id_user
-            WHERE carpooling.departure_date >= :dateSearch
+            WHERE DATE(carpooling.departure_date) = :dateSearch
+              AND LOWER(carpooling.departure_city) LIKE LOWER(:departureCitySearch)
+              AND LOWER(carpooling.arrival_city) LIKE LOWER(:arrivalCitySearch)
+            ORDER BY carpooling.departure_date ASC";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([
+        'dateSearch' => $date,
+        'departureCitySearch' => "%" . strtolower($departure) . "%",
+        'arrivalCitySearch' => "%" . strtolower($arrival) . "%"
+    ]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+public function findTripsAlternativeDates($departure, $arrival, $date)
+{
+    $sql = "SELECT 
+                carpooling.*, 
+                user.name_user, 
+                user.avatar_user, 
+                car.brand_car, 
+                car.model_car, 
+                car.photo_car, 
+                car.year_car, 
+                car.energy_car
+            FROM carpooling
+            JOIN car ON carpooling.id_car = car.id_car
+            JOIN user ON carpooling.driver_id = user.id_user
+            WHERE DATE(carpooling.departure_date) > :dateSearch
             AND LOWER(carpooling.departure_city) LIKE LOWER(:departureCitySearch)
             AND LOWER(carpooling.arrival_city) LIKE LOWER(:arrivalCitySearch)
-            ORDER BY carpooling.departure_date ASC;
-        ";
+            AND carpooling.nb_place > 0
+            ORDER BY carpooling.departure_date ASC";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
-            'dateSearch' => $date,
-            'departureCitySearch' => "%" . strtolower($departure) . "%",
-            'arrivalCitySearch' => "%" . strtolower($arrival) . "%"
-        ]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':dateSearch', $date);
+    $stmt->bindValue(':departureCitySearch', "%" . strtolower($departure) . "%");
+    $stmt->bindValue(':arrivalCitySearch', "%" . strtolower($arrival) . "%");
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
     public function getTripById(int $id)
     {

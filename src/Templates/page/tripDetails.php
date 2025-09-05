@@ -69,7 +69,7 @@ $avatarPathCar = !empty($car['photo_car'])
                 <div class="driver-preferences flex gap-4 mt-4">
                     <p class="text-black">Préférences de trajet : </p>
                     <?php foreach ($allPrefs as $pref):
-                        // Est-ce que le conducteur a cette préférence ?
+                        // Est-ce que utilisateur a cette préférence ?
                         $hasPref = in_array($pref['id_preference'], $driverPrefs);
 
                         // Définir l'icône FontAwesome correspondante
