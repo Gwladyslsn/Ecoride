@@ -60,7 +60,8 @@ class PageController extends Controller
 
     public function addCarpooling()
     {
-        $this->render('/Templates/page/addCarpooling', []);
+        $csrfToken = $this->generateCsrfToken();
+        $this->render('/Templates/page/addCarpooling', ['csrfToken' => $csrfToken]);
     }
 
     public function Carpoolings()

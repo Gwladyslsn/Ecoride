@@ -9,7 +9,7 @@ use App\Database\Database;
 use App\Service\CityVerifier;
 use App\Repository\UserRepository;
 
-class CarpoolingController
+class CarpoolingController extends Controller
 {
 
     // READ
@@ -24,6 +24,14 @@ class CarpoolingController
 
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             http_response_code(405); // Méthode non autorisée
+            exit;
+        }
+
+        // 🔒 Vérif CSRF
+        $csrfHeader = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
+        if (!$this->checkCsrfToken($csrfHeader)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'Token CSRF invalide']);
             exit;
         }
 
@@ -88,7 +96,7 @@ class CarpoolingController
                 (float) $data['price_place'],
                 $data['info_carpooling'],
                 (int) $idCar,
-                (int) $userId 
+                (int) $userId
             );
         } catch (\Exception $e) {
             echo json_encode(['success' => false, 'message' => 'Erreur de format des dates']);
@@ -105,63 +113,61 @@ class CarpoolingController
     // READ
 
     public function showTrips()
-{
-    $database = new Database();
-    $pdo = $database->getConnection();
+    {
+        $database = new Database();
+        $pdo = $database->getConnection();
 
-    $carpoolingRepo = new CarpoolingRepository($pdo);
+        $carpoolingRepo = new CarpoolingRepository($pdo);
 
-    $departure = $_POST['departureCitySearch'] ?? null;
-    $arrival   = $_POST['arrivalCitySearch'] ?? null;
-    $date      = $_POST['dateSearch'] ?? null;
+        $departure = $_POST['departureCitySearch'] ?? null;
+        $arrival   = $_POST['arrivalCitySearch'] ?? null;
+        $date      = $_POST['dateSearch'] ?? null;
 
-    $exactTrips = [];
-    $alternativeTrips = [];
+        $exactTrips = [];
+        $alternativeTrips = [];
 
-    if ($departure && $arrival && $date) {
-        // 1️⃣ Recherche trajets exacts
-        $exactTrips = $carpoolingRepo->showTripsSearched($departure, $arrival, $date);
+        if ($departure && $arrival && $date) {
+            // 1️⃣ Recherche trajets exacts
+            $exactTrips = $carpoolingRepo->showTripsSearched($departure, $arrival, $date);
 
-        // 2️⃣ Si aucun, on va chercher les trajets alternatifs
-        if (empty($exactTrips)) {
-            $alternativeTrips = $carpoolingRepo->findTripsAlternativeDates($departure, $arrival, $date);
+            // 2️⃣ Si aucun, on va chercher les trajets alternatifs
+            if (empty($exactTrips)) {
+                $alternativeTrips = $carpoolingRepo->findTripsAlternativeDates($departure, $arrival, $date);
+            }
+        } else {
+            // 3️⃣ Si pas de critères → on affiche tout
+            $exactTrips = $carpoolingRepo->getAllTrips();
         }
-    } else {
-        // 3️⃣ Si pas de critères → on affiche tout
-        $exactTrips = $carpoolingRepo->getAllTrips();
+
+        // On envoie les deux tableaux à la vue
+        $tripsData = [
+            'exactTrips' => $exactTrips,
+            'alternativeTrips' => $alternativeTrips
+        ];
+
+        require ROOTPATH . 'src/Templates/page/Carpoolings.php';
     }
 
-    // On envoie les deux tableaux à la vue
-    $tripsData = [
-        'exactTrips' => $exactTrips,
-        'alternativeTrips' => $alternativeTrips
-    ];
+    public function showTripDetails()
+    {
+        $tripId = $_GET['id'] ?? null;
+        if (!$tripId) return;
 
-    require ROOTPATH . 'src/Templates/page/Carpoolings.php';
-}
+        $pdo = Database::getConnection();
+        $carpoolingRepository = new CarpoolingRepository($pdo);
+        $userRepo = new UserRepository($pdo);
 
-public function showTripDetails()
-{
-    $tripId = $_GET['id'] ?? null;
-    if (!$tripId) return;
+        $trip = $carpoolingRepository->getTripById($tripId);
 
-    $pdo = Database::getConnection();
-    $carpoolingRepository = new CarpoolingRepository($pdo);
-    $userRepo = new UserRepository($pdo);
+        if (!$trip) return;
 
-    $trip = $carpoolingRepository->getTripById($tripId);
+        // ⚠️ Si $trip est un tableau
+        $driverId = $trip['driver_id'];
 
-    if (!$trip) return;
+        $driverPrefs = $userRepo->getUserPreferences($driverId);
+        $allPrefs = $userRepo->getAllPreferences();
+        $carpooling = $carpoolingRepository->getTripById($tripId);
 
-    // ⚠️ Si $trip est un tableau
-    $driverId = $trip['driver_id'];
-
-    $driverPrefs = $userRepo->getUserPreferences($driverId);
-    $allPrefs = $userRepo->getAllPreferences();
-    $carpooling = $carpoolingRepository->getTripById($tripId);
-
-    require_once ROOTPATH . 'src/Templates/page/tripDetails.php';
-}
-
-
+        require_once ROOTPATH . 'src/Templates/page/tripDetails.php';
+    }
 }

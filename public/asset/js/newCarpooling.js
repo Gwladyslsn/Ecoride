@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoCarpoolingInput = document.getElementById('info-carpooling');
     const feedbackAdd = document.getElementById('feedback-add-carpooling');
 
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     let selectedSeats = null;
 
     document.querySelectorAll('.seat-option').forEach(option => {
@@ -83,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch('/newCarpooling', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
             body: JSON.stringify(data)
         })
             .then(res => res.json())
