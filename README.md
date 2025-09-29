@@ -23,7 +23,7 @@ Remplacer les valeurs par celles de votre environnement
 
 3. Définir les variables d'environnement sur Heroku
 
-4. Déployer la abse de données MySQL avec HeidiSQL
+4. Déployer la base de données MySQL avec HeidiSQL
 Créez une base MySQL accessible à distance (chez votre hébergeur ou sur un serveur cloud).
 Ouvrez HeidiSQL et configurez la connexion (hôte, port, utilisateur, mot de passe).
 Importez le fichier SQL du projet (structure + données initiales).

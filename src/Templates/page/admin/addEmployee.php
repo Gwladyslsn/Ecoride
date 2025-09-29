@@ -9,6 +9,11 @@ if (!isset($_SESSION['admin'])) {
 ?>
 
 <body>
+    <div class="pl-4 text-lg">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        <a href="<?= BASE_URL ?>employeAdmin">Retour</a>
+    </div>
+
         <div class="main-content">
             <div class="info-section">
                 <h3>Information</h3>
@@ -62,6 +67,10 @@ if (!isset($_SESSION['admin'])) {
                 </div>
             </form>
         </div>
+    </div>
+    <div class="pl-4 text-lg">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        <a href="<?= BASE_URL ?>employeAdmin">Retour</a>
     </div>
 
     <script src="/asset/js/addEmployee.js"></script>

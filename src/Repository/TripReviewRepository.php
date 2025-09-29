@@ -81,15 +81,15 @@ class TripReviewRepository
 {
     $sql = "SELECT * FROM reviews WHERE status_reviews = 'pending' ORDER BY id_reviews";
     $stmt = $this->pdo->query($sql);
-    $reviewPending = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    return $reviewPending; // ✅ retourne un array
+    $reviewPending = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $reviewPending; // retourne un array
 }
 
     public function getReviewsAccept(): array
 {
     $sql = "SELECT * FROM reviews WHERE status_reviews = 'accept' ORDER BY id_reviews";
     $stmt = $this->pdo->query($sql);
-    $reviewsAccepted = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    $reviewsAccepted = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $reviewsAccepted; // ✅ retourne un array
 }
 
@@ -97,7 +97,7 @@ class TripReviewRepository
 {
     $sql = "SELECT * FROM reviews WHERE status_reviews = 'reject' ORDER BY id_reviews";
     $stmt = $this->pdo->query($sql);
-    $reviewsRejected = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    $reviewsRejected = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $reviewsRejected; // ✅ retourne un array
 }
 
@@ -105,7 +105,7 @@ class TripReviewRepository
 {
     $sql = "SELECT * FROM reviews WHERE status_reviews = 'reject' OR status_reviews = 'accept' ORDER BY id_reviews";
     $stmt = $this->pdo->query($sql);
-    $reviewsProcessed = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    $reviewsProcessed = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $reviewsProcessed; // ✅ retourne un array
 }
 
