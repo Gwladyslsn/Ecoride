@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Auth;
 use App\Controller\AdminController;
+use App\Security\CsrfManager;
+$csrf = new CsrfManager();
 
 
 class PageController extends Controller
@@ -58,11 +60,13 @@ class PageController extends Controller
         $this->render('/Entity/updateCar', []);
     }
 
-    public function addCarpooling()
-    {
-        $csrfToken = $this->generateCsrfToken();
-        $this->render('/Templates/page/addCarpooling', ['csrfToken' => $csrfToken]);
-    }
+    public function addCarpooling(): void
+{
+    $csrf = new CsrfManager();
+    $csrfToken = $csrf->getToken('add_carpooling_form'); // token unique pour ce formulaire
+    $this->render('/Templates/page/addCarpooling', ['csrfToken' => $csrfToken]);
+}
+
 
     public function Carpoolings()
     {

@@ -12,9 +12,8 @@ class User
         private ?string $password = null,
         private ?int $roleId = null,
         private ?string $avatar = null,
-    ) {}
+) {}
 
-    
 
         /**
          * Get the value of id

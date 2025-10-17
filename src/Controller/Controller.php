@@ -10,7 +10,7 @@ abstract class Controller
         require_once ROOTPATH .'src/' . $template . '.php';
     }
 
-    // --- AJOUT CSRF ---
+    /*// --- AJOUT CSRF ---
     protected function generateCsrfToken(): string
     {
         if (!isset($_SESSION['csrf_token'])) {
@@ -22,5 +22,5 @@ abstract class Controller
     protected function checkCsrfToken(?string $token): bool
     {
         return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
-    }
+    }*/
 }

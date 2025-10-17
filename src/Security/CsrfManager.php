@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Security;
 
@@ -16,8 +16,17 @@ class CsrfManager
         $this->cleanup();
     }
 
-    public function generate(string $formId = ''): string
+    // Génère ou récupère un token unique par formId
+    public function getToken(string $formId = ''): string
     {
+        // Si un token existe déjà pour ce formId, on le renvoie
+        foreach ($_SESSION[self::SESSION_KEY] as $token => $meta) {
+            if ($meta['form'] === $formId && (time() - $meta['created']) <= $this->ttl) {
+                return $token;
+            }
+        }
+
+        // Sinon, on en crée un nouveau
         $token = bin2hex(random_bytes(32));
         $_SESSION[self::SESSION_KEY][$token] = [
             'form' => $formId,
@@ -26,19 +35,21 @@ class CsrfManager
         return $token;
     }
 
+    // Retourne le champ HTML à insérer dans le formulaire
     public function getField(string $formId = ''): string
     {
-        $token = $this->generate($formId);
+        $token = $this->getToken($formId);
         return '<input type="hidden" name="_csrf" value="' . htmlspecialchars($token, ENT_QUOTES, 'UTF-8') . '">';
     }
 
+    // Valide le token
     public function validate(?string $token): bool
     {
         if (!$token || !isset($_SESSION[self::SESSION_KEY][$token])) {
             return false;
         }
-        $meta = $_SESSION[self::SESSION_KEY][$token];
 
+        $meta = $_SESSION[self::SESSION_KEY][$token];
         if (time() - $meta['created'] > $this->ttl) {
             unset($_SESSION[self::SESSION_KEY][$token]);
             return false;
@@ -57,3 +68,4 @@ class CsrfManager
         }
     }
 }
+

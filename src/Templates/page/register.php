@@ -1,83 +1,31 @@
 <?php
 
-use App\Repository\UserRepository;
 use App\Database\Database;
+use App\Repository\UserRepository;
+use App\Controller\AuthController;
+use App\Entity\Auth;
+use App\Security\CsrfManager;
+
+Auth::startSession();
+$csrf = new CsrfManager();
+
+require_once ROOTPATH . '/src/Templates/header.php';
 
 $database = new Database();
 $pdo = $database->getConnection();
-
 $userRepo = new UserRepository($pdo);
+$authController = new AuthController($userRepo, $csrf);
 
-use App\Entity\Auth;
-$auth = new Auth();
-
-$errors = [];
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $formType = $_POST['form_type'] ?? '';
 
     if ($formType === 'log') {
-        $email = $_POST["email_user"] ?? '';
-        $password = $_POST["password_user"] ?? '';
-
-        // 1. Tentative connexion admin
-        $admin = $userRepo->getAdminByEmail($email);
-        if ($admin && password_verify($password, $admin['password_admin'])) {
-            $_SESSION['admin'] = [
-                'id_admin' => $admin['id_admin'],
-                'email_admin' => $admin['email_admin'],
-                'name_admin' => $admin['name_admin']
-            ];
-            header('Location: dashboardAdmin');
-            exit;
-        }
-
-        // 2. Tentative connexion employé
-        $employee = $userRepo->getEmployeeByEmail($email);
-        if ($employee && password_verify($password, $employee['password_employee'])) {
-            $_SESSION['employee'] = $employee;
-            header('Location: dashboardEmployee');
-            exit;
-        }
-
-        // 3. Sinon tentative connexion utilisateur
-        $id_user = $userRepo->verifUserExists($email, $password);
-        if ($id_user !== false) {
-            $_SESSION['user'] = $id_user;
-            header('Location: http://localhost:8000/dashboardUser');
-            exit;
-        } else {
-            echo "Identifiants et/ou mot de passe incorrect(s).";
-        }
+        $authController->login($_POST);
     } elseif ($formType === 'sign') {
-        $name_user = $_POST["name_user"] ?? '';
-        $lastname_user = $_POST["lastname_user"] ?? '';
-        $email_user = $_POST["email_user"] ?? '';
-        $password_user = $_POST["password_user"] ?? '';
-        $id_role = $_POST["id_role"] ?? '';
-        $credit_user = 20;
-
-        $errors = $userRepo->verifyUserInput($_POST);
-
-        if (empty($errors)) {
-            if ($userRepo->emailExists($email_user)) {
-                echo '<div class="alert alert-success">
-                        <p class="text-white bg-gray-900 body-font">Un compte avec cette adresse email existe déjà. Veuillez vous connecter ou utiliser une autre adresse.</p>
-                        </div>';
-            } else {
-                if ($userRepo->addUser($name_user, $lastname_user, $email_user, $password_user, $id_role, $credit_user)) {
-                    echo '<div class="alert alert-success">
-                            <p class="text-gray-400 bg-gray-900 body-font">✅ Inscription réussie ! Vous pouvez maintenant vous connecter !</p>
-                            </div>';
-                } else {
-                    $errors[] = "Une erreur est survenue";
-                }
-            }
-        }
+        $authController->register($_POST);
     }
 }
 
-require_once ROOTPATH . '/src/Templates/header.php';
 ?>
 
 
@@ -85,7 +33,9 @@ require_once ROOTPATH . '/src/Templates/header.php';
 
 <section class="text-gray-600 body-font pt-20 flex justify-center sectionLog">
 
+
     <form method="post" id="form_log" class="container containerLog">
+        <?= $csrf->getField('register_form'); ?>
         <input type="hidden" name="form_type" value="log">
         <div class="lg:w-5/6 md:w-2/2 form rounded-lg p-10 flex flex-col mt-10 md:mt-0">
             <h2 class="text-gray-900 text-lg font-medium title-font text-center mb-5">Connexion</h2>
@@ -119,6 +69,7 @@ require_once ROOTPATH . '/src/Templates/header.php';
 
 
     <form method="post" id="form_sign" class="container containerLog form_sign">
+        <?= $csrf->getField('login_form'); ?>
         <input type="hidden" name="form_type" value="sign">
         <div class="lg:w-5/6 md:w-2/2 form rounded-lg p-10 flex flex-col mt-10 md:mt-0">
             <h2 class="text-gray-900 text-lg font-medium title-font text-center mb-5">Inscription</h2>

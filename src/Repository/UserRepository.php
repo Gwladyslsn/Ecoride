@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use PDO;
-use PDOException;
 
 class UserRepository
 {
@@ -115,14 +114,14 @@ public function getAverageCredit(): float
         return $car ?: null;
     }
 
-    public function getUserPreferences(int $userId): array
+    public function getUserPreferences(string $id_user): array
 {
     $stmt = $this->pdo->prepare("
         SELECT id_preference
         FROM user_has_preferences
-        WHERE id_user = ?
+        WHERE id_user = :id_user
     ");
-    $stmt->execute([$userId]);
+    $stmt->execute(['id_user' => $id_user]);
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 

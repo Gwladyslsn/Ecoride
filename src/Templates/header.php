@@ -23,7 +23,7 @@ require_once ROOTPATH . 'config/config.php';
     <?php if (isset($csrfToken)): ?>
         <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken) ?>">
     <?php endif; ?>
-    <title>Eco'ride</title>
+    <title>Ecoride</title>
 </head>
 
 <body>
