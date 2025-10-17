@@ -161,7 +161,6 @@ class CarpoolingController extends Controller
 
         if (!$trip) return;
 
-        // ⚠️ Si $trip est un tableau
         $driverId = $trip['driver_id'];
 
         $driverPrefs = $userRepo->getUserPreferences($driverId);

@@ -22,9 +22,6 @@ CREATE TABLE user (
 
 ALTER TABLE user ADD avatar_user VARCHAR(255);
 
-ALTER TABLE user DROP photo_user;
-
-
 
 INSERT INTO role (name_role) VALUES 
 ("chauffeur"),
@@ -189,9 +186,6 @@ FOREIGN KEY (driver_id)
 REFERENCES user(id_user)
 ON DELETE CASCADE;
 
-SELECT driver_id FROM carpooling
-WHERE driver_id IS NOT NULL
-AND driver_id NOT IN (SELECT id_user FROM user);
 
 UPDATE carpooling c
 JOIN car ca ON c.id_car = ca.id_car

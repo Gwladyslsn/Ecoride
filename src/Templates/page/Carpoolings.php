@@ -133,10 +133,10 @@
         <?php if (!empty($tripsData['exactTrips'])): ?>
             <div class="mb-12">
                 <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-2">
-                    🚗 Trajets disponibles à la date choisie
+                    🚗 Trajets
                 </h2>
                 <p class="text-gray-300 mb-6">
-                    <?= count($tripsData['exactTrips']) ?> trajet<?= count($tripsData['exactTrips']) > 1 ? 's' : '' ?> trouvé<?= count($tripsData['exactTrips']) > 1 ? 's' : '' ?>
+                    <?= count($tripsData['exactTrips']) ?> trajet<?= count($tripsData['exactTrips']) > 1 ? 's' : '' ?> trouvé<?= count($tripsData['exactTrips']) > 1 ? 's' : '' ?> au départ de <?= $departure ?>, arrivée <?= $arrival ?>
                 </p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                     <?php foreach ($tripsData['exactTrips'] as $trip): ?>
