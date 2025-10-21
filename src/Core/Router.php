@@ -2,6 +2,10 @@
 
 namespace App\Core;
 
+use App\Database\Database;
+use App\Security\CsrfManager;
+use App\Repository\UserRepository;
+
 class Router
 {
     private array $routes = [];
@@ -18,29 +22,48 @@ class Router
     {
         $path = strtok($uri, '?');
 
-        if (array_key_exists($path, $this->routes)) {
-            $route = $this->routes[$path];
-            $controllerName = $route['controller'];
-            $methodName = $route['method'];
-
-            if (class_exists($controllerName)) {
-                $controller = new $controllerName();
-                if (method_exists($controller, $methodName)) {
-                    $controller->$methodName();
-                } else {
-                    // Handle method not found
-                    header("HTTP/1.0 404 Not Found");
-                    echo "Error: Method '{$methodName}' not found in controller '{$controllerName}'.";
-                }
-            } else {
-                // Handle controller not found
-                header("HTTP/1.0 404 Not Found");
-                echo "Error: Controller '{$controllerName}' not found.";
-            }
-        } else {
-            // Handle route not found
+        if (!array_key_exists($path, $this->routes)) {
             header("HTTP/1.0 404 Not Found");
             echo "Error: Route '{$path}' not found.";
+            return;
+        }
+
+        $route = $this->routes[$path];
+        $controllerName = $route['controller'];
+        $methodName = $route['method'];
+
+        if (!class_exists($controllerName)) {
+            header("HTTP/1.0 404 Not Found");
+            echo "Error: Controller '{$controllerName}' not found.";
+            return;
+        }
+
+        // 🧩 Prépare les dépendances pour les contrôleurs qui en ont besoin
+        switch ($controllerName) {
+            case 'App\Controller\AuthController':
+                $pdo = Database::getConnection();
+                $csrfManager = new CsrfManager();
+                $userRepository = new UserRepository($pdo);
+                $controller = new $controllerName($userRepository, $csrfManager);
+                break;
+
+            default:
+                $controller = new $controllerName();
+        }
+
+        if (!method_exists($controller, $methodName)) {
+            header("HTTP/1.0 404 Not Found");
+            echo "Error: Method '{$methodName}' not found in controller '{$controllerName}'.";
+            return;
+        }
+
+        // ✅ Gestion POST pour handleForm
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $methodName === 'handleForm') {
+            $controller->$methodName($_POST); // passe le POST à la méthode
+        } else {
+            $controller->$methodName(); // GET ou autres méthodes
         }
     }
 }
+
+

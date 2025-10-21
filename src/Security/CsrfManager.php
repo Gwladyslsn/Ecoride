@@ -13,7 +13,7 @@ class CsrfManager
             $_SESSION[self::SESSION_KEY] = [];
         }
         $this->ttl = $ttl;
-        $this->cleanup();
+        //$this->cleanup();
     }
 
     // Génère ou récupère un token unique par formId
@@ -43,21 +43,33 @@ class CsrfManager
     }
 
     // Valide le token
-    public function validate(?string $token): bool
-    {
-        if (!$token || !isset($_SESSION[self::SESSION_KEY][$token])) {
-            return false;
-        }
+    public function validate(?string $token, string $formId = ''): bool
+{
 
-        $meta = $_SESSION[self::SESSION_KEY][$token];
-        if (time() - $meta['created'] > $this->ttl) {
-            unset($_SESSION[self::SESSION_KEY][$token]);
-            return false;
-        }
-
-        unset($_SESSION[self::SESSION_KEY][$token]); // usage unique
-        return true;
+    //var_dump('Token reçu pour validation : ', $token);
+    //var_dump('_SESSION avant check : ', $_SESSION[self::SESSION_KEY] ?? []);
+    // Vérifie que le token existe
+    if (!$token || !isset($_SESSION[self::SESSION_KEY][$token])) {
+        return false;
     }
+
+    $meta = $_SESSION[self::SESSION_KEY][$token];
+
+    // Vérifie que le token correspond bien au formulaire attendu
+    if ($formId !== '' && $meta['form'] !== $formId) {
+        return false;
+    }
+
+    // Vérifie que le token n’a pas expiré
+    if (time() - $meta['created'] > $this->ttl) {
+        unset($_SESSION[self::SESSION_KEY][$token]);
+        return false;
+    }
+
+    // Supprime le token pour usage unique
+    unset($_SESSION[self::SESSION_KEY][$token]);
+    return true;
+}
 
     private function cleanup(): void
     {

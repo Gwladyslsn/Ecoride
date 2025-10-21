@@ -4,13 +4,16 @@ $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
-    'domain' => $_SERVER['HTTP_HOST'],
+    //'domain' => $_SERVER['HTTP_HOST'],
     'secure' => $secure,   // ⚠️ Active sur HTTPS
     'httponly' => true,    // Empêche JS de lire le cookie
     'samesite' => 'Lax',   // ou 'Strict' si pas besoin de cross-site login
 ]);
 
 session_start();
+
+//var_dump('session_id au démarrage : ', session_id());
+//var_dump('_SESSION au démarrage : ', $_SESSION);
 
 // 2. Reste de ton code inchangé
 define("ROOTPATH", __DIR__ . '/../');

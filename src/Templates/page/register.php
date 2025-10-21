@@ -6,25 +6,26 @@ use App\Controller\AuthController;
 use App\Entity\Auth;
 use App\Security\CsrfManager;
 
-Auth::startSession();
-$csrf = new CsrfManager();
 
-require_once ROOTPATH . '/src/Templates/header.php';
 
 $database = new Database();
 $pdo = $database->getConnection();
 $userRepo = new UserRepository($pdo);
+
+$csrf = new CsrfManager();
+
+//var_dump('Token login_form : ', $csrf->getToken('login_form'));
+//var_dump('Token register_form : ', $csrf->getToken('register_form'));
+//var_dump('_SESSION après génération tokens : ', $_SESSION['_csrf_tokens']);
+
+
 $authController = new AuthController($userRepo, $csrf);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $formType = $_POST['form_type'] ?? '';
-
-    if ($formType === 'log') {
-        $authController->login($_POST);
-    } elseif ($formType === 'sign') {
-        $authController->register($_POST);
-    }
+    $authController->handleForm($_POST);
 }
+
+require_once ROOTPATH . '/src/Templates/header.php';
 
 ?>
 
@@ -34,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <section class="text-gray-600 body-font pt-20 flex justify-center sectionLog">
 
 
-    <form method="post" id="form_log" class="container containerLog">
-        <?= $csrf->getField('register_form'); ?>
-        <input type="hidden" name="form_type" value="log">
+    <form method="post" action="/auth-form" id="login" class="container containerLog">
+        <?= $csrf->getField('login_form'); ?>
+        <input type="hidden" name="form_type" value="login">
         <div class="lg:w-5/6 md:w-2/2 form rounded-lg p-10 flex flex-col mt-10 md:mt-0">
             <h2 class="text-gray-900 text-lg font-medium title-font text-center mb-5">Connexion</h2>
             <div id="feedbackLogin"></div>
@@ -68,9 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="divider divider-horizontal">OU</div>
 
 
-    <form method="post" id="form_sign" class="container containerLog form_sign">
-        <?= $csrf->getField('login_form'); ?>
-        <input type="hidden" name="form_type" value="sign">
+    <form method="post" action="/auth-form" id="regiter" class="container containerLog form_sign">
+        <?= $csrf->getField('register_form'); ?>
+        <input type="hidden" name="form_type" value="register">
         <div class="lg:w-5/6 md:w-2/2 form rounded-lg p-10 flex flex-col mt-10 md:mt-0">
             <h2 class="text-gray-900 text-lg font-medium title-font text-center mb-5">Inscription</h2>
             <div id="feedbackSign"></div>

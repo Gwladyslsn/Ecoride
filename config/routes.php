@@ -9,6 +9,10 @@ return [
         'controller' => App\Controller\PageController::class,
         'method' => 'register'
     ],
+    '/auth-form' => [
+    'controller' => App\Controller\AuthController::class,
+    'method' => 'handleForm'
+],
     '/contact' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'contact'
@@ -22,9 +26,9 @@ return [
         'method' => 'mentions'
     ],
     '/dashboardUser' => [
-    'controller' => App\Controller\UserController::class,
-    'method' => 'showDashboardUser'
-],
+        'controller' => App\Controller\UserController::class,
+        'method' => 'showDashboardUser'
+    ],
     '/logout' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'logout'
@@ -66,9 +70,9 @@ return [
         'method' => 'showTrips'
     ],
     '/tripDetails' => [
-    'controller' => App\Controller\CarpoolingController::class,
-    'method' => 'showTripDetails'
-],
+        'controller' => App\Controller\CarpoolingController::class,
+        'method' => 'showTripDetails'
+    ],
     '/contactUser' => [
         'controller' => App\Controller\PageController::class,
         'method' => 'contactUser'
@@ -109,58 +113,58 @@ return [
         'controller' => App\Controller\ReviewController::class,
         'method' => 'addReview'
     ],
-    '/showReviewsReceived'=> [
-    'controller' =>App\Controller\ReviewController::class,
-    'method' => 'showReviewsReceived'
+    '/showReviewsReceived' => [
+        'controller' => App\Controller\ReviewController::class,
+        'method' => 'showReviewsReceived'
     ],
-    '/showReviewGiven'=> [
-    'controller' =>App\Controller\ReviewController::class,
-    'method' => 'showReviewGiven'
+    '/showReviewGiven' => [
+        'controller' => App\Controller\ReviewController::class,
+        'method' => 'showReviewGiven'
     ],
     '/userAdmin' => [
-    'controller' =>App\Controller\PageController::class,
-    'method' => 'userAdmin'
+        'controller' => App\Controller\PageController::class,
+        'method' => 'userAdmin'
     ],
     '/carpoolingAdmin' => [
-    'controller' =>App\Controller\PageController::class,
-    'method' => 'carpoolingAdmin'
+        'controller' => App\Controller\PageController::class,
+        'method' => 'carpoolingAdmin'
     ],
     '/employeAdmin' => [
-    'controller' =>App\Controller\PageController::class,
-    'method' => 'employeAdmin'
+        'controller' => App\Controller\PageController::class,
+        'method' => 'employeAdmin'
     ],
     '/addEmployee' => [
-    'controller' =>App\Controller\PageController::class,
-    'method' => 'addEmployee'
+        'controller' => App\Controller\PageController::class,
+        'method' => 'addEmployee'
     ],
     '/addNewEmployee' => [
-    'controller' =>App\Controller\EmployeeController::class,
-    'method' => 'addNewEmployee'
+        'controller' => App\Controller\EmployeeController::class,
+        'method' => 'addNewEmployee'
     ],
     '/dashboardEmployee' => [
-    'controller' =>App\Controller\EmployeeController::class,
-    'method' => 'dashboardEmployees'
+        'controller' => App\Controller\EmployeeController::class,
+        'method' => 'dashboardEmployees'
     ],
-    '/acceptReview'=> [
-    'controller' =>App\Controller\ReviewController::class,
-    'method' => 'acceptReview'
+    '/acceptReview' => [
+        'controller' => App\Controller\ReviewController::class,
+        'method' => 'acceptReview'
     ],
-    '/rejectReview'=> [
-    'controller' =>App\Controller\ReviewController::class,
-    'method' => 'rejectReview'
+    '/rejectReview' => [
+        'controller' => App\Controller\ReviewController::class,
+        'method' => 'rejectReview'
     ],
-    '/api/stats/carpoolings-per-day'=> [
-        'controller' =>App\Controller\StatsController::class,
+    '/api/stats/carpoolings-per-day' => [
+        'controller' => App\Controller\StatsController::class,
         'method' => 'getCarpoolingsPerDay'
     ],
-    '/api/stats/credits-per-day'=> [
-        'controller' =>App\Controller\StatsController::class,
+    '/api/stats/credits-per-day' => [
+        'controller' => App\Controller\StatsController::class,
         'method' => 'getCreditsPerDay'
     ],
 
 
-    
 
 
-    
+
+
 ];

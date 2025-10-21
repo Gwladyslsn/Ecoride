@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordLogInput = document.getElementById('password_log');
     const btnLog = document.getElementById('btn_log');
     const feedbackLogin = document.getElementById('feedbackLogin');
-    const formLog = document.getElementById('form_log');
+    const formLog = document.getElementById('login');
 
     /* masque / affiche mdp */
 
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordCheckInput = document.getElementById('password_sign_check');
     const btnSign = document.getElementById('btn_sign');
     const feedbackSign = document.getElementById('feedbackSign');
-    const formSign = document.getElementById('form_sign');
+    const formSign = document.getElementById('register');
 
     /* Masque / affichage mdp */ //A ameliorer + tard (repetition de code)
 

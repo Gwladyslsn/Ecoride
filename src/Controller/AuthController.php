@@ -13,14 +13,39 @@ class AuthController
         Auth::startSession();
     }
 
-    public function login(array $post): void
+    /**
+     * Méthode principale appelée quand un formulaire est soumis
+     */
+    public function handleForm(array $post): void
     {
+        $formType = $post['form_type'] ?? '';
         $token = $post['_csrf'] ?? '';
 
-        if (!$this->csrf->validate($token)) {
+        // Vérification du token CSRF (lié à un formId spécifique)
+        if (!$this->csrf->validate($token, $formType . '_form')) {
             echo "❌ Token CSRF invalide ou expiré. Veuillez réessayer.";
             exit;
         }
+
+        // Redirige vers la méthode appropriée
+        if ($formType === 'login') {
+            //var_dump('session_id : ', session_id(), $_SESSION);
+            //var_dump('post : ', $_POST);
+            $this->processLogin($post);
+            
+        } elseif ($formType === 'register') {
+            $this->processRegister($post);
+        } else {
+            echo "❌ Type de formulaire inconnu.";
+            exit;
+        }
+    }
+
+    /**
+     * Connexion d’un utilisateur, d’un employé ou d’un admin
+     */
+    public function processLogin(array $post): void
+    {
 
         $email = trim($post['email_user'] ?? '');
         $password = trim($post['password_user'] ?? '');
@@ -52,19 +77,15 @@ class AuthController
             header('Location: dashboardUser');
             exit;
         }
-
+        
         echo "❌ Identifiants ou mot de passe incorrects.";
     }
 
-    public function register(array $post): void
+    /**
+     * Inscription d’un nouvel utilisateur
+     */
+    public function processRegister(array $post): void
     {
-        $token = $post['_csrf'] ?? '';
-
-        if (!$this->csrf->validate($token)) {
-            echo "❌ Token CSRF invalide ou expiré. Veuillez réessayer.";
-            exit;
-        }
-
         $name_user = trim($post["name_user"] ?? '');
         $lastname_user = trim($post["lastname_user"] ?? '');
         $email_user = trim($post["email_user"] ?? '');
@@ -91,4 +112,3 @@ class AuthController
         }
     }
 }
-
