@@ -19,7 +19,7 @@ if (!$trip) {
     exit;
 }
 $driverId = $trip['driver_id'];
-$user = $userRepo->getDataUser($driverId); 
+$user = $userRepo->getDataUser($driverId);
 $car = $userRepo->getDataCar($driverId);
 
 $avatarDriver = !empty($trip['avatar_user'])
@@ -89,6 +89,8 @@ $avatarPathCar = !empty($car['photo_car'])
                     <?php if ($trip['info_carpooling']): ?>
                         <p class="text-black"><strong>Message de <?= htmlspecialchars($trip['name_user']) ?> :</strong> <?= htmlspecialchars($trip['info_carpooling']) ?></p>
                     <?php endif; ?>
+                </div>
+                <div>
                 </div>
             </div>
         </div>
