@@ -30,7 +30,7 @@ class ReviewController
             exit;
         }
 
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = json_decode(file_get_contents(JSON_INPUT), true);
 
         if (!$data) {
             echo json_encode(['status' => 'error', 'message' => 'Données invalides']);
@@ -86,7 +86,7 @@ class ReviewController
 
     public function acceptReview()
     {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents(JSON_INPUT), true);
         $idReview = $data['id_reviews'] ?? null;
         $idEmployee = $_SESSION['employee']['id_employee'];
 
@@ -106,7 +106,7 @@ class ReviewController
 
     public function rejectReview()
     {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents(JSON_INPUT), true);
         $idReview = $data['id_reviews'] ?? null;
         $idEmployee = $_SESSION['employee']['id_employee'];
 

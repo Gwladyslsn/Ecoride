@@ -109,4 +109,9 @@ class AuthController
             echo "❌ Erreur lors de l'inscription.";
         }
     }
+
+    public function logout()
+    {
+        Auth::logout('/'); // appeler la fonction
+    }
 }

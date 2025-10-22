@@ -5,8 +5,9 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use App\Database\Database;
 
-class UserController
+class UserController extends Controller
 {
+
     public function updateAvatar()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -67,20 +68,20 @@ class UserController
 
             // Enregistre le chemin dans la BDD via UserRepository
             $userId = $_SESSION['user'];
-            require_once ROOTPATH . 'src/Database/Database.php';
+            require_once DATABASE_FILE;
             $database = new Database();
             $pdo = $database->getConnection(); // ou tout autre fichier qui crée l'objet PDO
             $userRepo = new UserRepository($pdo);
             $userRepo->updateAvatar($userId, $fileName);
 
-            header('Location: /dashboardUser'); 
+            header('Location: /dashboardUser');
             exit;
         } else {
             echo json_encode(['success' => false, 'message' => 'Erreur lors du déplacement du fichier.']);
         }
     }
 
-        public function showDashboardUser()
+    public function showDashboardUser()
     {
         $userId = $_SESSION['user'];
 
@@ -112,7 +113,7 @@ class UserController
             exit;
         }
 
-        $input = json_decode(file_get_contents('php://input'), true);
+        $input = json_decode(file_get_contents(JSON_INPUT), true);
         if (!$input) {
             echo json_encode(['success' => false, 'message' => 'Données JSON invalides']);
             exit;
@@ -125,11 +126,25 @@ class UserController
         $userRepo = new UserRepository($pdo);
 
         $data = [];
-        if (!empty($input['name_user'])) $data['name_user'] = $input['name_user'];
-        if (!empty($input['lastname_user'])) $data['lastname_user'] = $input['lastname_user'];
-        if (!empty($input['dob_user'])) $data['dob_user'] = $input['dob_user'];
-        if (!empty($input['email_user'])) $data['email_user'] = $input['email_user'];
-        if (!empty($input['phone_user'])) $data['phone_user'] = $input['phone_user'];
+        if (!empty($input['name_user'])) {
+            $data['name_user'] = $input['name_user'];
+        }
+
+        if (!empty($input['lastname_user'])) {
+            $data['lastname_user'] = $input['lastname_user'];
+        }
+
+        if (!empty($input['dob_user'])) {
+            $data['dob_user'] = $input['dob_user'];
+        }
+
+        if (!empty($input['email_user'])) {
+            $data['email_user'] = $input['email_user'];
+        }
+
+        if (!empty($input['phone_user'])) {
+            $data['phone_user'] = $input['phone_user'];
+        }
 
         $success = $userRepo->updateUserInfo($userId, $data);
 
@@ -151,7 +166,7 @@ class UserController
         $userId = $_SESSION['user'];
 
         // Récupérer les données envoyées par le JS
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = json_decode(file_get_contents(JSON_INPUT), true);
 
         // Sécuriser l'accès aux clés pour éviter les warnings
         $prefId = $data['id_preference'] ?? null;
@@ -162,7 +177,7 @@ class UserController
             exit;
         }
 
-        require_once ROOTPATH . 'src/Database/Database.php';
+        require_once DATABASE_FILE;
         $db = new Database();
         $pdo = $db->getConnection();
 
@@ -189,7 +204,7 @@ class UserController
 
 
     /* UPDATE VOITURE */
-    public function updateCar():void
+    public function updateCar(): void
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Requête invalide ou utilisateur non connecté.']);
@@ -198,7 +213,7 @@ class UserController
 
 
         // Récupération des données JSON
-        $json = file_get_contents('php://input');
+        $json = file_get_contents(JSON_INPUT);
         $data = json_decode($json, true);
 
         $carBrand = htmlspecialchars($data['brand_car'] ?? '');
@@ -279,7 +294,7 @@ class UserController
 
             // Enregistre le chemin dans la BDD via UserRepository
             $userId = $_SESSION['user'];
-            require_once ROOTPATH . 'src/Database/Database.php';
+            require_once DATABASE_FILE;
             $database = new Database();
             $pdo = $database->getConnection(); // ou tout autre fichier qui crée l'objet PDO
             $userRepo = new UserRepository($pdo);
@@ -293,35 +308,35 @@ class UserController
     }
 
     public function showHistoryUser()
-{
-    // Vérifier que l'utilisateur est connecté
-    if (!isset($_SESSION['user'])) {
-        header('Location: /login');
-        exit;
+    {
+        // Vérifier que l'utilisateur est connecté
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        $userId = $_SESSION['user'];
+
+        // Connexion à la base de données
+        $db = new Database();
+        $pdo = $db->getConnection();
+
+        // Récupérer les trajets à venir
+        $carpoolingRepo = new \App\Repository\CarpoolingRepository($pdo);
+        $nextTrips = $carpoolingRepo->nextCarpooling($userId);
+        $oldTrips = $carpoolingRepo->oldCarpooling($userId);
+
+        $tripReviewRepository = new \App\Repository\TripReviewRepository($pdo);
+        $reviewsReceived = $tripReviewRepository->getReviewReceivedByUser($userId);
+        $reviewsGiven = $tripReviewRepository->getReviewGivenByUser($userId);
+
+
+        // Rendre les variables disponibles dans la vue
+        extract([
+            'nextTrips' => $nextTrips,
+            'oldTrips' => $oldTrips,
+        ]);
+
+        require ROOTPATH . 'src/Templates/page/history.php';
     }
-
-    $userId = $_SESSION['user'];
-
-    // Connexion à la base de données
-    $db = new Database();
-    $pdo = $db->getConnection();
-
-    // Récupérer les trajets à venir
-    $carpoolingRepo = new \App\Repository\CarpoolingRepository($pdo);
-    $nextTrips = $carpoolingRepo->nextCarpooling($userId);
-    $oldTrips = $carpoolingRepo->oldCarpooling($userId);
-
-    $tripReviewRepository = new \App\Repository\TripReviewRepository($pdo);
-    $reviewsReceived = $tripReviewRepository->getReviewReceivedByUser($userId);
-    $reviewsGiven = $tripReviewRepository->getReviewGivenByUser($userId);
-
-
-    // Rendre les variables disponibles dans la vue
-    extract([
-        'nextTrips' => $nextTrips,
-        'oldTrips' => $oldTrips,
-    ]);
-
-    require ROOTPATH . 'src/Templates/page/history.php';
-}
 }

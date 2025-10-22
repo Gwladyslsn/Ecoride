@@ -7,7 +7,7 @@ use App\Database\Database;
 use App\Repository\TripReviewRepository;
 use App\Repository\EmployeeRepository;
 
-class AdminController
+class AdminController extends Controller
 {
     private AdminRepository $adminRepository;
     private TripReviewRepository $tripReviewRepo;
@@ -21,6 +21,31 @@ class AdminController
         $this->employeeRepo = new EmployeeRepository($db->getConnection());
     }
 
+
+    public function dashboardAdmin(): void
+    {
+        $adminController = new AdminController();
+        $data = $adminController->getDashboardData();
+
+        $this->render("Templates/page/admin/dashboardAdmin", $data);
+    }
+
+    public function userAdmin()
+    {
+        $this->render('Templates/page/admin/userAdmin', []);
+    }
+
+    public function carpoolingAdmin()
+    {
+        $this->render('Templates/page/admin/carpoolingAdmin', []);
+    }
+    public function employeAdmin()
+    {
+        $adminController = new AdminController();
+        $data = $adminController->EmployeeAdminDashboard();
+
+        $this->render('Templates/page/admin/employeAdmin', [$data]);
+    }
     public function getDashboardData(): array
     {
         $totalUsers = $this->adminRepository->countUsers();
@@ -55,5 +80,15 @@ class AdminController
         $totalEmployees = count($employees);
 
         require_once ROOTPATH . 'src/Templates/page/admin/employeAdmin.php';
+    }
+
+    public function addEmployee()
+    {
+        $this->render('Templates/page/admin/addEmployee', []);
+    }
+
+    public function addNewEmployee()
+    {
+        $this->render('Templates/page/admin/addEmployee', []);
     }
 }

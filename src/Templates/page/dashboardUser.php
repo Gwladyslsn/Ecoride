@@ -32,21 +32,24 @@ if (isset($_SESSION['user'])) {
 
     // 🛠 Mise à jour des infos utilisateur si formulaire envoyé
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
-        $data = [];
+    $data = [];
 
-        if (!empty($_POST['name_user'])) $data['name_user'] = $_POST['name_user'];
-        if (!empty($_POST['lastname_user'])) $data['lastname_user'] = $_POST['lastname_user'];
-        if (!empty($_POST['email_user'])) $data['email_user'] = $_POST['email_user'];
-        if (!empty($_POST['phone_user'])) $data['phone_user'] = $_POST['phone_user'];
-
-        $updated = $userRepo->updateUserInfo($id_user, $data);
-
-        if ($updated) {
-            $successMessage = "Profil mis à jour avec succès.";
-        } else {
-            $errorMessage = "Échec de la mise à jour.";
+    $fields = ['name_user', 'lastname_user', 'email_user', 'phone_user'];
+    foreach ($fields as $field) {
+        if (!empty($_POST[$field])) {
+            $data[$field] = $_POST[$field];
         }
     }
+
+    $updated = $userRepo->updateUserInfo($id_user, $data);
+
+    if ($updated) {
+        $successMessage = "Profil mis à jour avec succès.";
+    } else {
+        $errorMessage = "Échec de la mise à jour.";
+    }
+}
+
 
     // 🛠 Mise à jour des infos voiture si formulaire envoyé
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_car'])) {
@@ -142,10 +145,10 @@ $prefIcons = [
         <div class="profile-section car-section">
             <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">Mon Véhicule</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-                <div><span class="font-medium">Marque :</span> <span class="text-gray-900 edit-car" data-field="brand_car"><?= $car ? $car["brand_car"] : "non-renseigné" ?></span></div>
-                <div><span class="font-medium">Modèle :</span> <span class="text-gray-900 edit-car" data-field="model_car"><?= $car ? $car["model_car"] : "non-renseigné" ?></span></div>
-                <div><span class="font-medium">Année :</span> <span class="text-gray-900 edit-car" data-field="year_car"><?= $car ? $car["year_car"] : "non-renseigné" ?></span></div>
-                <div><span class="font-medium">Énergie :</span> <span class="text-gray-900 edit-car" data-field="energy_car"><?= $car ? $car["energy_car"] : "non-renseigné" ?></span></div>
+                <div><span class="font-medium">Marque :</span> <span class="text-gray-900 edit-car" data-field="brand_car"><?= $car ? $car["brand_car"] : NO_INFO ?></span></div>
+                <div><span class="font-medium">Modèle :</span> <span class="text-gray-900 edit-car" data-field="model_car"><?= $car ? $car["model_car"] : NO_INFO ?></span></div>
+                <div><span class="font-medium">Année :</span> <span class="text-gray-900 edit-car" data-field="year_car"><?= $car ? $car["year_car"] : NO_INFO ?></span></div>
+                <div><span class="font-medium">Énergie :</span> <span class="text-gray-900 edit-car" data-field="energy_car"><?= $car ? $car["energy_car"] : NO_INFO ?></span></div>
             </div>
             <button id="edit-btn-car" class="mt-6 px-4 py-2 text-white rounded-md shadow-sm edit-btn">
                 Modifier mon véhicule

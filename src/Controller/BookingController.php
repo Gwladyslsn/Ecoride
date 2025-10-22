@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Repository\BookingRepository;
 use App\Database\Database;
 
-class BookingController
+class BookingController extends Controller
 {
     private BookingRepository $bookingRepository;
 
@@ -91,6 +91,7 @@ class BookingController
 
         exit;
     }
+
 
     public function deleteBooking()
     {

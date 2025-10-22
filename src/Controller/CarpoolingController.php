@@ -9,11 +9,19 @@ use App\Database\Database;
 use App\Service\CityVerifier;
 use App\Repository\UserRepository;
 use App\Security\CsrfManager;
+USE App\Entity\Auth;
 
 class CarpoolingController extends Controller
 {
 
-    // READ
+    // CREATE
+
+    public function addCarpooling()
+    {
+        Auth::startSession(); // s’assure que la session est ouverte
+        $csrf = new CsrfManager();
+        $this->render('/Templates/page/addCarpooling');
+    }
     public function newCarpooling(): void
     {
         $database = new Database();
@@ -29,13 +37,6 @@ class CarpoolingController extends Controller
             exit;
         }
 
-        // 🔒 Vérif CSRF
-        $csrfHeader = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
-        if (!$this->checkCsrfToken($csrfHeader)) {
-            http_response_code(403);
-            echo json_encode(['success' => false, 'message' => 'Token CSRF invalide']);
-            exit;
-        }
 
         if (!isset($_SESSION['user'])) {
             echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);

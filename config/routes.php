@@ -30,7 +30,7 @@ return [
         'method' => 'showDashboardUser'
     ],
     '/logout' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\AuthController::class,
         'method' => 'logout'
     ],
     '/history' => [
@@ -58,7 +58,7 @@ return [
         'method' => 'updateImgCar'
     ],
     '/addCarpooling' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\CarpoolingController::class,
         'method' => 'addCarpooling'
     ],
     '/newCarpooling' => [
@@ -89,12 +89,8 @@ return [
         'controller' => App\Controller\PageController::class,
         'method' => 'createAdmin'
     ],
-    '/homeAdmin' => [
-        'controller' => App\Controller\PageController::class,
-        'method' => 'homeAdmin'
-    ],
     '/dashboardAdmin' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\AdminController::class,
         'method' => 'dashboardAdmin'
     ],
     '/bookTrip' => [
@@ -122,23 +118,23 @@ return [
         'method' => 'showReviewGiven'
     ],
     '/userAdmin' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\AdminController::class,
         'method' => 'userAdmin'
     ],
     '/carpoolingAdmin' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\AdminController::class,
         'method' => 'carpoolingAdmin'
     ],
     '/employeAdmin' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\AdminController::class,
         'method' => 'employeAdmin'
     ],
     '/addEmployee' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\AdminController::class,
         'method' => 'addEmployee'
     ],
     '/addNewEmployee' => [
-        'controller' => App\Controller\EmployeeController::class,
+        'controller' => App\Controller\AdminController::class,
         'method' => 'addNewEmployee'
     ],
     '/dashboardEmployee' => [

@@ -23,7 +23,7 @@ class Router
         $path = strtok($uri, '?');
 
         if (!array_key_exists($path, $this->routes)) {
-            header("HTTP/1.0 404 Not Found");
+            header(HTTP_404);
             echo "Error: Route '{$path}' not found.";
             return;
         }
@@ -33,7 +33,7 @@ class Router
         $methodName = $route['method'];
 
         if (!class_exists($controllerName)) {
-            header("HTTP/1.0 404 Not Found");
+            header(HTTP_404);
             echo "Error: Controller '{$controllerName}' not found.";
             return;
         }
@@ -52,7 +52,7 @@ class Router
         }
 
         if (!method_exists($controller, $methodName)) {
-            header("HTTP/1.0 404 Not Found");
+            header(HTTP_404);
             echo "Error: Method '{$methodName}' not found in controller '{$controllerName}'.";
             return;
         }
