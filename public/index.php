@@ -19,12 +19,12 @@ session_set_cookie_params([
 session_start();
 
 
-require ROOTPATH . '/vendor/autoload.php';
+require_once ROOTPATH . '/vendor/autoload.php';
 
 use App\Core\Router;
 
 $router = new Router();
-$routes = require ROOTPATH . 'config/routes.php';
+$routes = require_once ROOTPATH . 'config/routes.php';
 
 foreach ($routes as $path => $routeInfo) {
     $router->addRoute($path, $routeInfo['controller'], $routeInfo['method']);
