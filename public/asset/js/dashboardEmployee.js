@@ -1,68 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const loaderOverlay = document.getElementById('loader-overlay');
 
+    /**
+     * Fonction générique pour traiter une action sur un avis
+     * @param {string} endpoint - URL de la route (ex: '/acceptReview')
+     * @param {string} reviewId - ID de l'avis concerné
+     */
+    function handleReviewAction(endpoint, reviewId) {
+        loaderOverlay.style.display = 'flex';
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_reviews: reviewId })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.success) {
+                setTimeout(() => globalThis.location.reload(), 1000);
+            } else {
+                alert('Erreur : ' + response.message);
+                loaderOverlay.style.display = 'none';
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            loaderOverlay.style.display = 'none';
+        });
+    }
+
+    // Sélection des boutons
     const btnCheckReview = document.querySelector('.accept-review-btn');
     const btnRejectReview = document.querySelector('.reject-review-btn');
-    //const btnContactReview = document.getElementById('btn-contact-review');
 
-    btnCheckReview.addEventListener('click', (e) => {
+    // Gestionnaires d’événements
+    btnCheckReview?.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('click accept');
-        
-        const reviewId = btnCheckReview.dataset.reviewId;
-        //console.log('Review ID to accept:', reviewId);
-        //const text = btnCheckReview.querySelector('.btn-text');
-        const loaderOverlay = document.getElementById('loader-overlay');
-
-        loaderOverlay.style.display = 'flex';
-
-        fetch('/acceptReview', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id_reviews: reviewId })
-        })
-        .then(res => res.json())
-        .then(response => {
-            if (response.success) {
-                setTimeout(() => {
-                    globalThis.location.reload();
-                }, 1000);
-            } else {
-                alert('Erreur : ' + response.message);
-                loaderOverlay.style.display = 'none';
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            loaderOverlay.style.display = 'none';
-        });
+        handleReviewAction('/acceptReview', btnCheckReview.dataset.reviewId);
     });
 
-    btnRejectReview.addEventListener('click', (e) => {
+    btnRejectReview?.addEventListener('click', (e) => {
         e.preventDefault();
-        const reviewId = btnRejectReview.dataset.reviewId;
-        const loaderOverlay = document.getElementById('loader-overlay');
-
-        loaderOverlay.style.display = 'flex';
-
-        fetch('/rejectReview', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id_reviews: reviewId })
-        })
-        .then(res => res.json())
-        .then(response => {
-            if (response.success) {
-                setTimeout(() => {
-                    globalThis.location.reload();
-                }, 1000);
-            } else {
-                alert('Erreur : ' + response.message);
-                loaderOverlay.style.display = 'none';
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            loaderOverlay.style.display = 'none';
-        });
+        handleReviewAction('/rejectReview', btnRejectReview.dataset.reviewId);
     });
 });
+
