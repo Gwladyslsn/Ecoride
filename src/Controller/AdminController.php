@@ -35,7 +35,7 @@ class AdminController
         ];
     }
 
-    public function EmployeeAdminDashboard()
+    public function employeeAdminDashboard()
     {
         $pdo = (new Database())->getConnection();
         $tripReviewRepo = new TripReviewRepository($pdo);

@@ -21,12 +21,12 @@ class BookingController
 
         // Vérifie si utilisateur connecté
         if (!isset($_SESSION['user'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Utilisateur non connecté']);
+            echo json_encode(['status' => 'error', 'message' => ERR_USER_NOT_LOGGED]);
             exit;
         }
 
         // Récupération des données JSON envoyées
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = json_decode(file_get_contents(JSON_INPUT), true);
         file_put_contents('php://stderr', print_r($data, true));  // écrit dans le log Apache
 
         if (!$data) {
@@ -45,7 +45,7 @@ class BookingController
         // vérifier la réservation
         $dateDepart = $this->bookingRepository->getDateDepart($carpoolingId);
         if (!$dateDepart) {
-            echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable']);
+            echo json_encode(['status' => 'error', 'message' => ERR_TRIP_NOT_FOUND]);
             exit;
         }
 
@@ -83,7 +83,7 @@ class BookingController
                 echo json_encode(['status' => 'error', 'message' => 'Utilisateur introuvable.']);
                 break;
             case 'carpooling_not_found':
-                echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable.']);
+                echo json_encode(['status' => 'error', 'message' => ERR_TRIP_NOT_FOUND]);
                 break;
             default:
                 echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la réservation.']);
@@ -96,14 +96,14 @@ class BookingController
     {
         // Vérifie si l'utilisateur est connecté
         if (!isset($_SESSION['user'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Utilisateur non connecté']);
+            echo json_encode(['status' => 'error', 'message' => ERR_USER_NOT_LOGGED]);
             exit;
         }
 
         $userId = $_SESSION['user'];
 
         // Récupère les données POST
-        $input = file_get_contents('php://input');
+        $input = json_decode(file_get_contents(JSON_INPUT), true);
         $data = json_decode($input, true);
 
         if (!is_array($data) || !isset($data['carpoolingId'])) {
@@ -124,7 +124,7 @@ class BookingController
                 echo json_encode(['status' => 'error', 'message' => 'Utilisateur introuvable']);
                 break;
             case 'carpooling_not_found':
-                echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable']);
+                echo json_encode(['status' => 'error', 'message' => ERR_TRIP_NOT_FOUND]);
                 break;
             case 'booking_not_found':
                 echo json_encode(['status' => 'error', 'message' => 'Réservation introuvable']);
@@ -138,14 +138,14 @@ class BookingController
     {
         // Vérifie si l'utilisateur est connecté
         if (!isset($_SESSION['user'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Utilisateur non connecté']);
+            echo json_encode(['status' => 'error', 'message' => ERR_USER_NOT_LOGGED]);
             exit;
         }
 
         $userId = $_SESSION['user'];
 
         // Récupère les données POST
-        $input = file_get_contents('php://input');
+        $input = json_decode(file_get_contents(JSON_INPUT), true);
         $data = json_decode($input, true);
 
         if (!is_array($data) || !isset($data['carpoolingId'])) {
@@ -166,7 +166,7 @@ class BookingController
                 echo json_encode(['status' => 'error', 'message' => 'Utilisateur introuvable']);
                 break;
             case 'carpooling_not_found':
-                echo json_encode(['status' => 'error', 'message' => 'Trajet introuvable']);
+                echo json_encode(['status' => 'error', 'message' => ERR_TRIP_NOT_FOUND]);
                 break;
             case 'booking_not_found':
                 echo json_encode(['status' => 'error', 'message' => 'Réservation introuvable']);

@@ -29,8 +29,6 @@ class AuthController
 
         // Redirige vers la méthode appropriée
         if ($formType === 'login') {
-            //var_dump('session_id : ', session_id(), $_SESSION);
-            //var_dump('post : ', $_POST);
             $this->processLogin($post);
             
         } elseif ($formType === 'register') {

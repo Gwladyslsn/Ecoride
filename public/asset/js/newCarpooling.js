@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         option.addEventListener('click', function () {
             document.querySelectorAll('.seat-option').forEach(opt => opt.classList.remove('selected'));
             this.classList.add('selected');
-            selectedSeats = parseInt(this.dataset.seats);
+            selectedSeats = Number.parseInt(this.dataset.seats);
         });
     });
 
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const alertSuccess = document.getElementById('alert-success');
                     alertSuccess.classList.remove('hidden');
                     setTimeout(() => {
-                        window.location.reload();
+                        globalThis.location.reload();
                     }, 3000)
                 } else {
                     alert('Erreur : ' + (response.message || 'Impossible de sauvegarder'));

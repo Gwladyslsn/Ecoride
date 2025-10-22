@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!departureCity || !arrivalCity || !dateTrip) {
             alert("Veuillez remplir tous les champs !");
-            return;
         }
     });
 });
