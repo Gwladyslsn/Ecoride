@@ -142,10 +142,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const data = {
-                id_recipient: parseInt(recipientId),
-                note_reviews: parseInt(rating),
+                id_recipient: Number.parseInt(recipientId),
+                note_reviews: Number.parseInt(rating),
                 comment_reviews: comment,
-                id_carpooling: parseInt(idCarpooling),
+                id_carpooling: Number.parseInt(idCarpooling),
                 id_user: null
             };
 
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.status === 'ok') {
                     const alertSuccess = document.getElementById('alert-success');
                     if (alertSuccess) alertSuccess.classList.remove('hidden');
-                    setTimeout(() => window.location.reload(), 2000);
+                    setTimeout(() => globalThis.location.reload(), 2000);
                 } else {
                     alert('Erreur : ' + (response.message || 'Impossible de sauvegarder'));
                     loaderOverlay.style.display = 'none';

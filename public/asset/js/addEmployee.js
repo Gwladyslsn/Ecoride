@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const btnAddEmployee = document.getElementById('btn-add-employee');
-    const formEmployee = document.getElementById('employeeForm');
+    //const formEmployee = document.getElementById('employeeForm');
     const inputLastnameEmployee = document.getElementById('lastname_employee');
     const inputNameEmployee = document.getElementById('name_employee');
     const inputEmailEmployee = document.getElementById('email_employee');
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Telephone validation
-        const telPattern = /^\+?[0-9\s\-]{7,15}$/;
+        const telPattern = /^\+?[0-9\s-]{7,15}$/;
         if (!telPattern.test(TelEmployee)) {
             errors['TelEmployee'] = ('Veuillez entrer un numéro de téléphone valide.');
         }
@@ -62,9 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const inputs = document.querySelectorAll('input[name]');
         const data = {};
-        inputs.forEach(input => {
+        for (const input of inputs) {
             data[input.name] = input.value.trim();
-        });
+        }
 
         fetch('/addNewEmployee', {
             method: 'POST',
@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => {
                 if (response.success) {
                     //debug : alert('Informations mises à jour !');
-                    setTimeout(()=>{
-                        window.location.reload();
+                    setTimeout(() => {
+                        globalThis.location.reload();
                     }, 8000);
                 } else {
                     alert('Erreur : ' + (response.message || 'Impossible de sauvegarder'));
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log("Erreurs de validation côté client :", errors);
         } else {
-            feedbackAddEmployee.innerHTML = `L'\employé ${NameEmployee} ${LastnameEmployee} a bien été créé.`;
+            feedbackAddEmployee.innerHTML = `L'employé ${NameEmployee} ${LastnameEmployee} a bien été créé.`;
             //formEmployee.submit();
         }
     });

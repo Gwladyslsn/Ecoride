@@ -8,6 +8,7 @@ use App\Entity\Carpooling;
 use App\Database\Database;
 use App\Service\CityVerifier;
 use App\Repository\UserRepository;
+use App\Security\CsrfManager;
 
 class CarpoolingController extends Controller
 {
@@ -21,6 +22,7 @@ class CarpoolingController extends Controller
         $carpoolingRepo = new CarpoolingRepository($pdo);
         $carRepo = new CarRepository($pdo);
         $cityVerifier = new CityVerifier(); // ✅ Ajout du service de vérification
+
 
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             http_response_code(405); // Méthode non autorisée

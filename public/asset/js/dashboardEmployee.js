@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnCheckReview = document.querySelector('.accept-review-btn');
     const btnRejectReview = document.querySelector('.reject-review-btn');
-    const btnContactReview = document.getElementById('btn-contact-review');
+    //const btnContactReview = document.getElementById('btn-contact-review');
 
     btnCheckReview.addEventListener('click', (e) => {
         e.preventDefault();
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const reviewId = btnCheckReview.dataset.reviewId;
         //console.log('Review ID to accept:', reviewId);
-        const text = btnCheckReview.querySelector('.btn-text');
+        //const text = btnCheckReview.querySelector('.btn-text');
         const loaderOverlay = document.getElementById('loader-overlay');
 
         loaderOverlay.style.display = 'flex';
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.success) {
                 setTimeout(() => {
-                    window.location.reload();
+                    globalThis.location.reload();
                 }, 1000);
             } else {
                 alert('Erreur : ' + response.message);
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.success) {
                 setTimeout(() => {
-                    window.location.reload();
+                    globalThis.location.reload();
                 }, 1000);
             } else {
                 alert('Erreur : ' + response.message);

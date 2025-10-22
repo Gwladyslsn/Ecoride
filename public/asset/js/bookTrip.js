@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     recapContainer.innerHTML = `<p style="color:red; font-weight:600;">Erreur lors de la réservation.</p>`;
                 }
             })
-            .catch((errors) => {
-                console.error('Fetch error:', errors);
+            .catch((error) => {
+                console.error('Fetch error:', error);
                 recapContainer.innerHTML = `<p style="color:red; font-weight:600;">Erreur réseau ou serveur.</p>`;
             });
     }
