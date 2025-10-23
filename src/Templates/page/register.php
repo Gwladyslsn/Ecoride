@@ -69,7 +69,7 @@ require_once ROOTPATH . '/src/Templates/header.php';
     <div class="divider divider-horizontal">OU</div>
 
 
-    <form method="post" action="/auth-form" id="regiter" class="container containerLog form_sign">
+    <form method="post" action="/auth-form" id="register" class="container containerLog form_sign">
         <?= $csrf->getField('register_form'); ?>
         <input type="hidden" name="form_type" value="register">
         <div class="lg:w-5/6 md:w-2/2 form rounded-lg p-10 flex flex-col mt-10 md:mt-0">

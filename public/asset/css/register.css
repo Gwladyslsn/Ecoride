@@ -9,6 +9,7 @@
 
 .btn-register{
     background-color:var(--primary-color);
+    cursor: pointer;
     
 }
 
