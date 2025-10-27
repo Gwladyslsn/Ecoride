@@ -82,6 +82,8 @@ class Client
 
     private WriteConcern $writeConcern;
 
+    private bool $autoEncryptionEnabled;
+
     /**
      * Constructs a new Client instance.
      *
@@ -133,6 +135,11 @@ class Client
         $this->uri = $uri ?? self::DEFAULT_URI;
         $this->builderEncoder = $driverOptions['builderEncoder'] ?? new BuilderEncoder();
         $this->typeMap = $driverOptions['typeMap'];
+
+        /* Database and Collection objects may need to know whether auto
+         * encryption is enabled for dropping collections. Track this via an
+         * internal option until PHPC-2615 is implemented. */
+        $this->autoEncryptionEnabled = isset($driverOptions['autoEncryption']['keyVaultNamespace']);
 
         $driverOptions = array_diff_key($driverOptions, ['builderEncoder' => 1, 'typeMap' => 1]);
 
@@ -270,7 +277,7 @@ class Client
      */
     public function getCollection(string $databaseName, string $collectionName, array $options = []): Collection
     {
-        $options += ['typeMap' => $this->typeMap, 'builderEncoder' => $this->builderEncoder];
+        $options += ['typeMap' => $this->typeMap, 'builderEncoder' => $this->builderEncoder, 'autoEncryptionEnabled' => $this->autoEncryptionEnabled];
 
         return new Collection($this->manager, $databaseName, $collectionName, $options);
     }
@@ -285,7 +292,7 @@ class Client
      */
     public function getDatabase(string $databaseName, array $options = []): Database
     {
-        $options += ['typeMap' => $this->typeMap, 'builderEncoder' => $this->builderEncoder];
+        $options += ['typeMap' => $this->typeMap, 'builderEncoder' => $this->builderEncoder, 'autoEncryptionEnabled' => $this->autoEncryptionEnabled];
 
         return new Database($this->manager, $databaseName, $options);
     }
