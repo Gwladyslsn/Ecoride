@@ -50,7 +50,10 @@ class PageController extends Controller
     {
         $this->render('/Entity/createAdmin', []);
     }
-
+    public function reviewEcoride()
+    {
+        $this->render('/Templates/page/reviewEcoride', []);
+    }
     
 
     
