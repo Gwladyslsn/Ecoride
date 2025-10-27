@@ -45,9 +45,6 @@ class CsrfManager
     // Valide le token
     public function validate(?string $token, string $formId = ''): bool
 {
-
-    //var_dump('Token reçu pour validation : ', $token);
-    //var_dump('_SESSION avant check : ', $_SESSION[self::SESSION_KEY] ?? []);
     // Vérifie que le token existe
     if (!$token || !isset($_SESSION[self::SESSION_KEY][$token])) {
         return false;
