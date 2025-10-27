@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
-use App\Entity\Auth;
+use App\Entity\auth;
 use App\Security\CsrfManager;
 
 class AuthController
