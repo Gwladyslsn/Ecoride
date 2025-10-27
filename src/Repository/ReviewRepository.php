@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use MongoDB\Client;
@@ -20,7 +21,7 @@ class ReviewRepository
     }
 
     //CREATE
-        public function addReview(array $data): array
+    public function addReview(array $data): array
     {
         $name = $data['nameReviewEcoride'] ?? '';
         $email = $data['emailReviewEcoride'] ?? '';
@@ -28,18 +29,25 @@ class ReviewRepository
         $comment = $data['textReviewEcoride'] ?? '';
         $date = (new DateTime())->format(DateTime::ATOM);
 
-        $result = $this->collection->insertOne([
-            'name' => $name,
-            'email' => $email,
-            'note' => $note,
-            'comment' => $comment,
-            'created_at' => $date
-        ]);
+        try {
+            $result = $this->collection->insertOne([
+                'name' => $name,
+                'email' => $email,
+                'note' => $note,
+                'comment' => $comment,
+                'created_at' => $date
+            ]);
 
-        return [
-            'success' => true,
-            'insertedId' => (string)$result->getInsertedId()
-        ];
+            return [
+                'success' => true,
+                'insertedId' => (string)$result->getInsertedId()
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
     //READ
@@ -55,6 +63,4 @@ class ReviewRepository
 
         return $reviews;
     }
-
-
 }
