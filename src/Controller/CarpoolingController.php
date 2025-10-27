@@ -9,7 +9,7 @@ use App\Database\Database;
 use App\Service\CityVerifier;
 use App\Repository\UserRepository;
 use App\Security\CsrfManager;
-USE App\Entity\Auth;
+USE App\Entity\auth;
 
 class CarpoolingController extends Controller
 {
