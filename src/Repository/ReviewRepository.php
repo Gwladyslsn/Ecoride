@@ -22,33 +22,53 @@ class ReviewRepository
 
     //CREATE
     public function addReview(array $data): array
-    {
-        $name = $data['nameReviewEcoride'] ?? '';
-        $email = $data['emailReviewEcoride'] ?? '';
-        $note = (int)($data['selectedRating'] ?? 0);
-        $comment = $data['textReviewEcoride'] ?? '';
-        $date = (new DateTime())->format(DateTime::ATOM);
+{
+    // Récupération des données avec valeurs par défaut
+    $name = $data['nameReviewEcoride'] ?? '';
+    $email = $data['emailReviewEcoride'] ?? '';
+    $note = (int)($data['selectedRating'] ?? 0);
+    $comment = $data['textReviewEcoride'] ?? '';
+    $date = (new DateTime())->format(DateTime::ATOM);
 
-        try {
-            $result = $this->collection->insertOne([
-                'name' => $name,
-                'email' => $email,
-                'note' => $note,
-                'comment' => $comment,
-                'created_at' => $date
-            ]);
+    try {
+        // Insertion dans la collection MongoDB
+        $result = $this->collection->insertOne([
+            'name' => $name,
+            'email' => $email,
+            'note' => $note,
+            'comment' => $comment,
+            'created_at' => $date
+        ]);
 
-            return [
-                'success' => true,
-                'insertedId' => (string)$result->getInsertedId()
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'error' => $e->getMessage()
-            ];
-        }
+        // Affichage pour debug
+        echo "Insertion réussie ! ID : " . (string)$result->getInsertedId() . "\n";
+
+        return [
+            'success' => true,
+            'insertedId' => (string)$result->getInsertedId()
+        ];
+    } catch (\Exception $e) {
+        // Log de l'erreur pour debug
+        error_log("Erreur MongoDB : " . $e->getMessage());
+        echo "Erreur lors de l'insertion : " . $e->getMessage() . "\n";
+
+        return [
+            'success' => false,
+            'error' => $e->getMessage()
+        ];
     }
+}
+
+// --- Test rapide ---
+$test = $this->addReview([
+    'nameReviewEcoride' => 'Test',
+    'emailReviewEcoride' => 'test@test.com',
+    'selectedRating' => 5,
+    'textReviewEcoride' => 'Ceci est un test'
+]);
+
+var_dump($test);
+
 
     //READ
 
