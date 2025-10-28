@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../config/config.php';
 
 // Détermination du cookie sécurisé
@@ -18,7 +17,6 @@ session_set_cookie_params([
 
 session_start();
 
-
 require_once ROOTPATH . '/vendor/autoload.php';
 
 use App\Core\Router;
@@ -33,7 +31,5 @@ foreach ($routes as $path => $routeInfo) {
 $uri = $_SERVER['REQUEST_URI'];
 $uri = str_replace('/index.php', '', $uri);
 $router->dispatch($uri);
-
-
 
 
