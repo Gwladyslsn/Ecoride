@@ -54,7 +54,7 @@ require_once ROOTPATH . '/src/Templates/header.php';
                     <button id="btn-send" class="flex mx-auto text-white border-0 py-2 px-8 focus:outline-none rounded text-lg btn-send">Envoyer</button>
                 </div>
                 <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-                    <a class="mail-ecoride">ecoride@email.com</a>
+                    <a class="mail-ecoride">contact2ecoride@gmail.com</a>
                     <p class="leading-normal my-5 text-white">49 Smith St.
                         <br>Saint Cloud, 56301
                     </p>

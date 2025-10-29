@@ -10,7 +10,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "mongodb/mongodb": "^2.1"
+        "mongodb/mongodb": "^2.1",
+        "phpmailer/phpmailer": "^7.0"
     },
 
     "autoload": {
