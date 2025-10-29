@@ -36,10 +36,10 @@ class PageController extends Controller
         $this->render('Templates/page/mentions', []);
     }
 
-    public function contactUser()
+    /*public function contactUser()
     {
-        $this->render('Templates/page/contact', []);
-    }
+        $this->render('Services/MailServices', []);
+    }*/
 
     public function addReviewEcoride()
     {

@@ -39,50 +39,50 @@ class UserRepository
     /* get admin by id*/
     public function getAdminByEmail(string $email)
     {
-    $sql = "SELECT * FROM admin WHERE email_admin = :email";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute(['email' => $email]);
-    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $admin ?: null;
-}
+        $sql = "SELECT * FROM admin WHERE email_admin = :email";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $admin ?: null;
+    }
 
     /* get employees*/
     public function getEmployeeByEmail(string $email)
     {
-    $sql = "SELECT * FROM employee WHERE email_employee = :email";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute(['email' => $email]);
-    $employee = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $employee ?: null;
-}
+        $sql = "SELECT * FROM employee WHERE email_employee = :email";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $employee ?: null;
+    }
 
-public function getAllUsers(): array
-{
-    $stmt = $this->pdo->query("SELECT * FROM user ORDER BY id_user");
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    public function getAllUsers(): array
+    {
+        $stmt = $this->pdo->query("SELECT * FROM user ORDER BY id_user");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-public function countUsersWithCredit(): int
-{
-    $stmt = $this->pdo->query("SELECT COUNT(*) AS total FROM user WHERE credit_user > 0");
-    return (int) $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-}
+    public function countUsersWithCredit(): int
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) AS total FROM user WHERE credit_user > 0");
+        return (int) $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
 
-public function getTotalCredits(): float
-{
-    $sql = "SELECT SUM(credit_user) AS total FROM user";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
-    return (float) $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-}
+    public function getTotalCredits(): float
+    {
+        $sql = "SELECT SUM(credit_user) AS total FROM user";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return (float) $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
 
-public function getAverageCredit(): float
-{
-    $sql = "SELECT AVG(credit_user) AS average FROM user";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
-    return (float) $stmt->fetch(PDO::FETCH_ASSOC)['average'];
-}
+    public function getAverageCredit(): float
+    {
+        $sql = "SELECT AVG(credit_user) AS average FROM user";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return (float) $stmt->fetch(PDO::FETCH_ASSOC)['average'];
+    }
 
     /* get user by id*/
     public function getDataUser(string $id_user): ?array
@@ -115,24 +115,24 @@ public function getAverageCredit(): float
     }
 
     public function getUserPreferences(string $id_user): array
-{
-    $stmt = $this->pdo->prepare("
+    {
+        $stmt = $this->pdo->prepare("
         SELECT id_preference
         FROM user_has_preferences
         WHERE id_user = :id_user
     ");
-    $stmt->execute(['id_user' => $id_user]);
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
-}
+        $stmt->execute(['id_user' => $id_user]);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
 
-public function getAllPreferences(): array
-{
-    $stmt = $this->pdo->query("
+    public function getAllPreferences(): array
+    {
+        $stmt = $this->pdo->query("
         SELECT id_preference, preference_name
         FROM user_preferences
     ");
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
     /* check email*/
@@ -145,6 +145,7 @@ public function getAllPreferences(): array
     }
 
 
+    /* check and return id*/
     /* check and return id*/
     public function verifUserExists(string $email_user, string $password)
     {
@@ -160,25 +161,27 @@ public function getAllPreferences(): array
     }
 
     // Dans UserRepository
-public function Userexists(int $idUser): bool {
-    $stmt = $this->pdo->prepare("SELECT 1 FROM user WHERE id_user = :idUser");
-    $stmt->execute(['idUser' => $idUser]);
-    return (bool) $stmt->fetchColumn();
-}
+    public function Userexists(int $idUser): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT 1 FROM user WHERE id_user = :idUser");
+        $stmt->execute(['idUser' => $idUser]);
+        return (bool) $stmt->fetchColumn();
+    }
 
-// Dans TripReviewRepository
-public function hasReview(int $idUser, int $idRecipient, int $idCarpooling): bool {
-    $stmt = $this->pdo->prepare("
+    // Dans TripReviewRepository
+    public function hasReview(int $idUser, int $idRecipient, int $idCarpooling): bool
+    {
+        $stmt = $this->pdo->prepare("
         SELECT 1 FROM reviews 
         WHERE id_user = :idUser AND id_recipient = :idRecipient AND id_carpooling = :idCarpooling
     ");
-    $stmt->execute([
-        'idUser' => $idUser,
-        'idRecipient' => $idRecipient,
-        'idCarpooling' => $idCarpooling
-    ]);
-    return (bool) $stmt->fetchColumn();
-}
+        $stmt->execute([
+            'idUser' => $idUser,
+            'idRecipient' => $idRecipient,
+            'idCarpooling' => $idCarpooling
+        ]);
+        return (bool) $stmt->fetchColumn();
+    }
 
     // --- UPDATE ---
 

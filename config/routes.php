@@ -74,7 +74,7 @@ return [
         'method' => 'showTripDetails'
     ],
     '/contactUser' => [
-        'controller' => App\Controller\PageController::class,
+        'controller' => App\Controller\ContactController::class,
         'method' => 'contactUser'
     ],
     '/reviewEcoride' => [

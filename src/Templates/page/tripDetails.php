@@ -33,6 +33,7 @@ $avatarPathCar = !empty($car['photo_car'])
 
 ?>
 
+
 <div class="max-w-4xl mx-auto px-5 py-3 mt-10 mb-10 titleCard rounded-xl">
     <h2 class="text-xl text-black font-bold mb-4 text-center">Détails du trajet</h2>
 </div>
@@ -116,10 +117,19 @@ $avatarPathCar = !empty($car['photo_car'])
 </div>
 
 <div class="flex justify-center">
-    <?php if (isset($_SESSION['user'])): ?>
-        <button id="book-btn" class="btn book-btn rounded-xl" data-user="<?= $_SESSION['user'] ?>" data-carpooling="<?= $carpooling['id_carpooling'] ?>">Réserver ce trajet</button>
+    <?php
+    $userId = $_SESSION['user'];
+    $userRoleId = $userRepo->getDataUser($userId)['id_role']; // récupère id_role depuis la table user
+    $role = $userRepo->getRole($userRoleId); // récupère le nom_role
+
+    if ($role && in_array($userRoleId, [2, 3])): ?>
+        <button id="book-btn" class="btn book-btn rounded-xl"
+            data-user="<?= $userId ?>"
+            data-carpooling="<?= $carpooling['id_carpooling'] ?>">
+            Réserver ce trajet
+        </button>
     <?php else: ?>
-        <p class="text-gray-500 mt-5"><a class="text-gray-400" href="<?= BASE_URL ?>register">Inscrivez-vous</a> ou <a class="text-gray-400" href="<?= BASE_URL ?>register">connectez-vous</a> pour réserver ce trajet</p>
+        <p class="text-gray-500 mt-5">Vous n'êtes pas autorisé(e) à réserver ce trajet.</p>
     <?php endif; ?>
 </div>
 

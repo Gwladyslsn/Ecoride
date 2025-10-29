@@ -79,7 +79,10 @@ $prefIcons = [
     4 => '<i class="fa-solid fa-comments"></i>'  // Parler
 ];
 
+
 ?>
+
+
 
 
 <div class="max-w-6xl mx-auto">
@@ -113,7 +116,7 @@ $prefIcons = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 ">
             <div><span class="font-medium">Nom :</span> <span class="text-gray-900 edit-info" data-field="lastname_user"><?= $user["lastname_user"]; ?></span></div>
             <div><span class="font-medium">Prénom :</span> <span class="text-gray-900 edit-info" data-field="name_user"><?= $user["name_user"]; ?></span></div>
-            <div><span class="font-medium">Date de naissance :</span> <span class="text-gray-900 edit-info" data-field="dob_user"><?= $user["dob_user"]; ?></span></div>
+            <div><span class="font-medium">Date de naissance :</span> <span class="text-gray-900 edit-info"  data-field="dob_user"><?= $user["dob_user"]; ?></span></div>
             <div><span class="font-medium">E-mail :</span> <span class="text-gray-900 edit-info" data-field="email_user"><?= $user["email_user"]; ?></span></div>
             <div><span class="font-medium">Téléphone :</span> <span class="text-gray-900 edit-info" data-field="phone_user"><?= $user["phone_user"]; ?></span></div>
         </div>
