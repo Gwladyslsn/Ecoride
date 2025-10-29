@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Services\MailService;
+use App\Service\MailService;
 
 class ContactController extends Controller
 {
-    public function send()
+    public function contactUser()
     {
         $data = json_decode(file_get_contents("php://input"), true);
 
