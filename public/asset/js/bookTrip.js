@@ -74,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Vous avez déjà un trajet réservé ce jour.</p>`;
                 } else if (response.status === 'complet') {
                     recapContainer.innerHTML = `<p style="color:orange; font-weight:600;">Ce trajet est déja complet.</p>`;
+                } else if (response.status === 'role_non_autorise') {
+                    recapContainer.innerHTML = `<p style="color:red; font-weight:600;">En tant que chauffeur, vous n'êtes pas autorisé(e) à réserver ce trajet.</p>`;
                 } else {
                     recapContainer.innerHTML = `<p style="color:red; font-weight:600;">Erreur lors de la réservation.</p>`;
                 }

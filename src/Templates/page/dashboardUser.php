@@ -79,7 +79,10 @@ $prefIcons = [
     4 => '<i class="fa-solid fa-comments"></i>'  // Parler
 ];
 
+
 ?>
+
+
 
 
 <div class="max-w-6xl mx-auto">
