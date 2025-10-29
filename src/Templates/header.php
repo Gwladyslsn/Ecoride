@@ -92,7 +92,7 @@ require_once ROOTPATH . 'config/config.php';
             <?php if (isset($_SESSION['user']) || isset($_SESSION['admin']) || isset($_SESSION['employee'])): ?>
                 <a href="<?= BASE_URL ?>logout" class="btn btn-header">Déconnexion</a>
             <?php else: ?>
-                <a href="<?= BASE_URL ?>register" class="btn btn-header">Connexion / Inscription</a>
+                <a href="<?= BASE_URL ?>register" class="btn btn-header">Connexion/Inscription</a>
             <?php endif; ?>
         </div>
     </div>

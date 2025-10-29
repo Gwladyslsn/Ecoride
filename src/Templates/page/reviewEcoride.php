@@ -31,7 +31,7 @@ require_once ROOTPATH . '/src/Templates/header.php';
         <div class="p-2">
             <div class="relative"></div>
             <label for="text-review-ecoride" class="text-lg text-white">Votre avis :</label>
-            <textarea id="text-review-ecoride" name="comment" placeholder="Votre avis..." class="w-full"></textarea>
+            <textarea id="text-review-ecoride" name="comment" placeholder="Votre avis..." class="w-full bg-white"></textarea>
         </div>
         </div>
         <div class="p-2 w-full">
