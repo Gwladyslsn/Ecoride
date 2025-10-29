@@ -32,11 +32,7 @@ $avatarPathCar = !empty($car['photo_car'])
 
 
 ?>
-<?php
-echo '<pre>';
-var_dump($_SESSION['user']);
-echo '</pre>';
-?>
+
 
 <div class="max-w-4xl mx-auto px-5 py-3 mt-10 mb-10 titleCard rounded-xl">
     <h2 class="text-xl text-black font-bold mb-4 text-center">Détails du trajet</h2>
