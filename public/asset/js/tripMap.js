@@ -46,6 +46,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+window.addEventListener('resize', function () {
+    if (window.myMap) { // remplace myMap par ta variable de carte
+        myMap.invalidateSize();
+    }
+});
 
 
 
