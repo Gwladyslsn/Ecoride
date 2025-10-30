@@ -83,7 +83,6 @@ label {
     display: block;
     font-size: 13px;
     font-weight: 600;
-    color: var(--text-black);
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -260,6 +259,6 @@ select {
     }
 }
 
-.hidden {
-    display: none !important;
+.hidden-log {
+    display: none;
 }
