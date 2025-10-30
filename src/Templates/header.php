@@ -9,21 +9,38 @@ require_once ROOTPATH . 'config/config.php';
 <html lang="fr">
 
 <head>
+    <!-- Encodage & affichage -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- SEO de base -->
+    <meta name="description" content="Voyagez et partagez grâce à l'écologie avec EcoRide, la plateforme de covoiturage éco-responsable.">
+    <meta name="keywords" content="covoiturage, écologie, trajets, mobilité, ecoride, partage, voiture, durable, voiture électrique">
+    <meta name="author" content="Gwladys Laisné">
+
+    <!-- Sécurité -->
+    <?php if (isset($csrfToken)): ?>
+        <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken) ?>">
+    <?php endif; ?>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/asset/css/main.css">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Scripts -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <meta description="Voyagez, partagez grâce à l'écologie">
-    <?php if (isset($csrfToken)): ?>
-        <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken) ?>">
-    <?php endif; ?>
-    <title>Ecoride</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon">
+
+    <!-- Titre -->
+    <title>EcoRide - Covoiturage éco-responsable</title>
 </head>
 
 <body>
