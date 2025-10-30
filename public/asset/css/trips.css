@@ -1,4 +1,4 @@
-.titleCard{
+.titleCard {
     background-color: rgba(110, 160, 177, 0.5);
 }
 
@@ -6,7 +6,7 @@
     background-color: var(--text-white);
 }
 
-.trip:hover{
+.trip:hover {
     box-shadow: 0 15px 30px rgba(102, 192, 234, 0.4);
 }
 
@@ -30,20 +30,28 @@
     box-shadow: 0 15px 30px rgba(102, 234, 161, 0.4);
 }
 
-.details:hover{
+.details:hover {
     box-shadow: 0 15px 30px var(--bg-section);
 }
 
-.map{
-    width:550px;
-    height:350px;
+.map {
+    width: 550px;
+    height: 350px;
 }
 
-.book-btn{
-    background-color:var(--primary-color);
+.book-btn {
+    background-color: var(--primary-color);
 }
 
-.book-btn:hover{
+.book-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 30px rgba(102, 234, 161, 0.4);
+}
+
+@media screen and (max-width: 767px) {
+    .map {
+        width: 100%;
+        height: 250px;
+        max-width: 100%;
+    }
 }
