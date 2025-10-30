@@ -91,6 +91,6 @@ class EmployeeController
         $nbReviewProcessed = count($allReviewProcessed);
         $processedReviews = $tripReviewRepo->getDataOldReviews();
 
-        require_once ROOTPATH . '/src/Templates/page/employee/dashboardEmployee.php';
+        require_once ROOTPATH . '/src/Templates/page/Employee/dashboardEmployee.php';
     }
 }
