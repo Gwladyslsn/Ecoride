@@ -90,9 +90,15 @@ require_once ROOTPATH . 'config/config.php';
         </div>
         <div class="navbar-end">
             <?php if (isset($_SESSION['user']) || isset($_SESSION['admin']) || isset($_SESSION['employee'])): ?>
-                <a href="<?= BASE_URL ?>logout" class="btn btn-header">Déconnexion</a>
+                <a href="<?= BASE_URL ?>logout" class="btn btn-header btn-desktop">Déconnexion</a>
+                <a href="<?= BASE_URL ?>logout" class="icon-header btn-mobile" aria-label="Déconnexion">
+                    <i class="fa-solid fa-power-off" style="color: #d60303ff;"></i>
+                </a>
             <?php else: ?>
-                <a href="<?= BASE_URL ?>register" class="btn btn-header">Connexion/Inscription</a>
+                <a href="<?= BASE_URL ?>register" class="btn btn-header btn-desktop">Connexion / Inscription</a>
+                <a href="<?= BASE_URL ?>register" class="icon-header btn-mobile" aria-label="Connexion / Inscription">
+                    <i class="fa-solid fa-power-off"></i>
+                </a>
             <?php endif; ?>
         </div>
     </div>

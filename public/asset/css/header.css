@@ -1,4 +1,4 @@
-.navbar{
+.navbar {
     background-color: var(--bg-main);
 }
 
@@ -8,7 +8,7 @@
     height: 30px;
 }
 
-.menu li{
+.menu li {
     color: var(--text-white);
 }
 
@@ -18,9 +18,11 @@
     border-radius: 6px;
 }
 
-.btn-header{
+.btn-header {
     background-color: var(--bg-section);
 }
+
+
 
 
 
@@ -31,10 +33,21 @@
         width: 50%;
     }
 
-    .menu li{
-    color: var(--text-black);
-    background-color: var(--bg-section);
-}
+    .menu li {
+        color: var(--text-black);
+        background-color: var(--bg-section);
+    }
+
+    .btn-desktop {
+        display: none;
+    }
+
+    .btn-mobile {
+        display: inline-block;
+        color: #7A9E7E;
+        font-size: 2rem;
+        padding: 0.5rem;
+    }
 
 
 }
@@ -44,6 +57,18 @@
     .logo {
         max-width: 15%;
     }
+
+    .btn-mobile {
+        display: none;
+        font-size: 1.5rem;
+        color: var(--main-color);
+        padding: 0.5rem;
+    }
+
+    .btn-desktop {
+        display: flex;
+    }
+
+
 }
 
-/*Style LAPTOP Large*/
