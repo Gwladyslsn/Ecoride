@@ -37,6 +37,7 @@
 .map {
     width: 550px;
     height: 350px;
+    border-radius: 10px;
 }
 
 .book-btn {
@@ -49,9 +50,10 @@
 }
 
 @media screen and (max-width: 767px) {
-    .map {
-        width: 100%;
-        height: 250px;
-        max-width: 100%;
-    }
+.map {
+    width: 100%;
+    height: 250px;
+    min-height: 250px;
+    display: block;
+}
 }
